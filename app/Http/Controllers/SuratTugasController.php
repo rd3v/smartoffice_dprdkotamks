@@ -55,6 +55,10 @@ class SuratTugasController extends Controller
     public function store(Request $request)
     {
       // return response()->json($request->menugaskan);
+      $SuratTugasClass = "App\Model\SuratTugas";
+      $SuratTugas = new $SuratTugasClass;
+      $SuratTugas->where('status',0)->delete();
+
       $rules = [
           'nomor'                   => 'required|unique:tbl_surat_tugas',
           'berdasarkan_surat'       => 'required',
@@ -80,9 +84,6 @@ class SuratTugasController extends Controller
           'errors' => $validator->errors()
         ]);
       } else {
-
-          $SuratTugasClass = "App\Model\SuratTugas";
-          $SuratTugas = new $SuratTugasClass;
 
           $str_yang_bertanda_tangan = explode("-",$request->nama_yang_bertanda_tangan);
 

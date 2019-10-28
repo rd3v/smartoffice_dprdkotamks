@@ -224,8 +224,8 @@
         var lama_kegiatan = str_lama_kegiatan.split(" - ");
         var str_tanggal_mulai = lama_kegiatan[0].split('/');
         var str_tanggal_akhir = lama_kegiatan[1].split('/');
-        var tanggal_mulai = str_tanggal_mulai[2] + '-' + str_tanggal_mulai[1] + '-' + str_tanggal_mulai[0];
-        var tanggal_akhir = str_tanggal_akhir[2] + '-' + str_tanggal_akhir[1] + '-' + str_tanggal_akhir[0];
+        var tanggal_mulai = str_tanggal_mulai[2] + '-' + str_tanggal_mulai[0] + '-' + str_tanggal_mulai[1];
+        var tanggal_akhir = str_tanggal_akhir[2] + '-' + str_tanggal_akhir[0] + '-' + str_tanggal_akhir[1];
 
         mydata.nomor = $("input[name=nomor]").val();
         mydata.berdasarkan_surat = $("textarea[name=berdasarkan_surat]").val();
@@ -270,6 +270,55 @@
             }).done(function(res) {
               console.log(res);
 
+              var w = window.open('<?= route('printSuratTugas',['id' => 'tes']) ?>');
+              w.print();
+
+              Swal.fire({
+                title: 'Surat Tugas sudah di cetak ?',
+                text: "Data akan tersimpan permanen jika telah konfirmasi",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                allowOutsideClick:false,
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                  return new Promise(function(resolve) {
+                    setTimeout(function() {
+
+                      fetch("<?= route('updateStatusSuratTugasVerified') ?>")
+                        .then(response => {
+                          if (!response.ok) {
+                            throw new Error(response.statusText)
+                          }
+
+                            Swal.fire(
+                              'Sukses',
+                              'Data telah tersimpan.',
+                              'success'
+                            ).then((result) => {
+                                if(result.value) {
+                                  document.location = "<?= url('protokoler/surat-tugas') ?>";
+                                }
+                            })
+
+                          // return response.json()
+                        })
+                        .catch(error => {
+                          Swal.showValidationMessage(
+                            `Request failed: ${error}`
+                          )
+                        })
+
+                    }, 2000)
+
+                  })
+
+                }
+              });
+
             }).fail(function(res) {
               console.log(res);
             });
@@ -277,54 +326,7 @@
         }
 
 
-        var w = window.open('<?= route('printSuratTugas',['id' => 'tes']) ?>');
-        w.print();
 
-        Swal.fire({
-          title: 'Surat Tugas sudah di cetak ?',
-          text: "Data akan tersimpan permanen jika telah konfirmasi",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Tidak',
-          allowOutsideClick:false,
-          showLoaderOnConfirm: true,
-          preConfirm: function() {
-            return new Promise(function(resolve) {
-              setTimeout(function() {
-
-                fetch("<?= route('updateStatusSuratTugasVerified') ?>")
-                  .then(response => {
-                    if (!response.ok) {
-                      throw new Error(response.statusText)
-                    }
-
-                      Swal.fire(
-                        'Sukses',
-                        'Data telah tersimpan.',
-                        'success'
-                      ).then((result) => {
-                          if(result.value) {
-                            document.location = "<?= url('protokoler/surat-tugas') ?>";
-                          }
-                      })
-
-                    // return response.json()
-                  })
-                  .catch(error => {
-                    Swal.showValidationMessage(
-                      `Request failed: ${error}`
-                    )
-                  })
-
-              }, 2000)
-
-            })
-
-          }
-        });
 
 
       }

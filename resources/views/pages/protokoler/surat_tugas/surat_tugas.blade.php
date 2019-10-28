@@ -25,14 +25,14 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="container-fluid">
     <br>
     <div class="row">
       <div class="col-md-2">
-        <img src="{{ asset('public/assets/v2/images/dprd.jpeg') }}" alt="Logo">
+        <img src="{{ asset('public/assets/v2/images/dprd.jpeg') }}" alt="Logo" width="75px">
       </div>
       <div class="col-md-10 text-center">
-        <h1 style="font-size:2.5em;font-weight:bold">DEWAN PERWAKILAN RAKYAT DAERAH <br> KOTA MAKASSAR</h1>
+        <h1 style="font-size:1.5em;font-weight:bold">DEWAN PERWAKILAN RAKYAT DAERAH <br> KOTA MAKASSAR</h1>
         <p>
           {{ $data->alamat.' Telp. '.$data->telepon.' Fax. '.$data->fax.' '.$data->kodepos  }} <br>
           {{ 'Email : '.$data->email.' Homepage:.'.$data->homepage }}
