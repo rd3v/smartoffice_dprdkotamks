@@ -13,33 +13,38 @@ class DashboardController extends Controller {
     }
 
     public function view() {
-    	$user = Auth::user();
+    	
+        $user = Auth::user();
+
     	$data = [
     		"user"	=> $user
     	];
 
     	switch ($user->level) {
+            case 'admin':
+            return view('pages.dashboard.administrator',$data);
+                break;
+
     		case 'protokoler':
-	      	return view('pages.dashboard.protokoler',$data);
+	         	return view('pages.dashboard.protokoler',$data);
     			
     			break;
             case 'keuangan':
 
-            return view('pages.dashboard.keuangan',$data);
+                return view('pages.dashboard.keuangan',$data);
                 
                 break;
 	
     		case 'komisi':
-	      	return view('pages.dashboard.komisi',$data);
+	      	    return view('pages.dashboard.komisi',$data);
 			
     			break;
 	
             case 'bendahara':
-            return view('pages.dashboard.bendahara',$data);
+                return view('pages.dashboard.bendahara',$data);
             
                 break;
     
-
     		default:
     			# code...
     			break;

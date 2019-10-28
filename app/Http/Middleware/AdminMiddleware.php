@@ -15,6 +15,9 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if($request->user() && $request->user()->level != "admin") {
+            return redirect()->route('403');
+        }
         return $next($request);
     }
 }

@@ -9,41 +9,58 @@ Auth::routes();
 # DASHBOARD
 Route::get('dashboard', 'DashboardController@view');
 
-# LAPORAN PERJALANAN DINAS
+# USER MANAGEMENT
 Route::group([
-	'prefix' => 'protokoler',
-	'middleware' => 'App\Http\Middleware\ProtokolerMiddleware'
+	'middleware' => ['App\Http\Middleware\AdminMiddleware']
 ], function() {
 
-	Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
-	
+	Route::resource('manajemen-user','UserController');
+
 });
 
+# PROTOKOLER
+Route::group([
+	'prefix' => 'protokoler',
+	'middleware' => ['auth','protokoler']
+], function() {
 
+  Route::get('surat-tugas/updatestatusverified','SuratTugasController@verified')->name('updateStatusSuratTugasVerified');
+  Route::get('surat-tugas/print','SuratTugasController@print')->name('printSuratTugas');
+  Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
+  Route::resource('surat-tugas','SuratTugasController');
+	Route::resource('sppd','SppdController');
+
+	Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
+
+});
+
+# KEUANGAN
 Route::group([
 	'prefix' => 'keuangan',
 	'middleware' => 'App\Http\Middleware\KeuanganMiddleware'
 ], function() {
 
 	Route::get('laporan-perjalanan-dinas/{komisi}', 'LaporanPerjalananDinasController@lihatkomisi');
-	
+
 	Route::get('laporan-perjalanan-dinas/{komisi}/validasi/{id}', 'LaporanPerjalananDinasController@validasilaporan');
 
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
 });
 
+# BENDAHARA
 Route::group([
 	'prefix' => 'bendahara',
 	'middleware' => 'App\Http\Middleware\BendaharaMiddleware'
 ], function() {
 
 	Route::get('laporan-perjalanan-dinas/{komisi}', 'LaporanPerjalananDinasController@lihatkomisi');
-	
+
 	Route::get('laporan-perjalanan-dinas/{komisi}/validasi/{id}', 'LaporanPerjalananDinasController@validasilaporan');
 
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
 });
 
+# KOMISI
 Route::group([
 	'prefix' => 'komisi',
 	'middleware' => 'App\Http\Middleware\KomisiMiddleware'
