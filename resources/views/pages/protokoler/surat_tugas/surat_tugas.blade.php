@@ -47,19 +47,19 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-          <h3 style="text-decoration:underline">SURAT TUGAS</h3>
-          <h5>Nomor : {{ strtoupper($SuratTugas->nomor) }}</h5>
+          <h4 style="text-decoration:underline">SURAT TUGAS</h4>
+          <h6>Nomor : {{ strtoupper($SuratTugas->nomor) }}</h6>
       </div>
       <div class="col-md-12">
-          <h5 style="font-weight:normal;padding-left:4em;margin-top:0.7em">
+          <h6 style="font-weight:normal;padding-left:4em;margin-top:0.7em">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }}
-            Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</h5>
+            Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</h6>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-        <h5 style="margin-top:0.7em">M E N U G A S K A N</h5>
+        <h6 style="margin-top:0.7em">M E N U G A S K A N</h6>
       </div>
     </div>
     <div class="row">

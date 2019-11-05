@@ -70,8 +70,6 @@ class SuratTugasController extends Controller
           'tanggal_mulai'           => 'required',
           'tanggal_akhir'           => 'required',
           'tahun_anggaran'          => 'required',
-          'lambat_penyetoran'       => 'required',
-          'tempat_dikeluarkan'      => 'required',
           'tanggal_dikeluarkan'     => 'required',
           'nama_yang_bertanda_tangan'    => 'required'
       ];
@@ -100,8 +98,8 @@ class SuratTugasController extends Controller
           $SuratTugas->tanggal_mulai            = $request->tanggal_mulai;
           $SuratTugas->tanggal_akhir            = $request->tanggal_akhir;
           $SuratTugas->tahun_anggaran           = $request->tahun_anggaran;
-          $SuratTugas->lambat_penyetoran        = $request->lambat_penyetoran;
-          $SuratTugas->tempat_dikeluarkan       = $request->tempat_dikeluarkan;
+          $SuratTugas->lambat_penyetoran        = 5;
+          $SuratTugas->tempat_dikeluarkan       = "makassar";
           $SuratTugas->tanggal_dikeluarkan      = $request->tanggal_dikeluarkan;
           $SuratTugas->tanggal_dikeluarkan      = $request->tanggal_dikeluarkan;
           $SuratTugas->nama_yang_bertanda_tangan      = $str_yang_bertanda_tangan[0];
@@ -123,7 +121,7 @@ class SuratTugasController extends Controller
             $SuratTugasAnggotaDewan::insert($data);
 
             if($SuratTugasAnggotaDewan->save()) {
-              return response()->json(['state' => true]);
+              return response()->json(['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success']);
             }
 
             return response()->json(['state' => false,'class' => 'SuratTugasAnggotaDewan']);

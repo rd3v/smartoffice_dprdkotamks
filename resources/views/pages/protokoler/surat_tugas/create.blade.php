@@ -66,7 +66,13 @@
                         <div class="form-group row">
                             <label for="berdasarkan_surat" class="col-2 col-form-label">Berdasarkan Surat</label>
                             <div class="col-10">
-                                <textarea placeholder="komisi b bidang perekonomian dan keuangan DPRD kota makassar nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80"></textarea>
+                                <select class="form-control" name="berdasarkan_surat">
+                                    <option value="">== Pilih ==</option>
+                                    <option value="Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar">Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar</option>
+                                    <option value="manual">Isi Manual</option>
+                                </select>
+                                <br>
+                                <textarea placeholder="Contoh : Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar Nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80" style="display:none"></textarea>
                             </div>
                         </div>
 
@@ -138,20 +144,6 @@
                             <label for="tahun_anggaran" class="col-2 col-form-label">Tahun Anggaran</label>
                             <div class="col-10">
                                 <input name="tahun_anggaran" class="form-control mydatepicker" type="number" id="tahun_anggaran">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="lambat_penyetoran" class="col-2 col-form-label">Lambat Penyetoran</label>
-                            <div class="col-10">
-                                <input placeholder="Angka, Terhitung dalam hari" name="lambat_penyetoran" class="form-control" type="number" id="lambat_penyetoran">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="tempat_dikeluarkan" class="col-2 col-form-label">Tempat Surat Dikeluarkan</label>
-                            <div class="col-10">
-                                <input placeholder="Contoh: Makassar" name="tempat_dikeluarkan" class="form-control" type="text" id="tempat_dikeluarkan">
                             </div>
                         </div>
 
@@ -228,7 +220,7 @@
         var tanggal_akhir = str_tanggal_akhir[2] + '-' + str_tanggal_akhir[0] + '-' + str_tanggal_akhir[1];
 
         mydata.nomor = $("input[name=nomor]").val();
-        mydata.berdasarkan_surat = $("textarea[name=berdasarkan_surat]").val();
+        mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
         mydata.tanggal_surat_masuk = $("input[name=tanggal_surat_masuk]").val();
         mydata.perihal = $("input[name=perihal]").val();
         mydata.menugaskan = $("select[name=menugaskan]").val();
@@ -241,8 +233,6 @@
         mydata.tanggal_mulai = tanggal_mulai;
         mydata.tanggal_akhir = tanggal_akhir;
         mydata.tahun_anggaran = $("input[name=tahun_anggaran]").val();
-        mydata.lambat_penyetoran = $("input[name=lambat_penyetoran]").val();
-        mydata.tempat_dikeluarkan = $("input[name=tempat_dikeluarkan]").val();
         mydata.tanggal_dikeluarkan = $("input[name=tanggal_dikeluarkan]").val();
         mydata.nama_yang_bertanda_tangan = $("select[name=nama_yang_bertanda_tangan]").val();
 
@@ -270,7 +260,7 @@
             }).done(function(res) {
               console.log(res);
 
-              var w = window.open('<?= route('printSuratTugas',['id' => 'tes']) ?>');
+              var w = window.open("<?= route('printSuratTugas') ?>");
               w.print();
 
               Swal.fire({
@@ -294,15 +284,15 @@
                             throw new Error(response.statusText)
                           }
 
-                            Swal.fire(
-                              'Sukses',
-                              'Data telah tersimpan.',
-                              'success'
-                            ).then((result) => {
-                                if(result.value) {
-                                  document.location = "<?= url('protokoler/surat-tugas') ?>";
-                                }
-                            })
+                              Swal.fire({
+                                title:res.title,
+                                text:res.text,
+                                type:res.type
+                              }).then((result) => {
+                                  if(result.value) {
+                                    document.location = "<?= url('protokoler/surat-tugas') ?>";
+                                  }
+                              })
 
                           // return response.json()
                         })
@@ -321,15 +311,21 @@
 
             }).fail(function(res) {
               console.log(res);
+              Swal.fire('Terjadi kesalahan','Gagal membuat surat tugas, silahkan hubungi admin','error');
             });
 
         }
 
-
-
-
-
       }
+
+      $("select[name=berdasarkan_surat]").change(function() {
+          if($(this).val() == "manual") {
+            $("textarea[name=berdasarkan_surat]").css("display","");
+          } else {
+            $("textarea[name=berdasarkan_surat]").css("display","none");
+          }
+          $("textarea[name=berdasarkan_surat]").val("");
+      });
 
   </script>
 
