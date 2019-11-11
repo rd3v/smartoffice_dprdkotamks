@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use \Telegram as Telegram;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,17 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('getupdates', function() {
+    $updates = Telegram::getUpdates();
+    return (json_encode($updates));
+});
+
+Route::post('sendmessage', function() {
+    Telegram::sendMessage([
+        'chat_id' => '421428311',
+        'text' => 'I LOVE SERLINA SO MUCH'
+    ]);
+    return;
 });
