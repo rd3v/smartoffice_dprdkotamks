@@ -59,7 +59,7 @@
                 <ul class="nav navbar-top-links navbar-right pull-right">
 
                     <li class="dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{ asset('public/assets/v2') }}/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ $user->penanggung_jawab }}</b> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{ asset('public/assets/v2') }}/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{ strtoupper($user->penanggung_jawab) }}</b> </a>
                         <ul class="dropdown-menu dropdown-user animated flipInY">
                             <li><a href="{{ url('password') }}/{{ $user->id }}/edit"><i class="ti-settings"></i> Ganti Password</a></li>
                             <li role="separator" class="divider"></li>
@@ -105,61 +105,8 @@
 
 
                             @if($user->level == "protokoler")
-                           <!-- <li class="menu">
-                                <a href="{{ url('protokoler/sppd') }}"> <span>SPPD</span>  </a>
-                                 <a href="javascript:void(0)"> <span>Manajemen SPPD</span> <i class="fa fa-angle-left pull-right"></i> </a> -->
-                                <!-- <ul class="sub-menu"> -->
-
-<!--                                     <li class="menu">
-                                        <a href="javascript:void(0)"> <span>PIMPINAN</span><i class="fa fa-angle-left pull-right"></i> </a>
-                                        <ul class="sub-menu">
-
-                                        </ul>
-                                    </li> -->
-
-<!--                                    <li class="menu">
-                                        <a href="javascript:void(0)"> <span>ANGGOTA DPR</span><i class="fa fa-angle-left pull-right"></i> </a>
-                                        <ul class="sub-menu">
-                                            <li><a href="{{ url('protokoler/laporan-perjalanan-dinas/1/buatsppd') }}">ERIC HORAS, SE., MM</a></li>
-                                            <li><a href="#">ANDI SUHADA SAPPAILE</a></li>
-                                            <li><a href="#">Dr. Ir. Hj. APIATY K. AMIN SYAM, M.Si</a></li>
-                                            <li><a href="#">H. IRWAN DJAFAR, SE</a></li>
-                                            <li><a href="#">ANWAR FARUQ, S.Kom</a></li>
-                                            <li><a href="#">FASRUDDIN RUSLY, SE</a></li>
-                                            <li><a href="#">H. ZAENAL DG. BETA, S.Sos., M.Si</a></li>
-                                            <li><a href="#">Ir. MUCHLIS A. MISBAH</a></li>
-                                            <li><a href="#">REZKI</a></li>
-                                            <li><a href="#">A. PAHLEVI, SE</a></li>
-                                            <li><a href="#">WILLIAM</a></li>
-                                            <li><a href="#">H. ABDUL WAHAB TAHIR, SH</a></li>
-                                        </ul>
-                                    </li> -->
-
-<!--                                    <li class="menu">
-                                        <a href="javascript:void(0)"> <span>STAFF</span><i class="fa fa-angle-left pull-right"></i> </a>
-                                        <ul class="sub-menu">
-                                            <li><a href="{{ url('protokoler/laporan-perjalanan-dinas/2/buatsppd') }}">H. Andi Sadly, SE, M.Si</a></li>
-                                            <li><a href="">Syamsul Syamsuddin, SE, S.Sos</a></li>
-                                            <li><a href="">Marlina Tawang, S.Sos, MAP</a></li>
-                                            <li><a href="">Puspawati Hera, S.Sos, M.Si</a></li>
-                                            <li><a href="">Andi Taufiq Nadsir, SE, MM</a></li>
-                                        </ul>
-                                    </li> -->
-
-                                <!-- </ul>
-                            </li> -->
-
                             <li class="menu">
-                                <a href="{{ url('protokoler/surat-tugas') }}"> <span>Surat Tugas</span>  </a>
-                            </li>
-                            <li class="menu">
-                                <a href="#"> <span>SPPD (<b><u>on progress</u></b>)</span>  </a>
-                            </li>
-                            <li class="menu">
-                                <a href="#"> <span>Rincian Anggaran <br> (<b><u>on progress</u></b>)</span></a>
-                            </li>
-                            <li class="menu">
-                                <a href="#"> <span>Rekapan (<b><u>on progress</u></b>)</span></a>
+                                <a href="{{ url('protokoler/surat-tugas') }}"> <span>PERJALANAN DINAS</span>  </a>
                             </li>
                     @endif
 
