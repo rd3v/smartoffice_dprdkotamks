@@ -89,21 +89,7 @@
       <span class="col-md-1">Untuk</span>
         <div class="col-md-10" style="padding-left:0;">
             :<ol>
-                @if($SuratTugas->untuk_maksud1 != "" or $SuratTugas->untuk_maksud1 != null)
-                  <li>{{ $SuratTugas->untuk_maksud1 }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
-                @endif
-                @if($SuratTugas->untuk_maksud2 != "" or $SuratTugas->untuk_maksud2 != null)
-                  <li>{{ $SuratTugas->untuk_maksud2 }}</li>
-                @endif
-                @if($SuratTugas->untuk_maksud3 != "" or $SuratTugas->untuk_maksud3 != null)
-                  <li>{{ $SuratTugas->untuk_maksud3 }}</li>
-                @endif
-                @if($SuratTugas->untuk_maksud4 != "" or $SuratTugas->untuk_maksud4 != null)
-                  <li>{{ $SuratTugas->untuk_maksud4 }}</li>
-                @endif
-                @if($SuratTugas->untuk_maksud5 != "" or $SuratTugas->untuk_maksud5 != null)
-                  <li>{{ $SuratTugas->untuk_maksud5 }}</li>
-                @endif
+                <li>{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
                 <li>Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
                 <li>Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
             </ol>

@@ -96,33 +96,9 @@
 
 
                         <div class="form-group row">
-                            <label for="untuk_maksud1" class="col-2 col-form-label">Untuk Maksud 1</label>
+                            <label for="untuk_maksud" class="col-2 col-form-label">Untuk Maksud</label>
                             <div class="col-10">
-                                <textarea name="untuk_maksud1" id="untuk_maksud1" class="form-control" rows="8" cols="80"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="untuk_maksud2" class="col-2 col-form-label">Untuk Maksud 2</label>
-                            <div class="col-10">
-                                <textarea placeholder="Kosongkan jika tidak ada" name="untuk_maksud2" id="untuk_maksud2" class="form-control" rows="8" cols="80"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="untuk_maksud3" class="col-2 col-form-label">Untuk Maksud 3</label>
-                            <div class="col-10">
-                                <textarea placeholder="Kosongkan jika tidak ada" name="untuk_maksud3" id="untuk_maksud3" class="form-control" rows="8" cols="80"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="untuk_maksud4" class="col-2 col-form-label">Untuk Maksud 4</label>
-                            <div class="col-10">
-                                <textarea placeholder="Kosongkan jika tidak ada" name="untuk_maksud4" id="untuk_maksud4" class="form-control" rows="8" cols="80"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="untuk_maksud5" class="col-2 col-form-label">Untuk Maksud 5</label>
-                            <div class="col-10">
-                                <textarea placeholder="kosongkan jika tidak ada" name="untuk_maksud5" id="untuk_maksud5" class="form-control" rows="8" cols="80"></textarea>
+                                <textarea name="untuk_maksud" id="untuk_maksud" class="form-control" rows="8" cols="80"></textarea>
                             </div>
                         </div>
 
@@ -224,11 +200,7 @@
         mydata.tanggal_surat_masuk = $("input[name=tanggal_surat_masuk]").val();
         mydata.perihal = $("input[name=perihal]").val();
         mydata.menugaskan = $("select[name=menugaskan]").val();
-        mydata.untuk_maksud1 = $("textarea[name=untuk_maksud1]").val();
-        mydata.untuk_maksud2 = $("textarea[name=untuk_maksud2]").val();
-        mydata.untuk_maksud3 = $("textarea[name=untuk_maksud3]").val();
-        mydata.untuk_maksud4 = $("textarea[name=untuk_maksud4]").val();
-        mydata.untuk_maksud5 = $("textarea[name=untuk_maksud5]").val();
+        mydata.untuk_maksud = $("textarea[name=untuk_maksud]").val();
         mydata.tempat = $("input[name=tempat]").val();
         mydata.tanggal_mulai = tanggal_mulai;
         mydata.tanggal_akhir = tanggal_akhir;

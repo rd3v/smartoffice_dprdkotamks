@@ -54,7 +54,7 @@ class SuratTugasController extends Controller
      */
     public function store(Request $request)
     {
-      // return response()->json($request->menugaskan);
+
       $SuratTugasClass = "App\Model\SuratTugas";
       $SuratTugas = new $SuratTugasClass;
       $SuratTugas->where('status',0)->delete();
@@ -65,7 +65,7 @@ class SuratTugasController extends Controller
           'tanggal_surat_masuk'     => 'required',
           'perihal'                 => 'required',
           'menugaskan'              => 'required|array',
-          'untuk_maksud1'           => 'required',
+          'untuk_maksud'            => 'required',
           'tempat'                  => 'required',
           'tanggal_mulai'           => 'required',
           'tanggal_akhir'           => 'required',
@@ -89,11 +89,7 @@ class SuratTugasController extends Controller
           $SuratTugas->berdasarkan_surat        = $request->berdasarkan_surat;
           $SuratTugas->tanggal_surat_masuk      = $request->tanggal_surat_masuk;
           $SuratTugas->perihal                  = $request->perihal;
-          $SuratTugas->untuk_maksud1            = $request->untuk_maksud1;
-          $SuratTugas->untuk_maksud2            = $request->untuk_maksud2;
-          $SuratTugas->untuk_maksud3            = $request->untuk_maksud3;
-          $SuratTugas->untuk_maksud4            = $request->untuk_maksud4;
-          $SuratTugas->untuk_maksud5            = $request->untuk_maksud5;
+          $SuratTugas->untuk_maksud             = $request->untuk_maksud;
           $SuratTugas->tempat                   = $request->tempat;
           $SuratTugas->tanggal_mulai            = $request->tanggal_mulai;
           $SuratTugas->tanggal_akhir            = $request->tanggal_akhir;
@@ -109,8 +105,11 @@ class SuratTugasController extends Controller
           if($SuratTugas->save()) {
 
             $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
+            $PersuratanClass = "App\Model\Persuratan";
             $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
+            $Persuratan = new $PersuratanClass;
 
+        
             foreach ($request->menugaskan as $value) {
                 $data[] = [
                   'surat_tugas_id'  => $SuratTugas->id,
