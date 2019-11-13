@@ -23,6 +23,10 @@ class SuratTugas extends Model
 				return $this->hasMany('App\Model\SuratTugasTembusan');
 		}
 
+    public function persuratan() {
+      return $this->belongsTo('App\Model\Persuratan');  
+    }
+
     public function getAll() {
       return self::all();
     }
@@ -34,5 +38,6 @@ class SuratTugas extends Model
     public function getWhere(array $where) {
       return self::where($where);
     }
+
 
 }

@@ -22,9 +22,15 @@ class SuratTugasController extends Controller
      */
     public function index()
     {
+      $PersuratanClass = "App\Model\Persuratan";
       $SuratTugasClass = "App\Model\SuratTugas";
+      $Persuratan = new $PersuratanClass;
       $SuratTugas = new $SuratTugasClass;
-      $SuratTugas->where('status',0)->delete();
+
+      $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
+      if($SuratTugasDelete) {
+        $Persuratan->where(['id_sppd' => null,'id_rincian' => null])->delete();
+      }
 
       $this->data['user'] = Auth::user();
       $this->data['SuratTugas'] = $SuratTugas->where('status',1)->orderBy('id','desc')->get();
@@ -55,9 +61,15 @@ class SuratTugasController extends Controller
     public function store(Request $request)
     {
 
+      $PersuratanClass = "App\Model\Persuratan";
       $SuratTugasClass = "App\Model\SuratTugas";
       $SuratTugas = new $SuratTugasClass;
-      $SuratTugas->where('status',0)->delete();
+      $Persuratan = new $PersuratanClass;
+
+      $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
+      if($SuratTugasDelete) {
+        $Persuratan->where(['id_sppd' => null,'id_rincian' => null])->delete();
+      }
 
       $rules = [
           'nomor'                   => 'required|unique:tbl_surat_tugas',
@@ -120,10 +132,18 @@ class SuratTugasController extends Controller
             $SuratTugasAnggotaDewan::insert($data);
 
             if($SuratTugasAnggotaDewan->save()) {
-              return response()->json(['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success']);
-            }
 
-            return response()->json(['state' => false,'class' => 'SuratTugasAnggotaDewan']);
+              $Persuratan->id_surat_tugas = $SuratTugas->id;
+              if($Persuratan->save()) {
+                return response()->json(['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success']);
+              }
+
+              return response()->json(['state' => false,'class' => 'Persuratan']);
+
+            } else {
+
+              return response()->json(['state' => false,'class' => 'SuratTugasAnggotaDewan']);
+            }
 
           } else {
 
@@ -227,6 +247,14 @@ class SuratTugasController extends Controller
       $SuratTugas = new $SuratTugasClass;
 
       $SuratTugas->where('status',0)->update(['status' => 1]);
-
     }
+
+    public function checkNomorSuratTugas(Request $request) {
+      $SuratTugasClass = "App\Model\SuratTugas";
+      $SuratTugas = new $SuratTugasClass;
+
+      $check = $SuratTugas->where('nomor',$request->nomor)->first();
+      if($check != null) return response()->json(true); else return response()->json(false);
+    }
+
 }

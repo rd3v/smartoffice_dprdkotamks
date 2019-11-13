@@ -55,6 +55,11 @@
                             <label for="nomor" class="col-2 col-form-label">Nomor</label>
                             <div class="col-10">
                                 <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
+
+                        <div class="alert alert-danger text-center nomor-exist" style="border-color: red;display:none">
+                          <h4 style="font-weight: bold">!!! Nomor Surat sudah ada</h4>
+                        </div>
+
                             </div>
                         </div>
                         <div class="form-group row">
@@ -183,6 +188,26 @@
         format: "yyyy",
         viewMode: "years",
         minViewMode: "years"
+      });
+      
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $("input[name=nomor]").on('input', function() {
+          var nomor = $(this).val()
+          $.ajax({
+            url:"<?= url('protokoler/checkNomorSuratTugas') ?>",
+            type:"POST",
+            data:{nomor:nomor},
+            dataTYpe:"json"
+          }).done(function(res) {
+              if(res) $("div.nomor-exist").css("display",""); else $("div.nomor-exist").css("display","none");
+          }).fail(function(res) {
+              console.log(res);
+          });
+
       });
 
       function print_confirm() {
