@@ -88,7 +88,7 @@
                                                $str_tanggal_akhir = explode('-',$value->tanggal_akhir);
                                             ?>
 
-                                          <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.$days->format('%a').' Hari)' ?> </td>
+                                          <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
                                           <td>
                                             <button type="button" name="button" class="btn btn-primary" onclick="printthis(<?= $value->id ?>)"><i class="fa fa-print"></i> PRINT</button>
                                             <button type="button" name="button" class="btn btn-info" onclick="createspd()"><i class="fa fa-file"></i>+ BUAT SPD</button>
