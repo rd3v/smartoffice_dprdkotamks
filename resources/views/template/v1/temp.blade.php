@@ -167,13 +167,13 @@
 
     @yield('konten')
 
-    <footer class="footer text-center"> 2019 &copy; HD Solution </footer>
+    <footer class="footer text-center">  <?= date('Y') ?> &copy; HD Solution </footer>
         </div>
 
 
     </div>
 
-  <!-- jQuery -->
+    <!-- jQuery -->
     <script src="{{ asset('public/assets/v2') }}/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('public/assets/v2') }}/bootstrap/dist/js/tether.min.js"></script>

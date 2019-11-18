@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Model\LaporanPerjalananDinas;
-
 use Auth;
 
-class LaporanPerjalananDinasController extends Controller
+use App\Model\LaporanPerjalananDinas;
+
+class LaporanPerjalananDinasController extends MyController
 {
 
     public function __construct() {

@@ -48,7 +48,7 @@
                             <h3 class="box-title m-b-0">Data Surat Tugas</h3>
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
-                                <table id="example23" class="display nowrap" cellspacing="0">
+                                <table id="table-surat" class="display responsive nowrap" cellspacing="0" width="100%">
                                     <thead>
                                             <th>No</th>
                                             <th>Nomor</th>
@@ -68,7 +68,8 @@
                                             <th>Aksi</th>
                                     </tfoot>
                                     <tbody>
-                                      <?php foreach($SuratTugas as $key => $value) { ?>
+                                      <?php 
+                                       foreach($SuratTugas as $key => $value) { ?>
                                         <tr>
                                           <td><?= ($key+1) ?></td>
                                           <td><?= strtoupper($value->nomor) ?></td>
@@ -90,11 +91,17 @@
 
                                           <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
                                           <td>
+                                            
                                             <button type="button" name="button" class="btn btn-primary" onclick="printthis(<?= $value->id ?>)"><i class="fa fa-print"></i> PRINT</button>
-                                            <button type="button" name="button" class="btn btn-info" onclick="createspd()"><i class="fa fa-file"></i>+ BUAT SPD</button>
+
+                                            @if($value->status != 'batal')
+                                            <button type="button" name="button" class="btn btn-info buatspd" onclick="createspd()"><i class="fa fa-file"></i>+ BUAT SPD</button>
+
+                                            <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
+                                            @endif
                                           </td>
                                         </tr>
-                                      <?php } ?>
+                                     <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -123,6 +130,94 @@
 
 @section('myscript')
     <script>
+  
+        $(document).ready(function() {
+             
+             $('#table-surat').DataTable({
+                  dom: 'Bfrtip',
+                  buttons: [
+                      'copy', 'csv', 'excel', 'pdf', 'print'
+                  ],
+                  responsive:true
+              });
+
+        });
+
+         (function() {
+
+            [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
+                new CBPFWTabs(el);
+            });
+
+        })();
+
+      $(document).on('click','.btn-batal',function(e) {
+          var id = $(this).data("id");
+          var nomor = $(this).data("nomor");
+
+              Swal.fire({
+                title: 'Batalkan surat tugas '+nomor+' ?',
+                text: "Data akan terhapus permanen jika telah konfirmasi",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                allowOutsideClick:false,
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                  return new Promise(function(resolve) {
+                    setTimeout(function() {
+
+                      fetch("<?= url('protokoler/updateStatusBatal') ?>/" + id)
+                        .then(response => {
+
+                          if (!response.ok) {
+                            throw new Error(response.statusText)
+                          }
+
+                           response.text().then((res) => {
+
+                              var json = JSON.parse(res);
+
+                              if(json.state) {
+                                Swal.fire({
+                                  title:json.title,
+                                  text:json.text,
+                                  type:json.type
+                                }).then((result) => {
+                                    if(result.value) {
+                                      location.reload();
+                                    }
+                                })
+
+                              } else {
+                                Swal.fire({
+                                  title:json.title,
+                                  text:json.text,
+                                  type:json.type
+                                });
+                              }
+
+                            })
+
+                        })
+                        .catch(error => {
+                          Swal.showValidationMessage(
+                            `Request failed: ${error}`
+                          )
+                        })
+
+                    }, 2000)
+
+                  })
+
+                }
+              });
+
+
+      });
 
       function printthis(id) {
 
@@ -138,42 +233,6 @@
           type:"info"
         });
       }
-
-      // function hapus(id) {
-      //
-      //   Swal.fire({
-      //     title: 'Hapus data ini ?',
-      //     text: "Data akan tersimpan permanen jika telah konfirmasi",
-      //     type: 'warning',
-      //     showCancelButton: true,
-      //     confirmButtonColor: '#3085d6',
-      //     cancelButtonColor: '#d33',
-      //     confirmButtonText: 'Ya',
-      //     cancelButtonText: 'Tidak',
-      //     allowOutsideClick:false,
-      //     showLoaderOnConfirm: true,
-      //   }).then((result) => {
-      //
-      //   });
-      //
-      // }
-
-        $(document).ready(function() {
-             $('#example23').DataTable({
-                  dom: 'Bfrtip',
-                  buttons: [
-                      'copy', 'csv', 'excel', 'pdf', 'print'
-                  ],
-              });
-        });
-
-         (function() {
-
-            [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
-                new CBPFWTabs(el);
-            });
-
-        })();
 
     </script>
 @endsection

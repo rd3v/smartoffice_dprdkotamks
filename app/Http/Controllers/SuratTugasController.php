@@ -29,11 +29,29 @@ class SuratTugasController extends Controller
 
       $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
       if($SuratTugasDelete) {
-        $Persuratan->where(['id_sppd' => null,'id_rincian' => null])->delete();
+        $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
+      }
+      
+      $dp = $Persuratan->with('SuratTugas')->orderBy('id','desc')->get();
+      $Persuratan_DataSurat = [];
+      foreach ($dp as $value) {
+        if($value->suratTugas != null) {
+          array_push($Persuratan_DataSurat, (object) [
+            'persuratan_id' => $value->suratTugas->persuratan_id,
+            'id' => $value->suratTugas->id,
+            'nomor' => $value->suratTugas->nomor,
+            'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
+            'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
+            'perihal' => $value->suratTugas->perihal,
+            'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
+            'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
+            'status' => $value->status,
+          ]);
+        }
       }
 
       $this->data['user'] = Auth::user();
-      $this->data['SuratTugas'] = $SuratTugas->where('status',1)->orderBy('id','desc')->get();
+      $this->data['SuratTugas'] = $Persuratan_DataSurat;
       return view('pages.protokoler.surat_tugas.index',$this->data);
     }
 
@@ -68,7 +86,7 @@ class SuratTugasController extends Controller
 
       $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
       if($SuratTugasDelete) {
-        $Persuratan->where(['id_sppd' => null,'id_rincian' => null])->delete();
+        $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
       }
 
       $rules = [
@@ -117,9 +135,7 @@ class SuratTugasController extends Controller
           if($SuratTugas->save()) {
 
             $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
-            $PersuratanClass = "App\Model\Persuratan";
             $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
-            $Persuratan = new $PersuratanClass;
 
         
             foreach ($request->menugaskan as $value) {
@@ -133,25 +149,33 @@ class SuratTugasController extends Controller
 
             if($SuratTugasAnggotaDewan->save()) {
 
-              $Persuratan->id_surat_tugas = $SuratTugas->id;
+              $Persuratan->surat_tugas_id = $SuratTugas->id;
               if($Persuratan->save()) {
-                return response()->json(['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success']);
+                
+                $ResultSuratTugas = $SuratTugas->where('persuratan_id',null)->update(['persuratan_id' => $Persuratan->id]);
+                
+                if($ResultSuratTugas) {
+                  $response = ['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success'];
+                } else {
+                  $response = ['state' => false,'title' => 'Gagal','text' => 'Data gagal tersimpan, silahkan hubungi admin','type' => 'error'];
+                }
+
+              } else {
+                $response = ['state' => false,'class' => 'Persuratan','title' => 'Gagal','text' => 'Data gagal tersimpan, silahkan hubungi admin','type' => 'error'];
               }
 
-              return response()->json(['state' => false,'class' => 'Persuratan']);
 
             } else {
-
-              return response()->json(['state' => false,'class' => 'SuratTugasAnggotaDewan']);
+              $response = ['state' => false,'class' => 'SuratTugasAnggotaDewan','title' => 'Gagal','text' => 'Data gagal tersimpan, silahkan hubungi admin','type' => 'error'];
             }
 
           } else {
 
-            return response()->json(['state' => false,'class' => 'SuratTugas']);
+            $response = ['state' => false,'class' => 'SuratTugas','title' => 'Gagal','text' => 'Data gagal tersimpan, silahkan hubungi admin','type' => 'error'];
 
           }
 
-
+          return response()->json($response);
 
       }
 
@@ -255,6 +279,19 @@ class SuratTugasController extends Controller
 
       $check = $SuratTugas->where('nomor',$request->nomor)->first();
       if($check != null) return response()->json(true); else return response()->json(false);
+    }
+
+    public function updateStatusBatal($id) {
+      $PersuratanClass = "App\Model\Persuratan";
+      $Persuratan = new $PersuratanClass;
+      $result = $Persuratan->where("id",$id)->update(['status' => 'batal']);
+      if($result==1) {
+        $response = ['state' => true,'title' => 'Sukses','text' => 'Data telah di hapus','type' => 'success'];
+      } else {
+        $response = ['state' => false,'title' => 'Gagal','text' => 'Data gagal di hapus, silahkan hubungi admin','type' => 'danger'];
+      }
+
+      return response()->json($response);
     }
 
 }

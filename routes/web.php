@@ -28,6 +28,7 @@ Route::group([
   Route::get('surat-tugas/print','SuratTugasController@print')->name('printSuratTugas');
   Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
   Route::post('checkNomorSuratTugas','SuratTugasController@checkNomorSuratTugas');
+  Route::get('updateStatusBatal/{id}','SuratTugasController@updateStatusBatal')->name('updatestatusBatal');
 
   Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
 

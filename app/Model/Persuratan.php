@@ -9,10 +9,10 @@ class Persuratan extends Model
     protected $table = 'tbl_persuratan';
 
     protected $fillable = [
-    	'id_surat_tugas','id_sppd','id_rincian','id_rekapan'
+    	'id','surat_tugas_id','sppd_id','rincian_id','rekapan_id'
     ];
 
-    protected $hidden = ['id','created_at','updated_at'];
+    protected $hidden = ['created_at','updated_at'];
 
     public function suratTugas() {
     	return $this->hasOne('App\Model\SuratTugas');

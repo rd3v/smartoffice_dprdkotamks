@@ -9,7 +9,7 @@ class SuratTugas extends Model
   	protected $table = "tbl_surat_tugas";
 
     protected $fillable = [
-				'id','nomor','berdasarkan_surat','tanggal_surat_masuk','perihal',
+				'id','persuratan_id','nomor','berdasarkan_surat','tanggal_surat_masuk','perihal',
         'untuk_maksud1','untuk_maksud2','untuk_maksud3','untuk_maksud4','untuk_maksud5',
 				'tempat','tanggal_mulai','tanggal_akhir','tahun_anggaran','lambat_penyetoran',
         'tempat_dikeluarkan','tanggal_dikeluarkan','nama_yang_bertanda_tangan','jabatan','status'

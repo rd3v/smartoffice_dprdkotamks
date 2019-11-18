@@ -94,9 +94,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                        
-                            <button class="btn btn-success" style="float:right">+ TAMBAH LAPORAN</button>
-                            
+                                                    
                             <h3 class="box-title m-b-0">Data Perjalanan Dinas</h3>
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
