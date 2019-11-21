@@ -32,7 +32,7 @@ Route::group([
 
   Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
 
-  Route::resource('surat-tugas','SuratTugasController');
+  Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
   Route::resource('sppd','SppdController');
   
 });
@@ -43,11 +43,12 @@ Route::group([
 	'middleware' => 'App\Http\Middleware\KeuanganMiddleware'
 ], function() {
 
-	Route::get('laporan-perjalanan-dinas/{komisi}', 'LaporanPerjalananDinasController@lihatkomisi');
+	Route::get('laporan-perjalanan-dinas/validasilaporan', 'LaporanPerjalananDinasController@validasilaporan')->name('validasilaporan');
+	Route::get('laporan-perjalanan-dinas/ceklaporan/{id}', 'LaporanPerjalananDinasController@ceklaporan')->name('ceklaporan');
 
-	Route::get('laporan-perjalanan-dinas/{komisi}/validasi/{id}', 'LaporanPerjalananDinasController@validasilaporan');
+	Route::resource('laporan-perjalanan-dinas','LaporanPerjalananDinasController');
+	Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');	
 
-	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
 });
 
 # BENDAHARA

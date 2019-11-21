@@ -111,15 +111,9 @@
                     @endif
 
                     @if($user->level == "keuangan")
-                    <li class="menu">
-                        <a href="javascript:void(0)"> <span>LAPORAN PERJALANAN DINAS</span> <i class="fa fa-angle-left pull-right"></i> </a>
-                        <ul class="sub-menu">
-                            <li><a href="{{ url('keuangan/laporan-perjalanan-dinas/a') }}">Komisi A</a></li>
-                            <li><a href="{{ url('keuangan/laporan-perjalanan-dinas/b') }}">Komisi B</a></li>
-                            <li><a href="{{ url('keuangan/laporan-perjalanan-dinas/c') }}">Komisi C</a></li>
-                            <li><a href="{{ url('keuangan/laporan-perjalanan-dinas/d') }}">Komisi D</a></li>
-                        </ul>
-                    </li>
+                        <li class="menu">
+                            <a href="{{ url('keuangan/laporan-perjalanan-dinas') }}"> <span>LAPORAN PERJALANAN DINAS</span>  </a>
+                        </li>
                     @endif
 
 

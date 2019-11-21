@@ -53,21 +53,19 @@ class LaporanPerjalananDinasController extends MyController
     }
 
 
-    public function validasilaporan($komisi,$id) {
+    public function ceklaporan($id) {
+
+        $KelengkapanClass = "App\Model\Kelengkapan";
+        $Kelengkapan = new $KelengkapanClass;
+
         $user = Auth::user();
         $data = [
             "user" => $user,
-            "kode" => $komisi,
-            "komisi" => "KOMISI ".strtoupper($komisi),
+            "kelengkapan" => $Kelengkapan->with('tiketperjalanan')->where('id',$id)->first(),
+            "storage" => "storage/app/documents/"
         ];
 
-        if($user->level == "keuangan") {
-            $view = 'pages.laporan-perjalanan-dinas.keuangan.validasi';
-        } else if($user->level == "bendahara") {
-            $view = 'pages.laporan-perjalanan-dinas.bendahara.validasi';
-        }
-
-        return view($view,$data);
+        return view('pages.laporan-perjalanan-dinas.keuangan.cek',$data);
     }
 
 
@@ -129,42 +127,47 @@ class LaporanPerjalananDinasController extends MyController
            $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
         }
 
-      $dp = $Persuratan->with('SuratTugas')->where('untuk',$data['user']->komisi)->where('status','belum selesai')->orderBy('id','desc')->get();
-      
-      $Persuratan_DataSurat = [];
-      foreach ($dp as $value) {
-        if($value->suratTugas != null) {
-          array_push($Persuratan_DataSurat, (object) [
-            'persuratan_id' => $value->suratTugas->persuratan_id,
-            'id' => $value->suratTugas->id,
-            'nomor' => $value->suratTugas->nomor,
-            'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
-            'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
-            'perihal' => $value->suratTugas->perihal,
-            'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
-            'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
-            'kelengkapan_id' => $value->kelengkapan_id,
-            'status' => $value->status,
-          ]);
-        }
-      }
-
-      $data['user'] = Auth::user();
-      $data['SuratTugas'] = $Persuratan_DataSurat;
+        $data['user'] = Auth::user();
 
         switch ($data['user']->level) {
             case 'keuangan':
-                return view('pages.laporan-perjalanan-dinas.keuangan',$data);
+                $dp = $Persuratan->with('SuratTugas')->where('kelengkapan_id','!=',null)->where('status','belum selesai')->orderBy('id','desc')->get();
+            
+                $view = 'pages.laporan-perjalanan-dinas.keuangan.index';
                 break;
 
             case 'komisi':
-                return view('pages.laporan-perjalanan-dinas.komisi.index',$data);
+                $dp = $Persuratan->with('SuratTugas')->where('untuk',$data['user']->komisi)->where('status','belum selesai')->orderBy('id','desc')->get();
+
+                $view = 'pages.laporan-perjalanan-dinas.komisi.index';
                 break;
             
             default:
                 # code...
                 break;
         }
+
+          $Persuratan_DataSurat = [];
+          foreach ($dp as $value) {
+            if($value->suratTugas != null) {
+              array_push($Persuratan_DataSurat, (object) [
+                'persuratan_id' => $value->suratTugas->persuratan_id,
+                'id' => $value->suratTugas->id,
+                'nomor' => $value->suratTugas->nomor,
+                'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
+                'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
+                'perihal' => $value->suratTugas->perihal,
+                'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
+                'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
+                'kelengkapan_id' => $value->kelengkapan_id,
+                'status' => $value->status,
+              ]);
+            }
+          }
+
+        $data['SuratTugas'] = $Persuratan_DataSurat;      
+
+        return view($view,$data);
 
     }
 

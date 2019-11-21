@@ -1,7 +1,7 @@
 @extends('template.v1.temp')
 
 @section('title_bar')
- DATA LAPORAN PERJALANAN DINAS {{ $komisi }}
+ DATA LAPORAN PERJALANAN DINAS
 @endsection
 
 @section('css')
@@ -16,7 +16,7 @@
                 <!-- .row -->
                 <div class="row bg-title" style="background:url({{ asset('public/assets/v2/plugins/images/heading-title-bg.jpg') }}) no-repeat center center /cover;">
                     <div class="col-lg-12">
-                        <h4 class="page-title">Laporan Perjalanan Dinas {{ $komisi }}</h4>
+                        <h4 class="page-title">Laporan Perjalanan Dinas</h4>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xs-12">
                         <ol class="breadcrumb pull-left">
@@ -38,7 +38,7 @@
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
 
-                            <div class="row row-in">
+<!--                             <div class="row row-in">
                                 <div class="col-lg-4 col-sm-6 row-in-br" style="cursor: pointer;">
                                     <div class="col-in row">
                                         <div class="col-md-6 col-sm-6 col-xs-6"><h4 style="display: inline;font-weight: bold">JUMLAH PERJALANAN DINAS</h4>
@@ -85,59 +85,95 @@
                                     </div>
                                 </div>
                             </div>
-
+ -->
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
 
                 <div class="row">
-                                        <div class="col-sm-12">
+                    <div class="col-sm-12">
                         <div class="white-box">
                             <h3 class="box-title m-b-0">Data Perjalanan Dinas</h3>
-                            <p class="text-muted m-b-30">Data di input langsung dari {{ $komisi }}</p>
+@if (session('response'))
+    <div class="alert alert-danger">
+        {{ session('response') }}
+    </div>
+@endif
+                            <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
                                 <table id="example23" class="display nowrap" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Anggota</th>
-                                            <th>Status</th>
+                                            <th>Nomor</th>
+                                            <th>Surat</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Perihal</th>
+                                            <th>Lama Kegiatan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Anggota</th>
-                                            <th>Status</th>
+                                            <th>Nomor</th>
+                                            <th>Surat</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Perihal</th>
+                                            <th>Lama Kegiatan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
+                                       
+                                       @foreach($SuratTugas as $key => $value)
                                         <tr>
-                                            <td>1</td>
-                                            <td>{{ date('d-M-y') }}</td>
-                                            <td>Perjalanan 1</td>
-                                            <td>Nama, Nama, Nama</td>
-                                            <td><button class="btn btn-danger btn-sm">Ditolak</button></td>
-                                            <td><a href="{{ url('keuangan/laporan-perjalanan-dinas') }}/{{ $kode }}/validasi/22" class="btn btn-warning btn-sm"><i class="fa fa-check"></i> Validasi</a></td>
+                                          <td><?= ($key+1) ?></td>
+                                          <td><?= strtoupper($value->nomor) ?></td>
+                                          <td><?= ucwords($value->berdasarkan_surat) ?></td>
+                                          <?php
+                                              $str_tanggal_surat_masuk = explode('-',$value->tanggal_surat_masuk);
+                                           ?>
+                                          <td><?= $str_tanggal_surat_masuk[2].' / '.$str_tanggal_surat_masuk[1].' / '.$str_tanggal_surat_masuk[0] ?></td>
+                                          <td><?= ucwords($value->perihal) ?></td>
+                                          <?php
+                                            $date1 = date_create($value->tanggal_mulai);
+                                            $date2 = date_create($value->tanggal_akhir);
+                                            $days  = date_diff($date1,$date2);
+                                           ?>
+                                           <?php
+                                               $str_tanggal_mulai = explode('-',$value->tanggal_mulai);
+                                               $str_tanggal_akhir = explode('-',$value->tanggal_akhir);
+                                            ?>
+
+                                          <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
+                                          <td>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="seethis(<?= $value->id ?>)"><i class="fa fa-eye"></i> LIHAT SURAT TUGAS</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT SPD</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT RINCIAN AWAL</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT REKAPAN</button>
+                                            <hr style="margin-top:1em;margin-bottom: 1em">
+                                             
+                                                @if($value->status != 'batal')
+                                                    @if($value->kelengkapan_id != null)
+                                                        <a href="{{ route('ceklaporan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-check"></i> CEK KELENGKAPAN</a>
+                                                        <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ BUAT RINCIAN AKHIR</a>
+                                                    @endif
+                                                @endif
+                                          </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>{{ date('d-M-y') }}</td>
-                                            <td>Perjalanan 2</td>
-                                            <td>Nama, Nama, Nama</td>
-                                            <td><button class="btn btn-success btn-sm">Diterima</button></td>
-                                            <td><a href="{{ url('keuangan/laporan-perjalanan-dinas') }}/{{ $kode }}/validasi/22" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Lihat</a></td>
-                                        </tr>
+                                     @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -171,13 +207,9 @@
                 });
         });
         
-         (function() {
-
-            [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
-                new CBPFWTabs(el);
-            });
-
-        })();
+      function seethis(id) {
+        window.open("<?= url('keuangan/surat-tugas/printthis') ?>" + '/' + id);
+      }
 
 	</script>
 @endsection

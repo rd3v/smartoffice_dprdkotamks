@@ -15,7 +15,7 @@ class KeuanganMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if($request->user() && $request->user()->level != "keuangan") {
+        if ($request->user() && $request->user()->level != "keuangan") {
             return redirect()->route('403');
         }
         return $next($request);

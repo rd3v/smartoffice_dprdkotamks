@@ -34,6 +34,10 @@ class Persuratan extends Model
         return $this->hasOne('App\Model\Kelengkapan');
     }
 
+    public function rincian_akhir() {
+        return $this->hasOne('App\Model\RincianAkhir');
+    }
+
     public static function boot() {
       parent::boot();
       self::deleting(function($surat) {
