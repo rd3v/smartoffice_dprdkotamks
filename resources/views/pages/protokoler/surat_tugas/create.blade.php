@@ -253,7 +253,15 @@
             }
         });
 
-        if(mydata.menugaskan == null) {
+        if(mydata.untuk == "") {
+
+            Swal.fire({
+                title: 'Anda belum menentukan tujuan surat',
+                text: "",
+                type: 'warning'
+            });
+
+        } else if(mydata.menugaskan == null) {
 
             Swal.fire({
                 title: 'Anda belum memilih Anggota Dewan',
