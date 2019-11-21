@@ -178,7 +178,6 @@
                                                 <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ UPLOAD KELENGKAPAN</a>
                                             <?php } else { ?>
                                                 <a href="{{ route('upload-kelengkapan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-primary"><i class="fa fa-edit"></i>+ EDIT KELENGKAPAN</a>
-                                                <!-- <a href="#" onclick="preview()" name="button" class="btn btn-info"><i class="fa fa-eye"></i> LIHAT KELENGKAPAN</a> -->
                                                 <a href="{{ route('laporan-perjalanan-dinas.show',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-eye"></i> LIHAT KELENGKAPAN</a>
                                             <?php } 
                                              } ?>
@@ -241,11 +240,6 @@
       function notready() {
         Swal.fire("Belum ada surat","","info");
       }
-
-      function preview() {
-        Swal.fire("On Progress","","info");
-      }
-
 
 	</script>
 @endsection
