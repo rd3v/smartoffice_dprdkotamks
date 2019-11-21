@@ -5,8 +5,14 @@
 @endsection
 
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
 <link href="{{ asset('public/assets/v2') }}/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <style>
+    .swal2-popup {
+      font-size: 1.6rem !important;
+      }
+    </style>
 @endsection
 
 @section('konten')
@@ -38,7 +44,7 @@
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
 
-                            <div class="row row-in">
+<!--                             <div class="row row-in">
                                 <div class="col-lg-4 col-sm-6 row-in-br" style="cursor: pointer;">
                                     <div class="col-in row">
                                         <div class="col-md-6 col-sm-6 col-xs-6"><h4 style="display: inline;font-weight: bold">JUMLAH PERJALANAN DINAS</h4>
@@ -84,7 +90,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>
@@ -94,17 +100,24 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                                                    
+
                             <h3 class="box-title m-b-0">Data Perjalanan Dinas</h3>
+@if (session('response'))
+    <div class="alert alert-danger">
+        {{ session('response') }}
+    </div>
+@endif
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
                                 <table id="example23" class="display nowrap" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Anggota</th>
+                                            <th>Nomor</th>
+                                            <th>Surat</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Perihal</th>
+                                            <th>Lama Kegiatan</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -112,30 +125,68 @@
                                     <tfoot>
                                         <tr>
                                             <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Anggota</th>
+                                            <th>Nomor</th>
+                                            <th>Surat</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Perihal</th>
+                                            <th>Lama Kegiatan</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
+                                      <?php 
+                                       foreach($SuratTugas as $key => $value) { ?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>{{ date('d-M-y') }}</td>
-                                            <td>Perjalanan 1</td>
-                                            <td>Nama, Nama, Nama</td>
-                                            <td><button class="btn btn-danger btn-sm">Ditolak</button></td>
-                                            <td><a href="{{ url('komisi/laporan-perjalanan-dinas/12') }}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Edit</a></td>
+                                          <td><?= ($key+1) ?></td>
+                                          <td><?= strtoupper($value->nomor) ?></td>
+                                          <td><?= ucwords($value->berdasarkan_surat) ?></td>
+                                          <?php
+                                              $str_tanggal_surat_masuk = explode('-',$value->tanggal_surat_masuk);
+                                           ?>
+                                          <td><?= $str_tanggal_surat_masuk[2].' / '.$str_tanggal_surat_masuk[1].' / '.$str_tanggal_surat_masuk[0] ?></td>
+                                          <td><?= ucwords($value->perihal) ?></td>
+                                          <?php
+                                            $date1 = date_create($value->tanggal_mulai);
+                                            $date2 = date_create($value->tanggal_akhir);
+                                            $days  = date_diff($date1,$date2);
+                                           ?>
+                                           <?php
+                                               $str_tanggal_mulai = explode('-',$value->tanggal_mulai);
+                                               $str_tanggal_akhir = explode('-',$value->tanggal_akhir);
+                                            ?>
+
+                                          <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
+                                          <td>
+                                            <button class="btn btn-danger btn-md">Belum Diterima</button>
+                                          </td>
+                                          <td>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="seethis(<?= $value->id ?>)"><i class="fa fa-eye"></i> LIHAT SURAT TUGAS</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT SPD</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT RINCIAN</button>
+                                            
+                                            <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT REKAPAN</button>
+                                            <hr style="margin-top:1em;margin-bottom: 1em">
+                                            <?php 
+                                                if($value->status != 'batal') {
+                                                
+                                                if($value->kelengkapan_id == null) { ?>
+                                                <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ UPLOAD KELENGKAPAN</a>
+                                            <?php } else { ?>
+                                                <a href="{{ route('upload-kelengkapan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-primary"><i class="fa fa-edit"></i>+ EDIT KELENGKAPAN</a>
+                                                <!-- <a href="#" onclick="preview()" name="button" class="btn btn-info"><i class="fa fa-eye"></i> LIHAT KELENGKAPAN</a> -->
+                                                <a href="{{ route('laporan-perjalanan-dinas.show',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-eye"></i> LIHAT KELENGKAPAN</a>
+                                            <?php } 
+                                             } ?>
+
+                                          </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>{{ date('d-M-y') }}</td>
-                                            <td>Perjalanan 2</td>
-                                            <td>Nama, Nama, Nama</td>
-                                            <td><button class="btn btn-success btn-sm">Diterima</button></td>
-                                            <td><a href="" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Lihat</a></td>
-                                        </tr>
+                                     <?php } ?>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -147,6 +198,7 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
 <script src="{{ asset('public/assets/v2') }}/js/custom.min.js"></script>
 <script src="{{ asset('public/assets/v2') }}/js/cbpFWTabs.js"></script>
 <script src="{{ asset('public/assets/v2') }}/plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
@@ -179,6 +231,21 @@
             });
 
         })();
+
+      function seethis(id) {
+
+        window.open("<?= url('komisi/surat-tugas/printthis') ?>" + '/' + id);
+
+      }
+
+      function notready() {
+        Swal.fire("Belum ada surat","","info");
+      }
+
+      function preview() {
+        Swal.fire("On Progress","","info");
+      }
+
 
 	</script>
 @endsection

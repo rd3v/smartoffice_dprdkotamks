@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class TiketPerjalanan extends Model
 {
-    protected $table = 'tbl_tiket_perjalanan';
+    protected $table = 'tbl_tiketperjalanan';
 
     protected $fillable = [
-    	"dinas_id","file","status","keterangan"
+    	"kelengkapan_id","file"
     ];
 
     protected $hidden = [
     	"id","created_at","updated_at"
     ];
+
+    public function kelengkapan() {
+    	return $this->belongsTo('App\Model\Kelengkapan');
+    }
+
 }

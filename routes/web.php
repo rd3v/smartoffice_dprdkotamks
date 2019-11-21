@@ -68,7 +68,9 @@ Route::group([
 	'prefix' => 'komisi',
 	'middleware' => 'App\Http\Middleware\KomisiMiddleware'
 ], function() {
+	Route::get('laporan-perjalanan-dinas/upload-kelengkapan/{id}','LaporanPerjalananDinasController@uploadKelengkapan')->name('upload-kelengkapan');
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
+	Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
 });
 
 # JADWAL SIDANG

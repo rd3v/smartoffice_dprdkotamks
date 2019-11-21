@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\SuratTugasTembusan;
 use App\Model\Settings;
 use App\User;
 use Illuminate\Http\Request;
@@ -90,6 +89,7 @@ class SuratTugasController extends Controller
       }
 
       $rules = [
+          'untuk'                   => 'required',
           'nomor'                   => 'required|unique:tbl_surat_tugas',
           'berdasarkan_surat'       => 'required',
           'tanggal_surat_masuk'     => 'required',
@@ -150,6 +150,7 @@ class SuratTugasController extends Controller
             if($SuratTugasAnggotaDewan->save()) {
 
               $Persuratan->surat_tugas_id = $SuratTugas->id;
+              $Persuratan->untuk = $request->untuk;
               if($Persuratan->save()) {
                 
                 $ResultSuratTugas = $SuratTugas->where('persuratan_id',null)->update(['persuratan_id' => $Persuratan->id]);
