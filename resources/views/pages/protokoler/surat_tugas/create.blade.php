@@ -52,6 +52,19 @@
                     <p class="text-muted m-b-30 font-13"> </p>
                     <form class="form">
                         <div class="form-group row">
+                            <label for="untuk" class="col-2 col-form-label">Untuk</label>
+                            <div class="col-10">
+                                <select class="form-control" name="untuk" id="untuk" required>
+                                    <option value="">== Pilih ==</option>
+                                    <option value="a">Komisi A</option>
+                                    <option value="b">Komisi B</option>
+                                    <option value="c">Komisi C</option>
+                                    <option value="d">Komisi D</option>
+                                    <option value="staff">STAFF</option>
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="form-group row">
                             <label for="nomor" class="col-2 col-form-label">Nomor</label>
                             <div class="col-10">
                                 <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
@@ -220,6 +233,7 @@
         var tanggal_mulai = str_tanggal_mulai[2] + '-' + str_tanggal_mulai[0] + '-' + str_tanggal_mulai[1];
         var tanggal_akhir = str_tanggal_akhir[2] + '-' + str_tanggal_akhir[0] + '-' + str_tanggal_akhir[1];
 
+        mydata.untuk = $("select[name=untuk]").val();
         mydata.nomor = $("input[name=nomor]").val();
         mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
         mydata.tanggal_surat_masuk = $("input[name=tanggal_surat_masuk]").val();
