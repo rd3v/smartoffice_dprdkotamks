@@ -166,7 +166,7 @@
 
 
     </div>
-
+    <script src="{{ asset('public/assets/v2') }}/js/connection.js"></script>
     <!-- jQuery -->
     <script src="{{ asset('public/assets/v2') }}/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
