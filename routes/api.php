@@ -18,15 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('getupdates', function() {
+Route::post('bot/getupdates', function() {
     $updates = Telegram::getUpdates();
-    return (json_encode($updates));
+    return response()->json($updates);
 });
 
-Route::post('sendmessage', function() {
+Route::post('bot/ping', function() {
     Telegram::sendMessage([
         'chat_id' => '421428311',
-        'text' => 'I LOVE SERLINA SO MUCH'
+        'text' => 'I\'M HERE BOSS'
     ]);
     return;
 });
