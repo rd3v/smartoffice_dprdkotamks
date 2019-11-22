@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Auth;
-use Telegram;
+use Telegram as Telegram;
 
 class LoginController extends Controller
 {
@@ -62,7 +62,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $name = Auth::user()->name;
-            Telegram::sendMessage([
+            \Telegram::sendMessage([
                 'chat_id' => '421428311',
                 'text' => 'User '.strtoupper($name).' is Logged In'
             ]);
