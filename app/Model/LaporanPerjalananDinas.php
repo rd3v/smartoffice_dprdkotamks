@@ -17,7 +17,7 @@ class LaporanPerjalananDinas extends Model
     	"id","created_at","updated_at"
     ];
 
-    public function sppd() {
+    public function spd() {
     	return $this->hasMany('App\Sppd');
     }
 

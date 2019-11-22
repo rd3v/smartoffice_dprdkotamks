@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 
-class SppdController extends Controller
+class SpdController extends Controller
 {
 
     private $data = [];
@@ -21,9 +21,10 @@ class SppdController extends Controller
      */
     public function index()
     {
-        $this->data['user'] = Auth::user();
-        $this->data['users'] = User::where('level','<>','master')->get();
-        return view('pages.sppd.protokoler.index',$this->data);
+        return redirect()->back();
+        // $this->data['user'] = Auth::user();
+        // $this->data['users'] = User::where('level','<>','master')->get();
+        // return view('pages.spd.protokoler.index',$this->data);
     }
 
     /**
@@ -33,7 +34,7 @@ class SppdController extends Controller
      */
     public function create()
     {
-        return view('pages.sppd.protokoler.create');
+        return view('pages.spd.create');
     }
 
     /**

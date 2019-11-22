@@ -18,8 +18,8 @@ class Persuratan extends Model
     	return $this->hasOne('App\Model\SuratTugas');
     }
 
-    public function sppd() {
-
+    public function spd() {
+        return $this->hasOne('App\Model\Spd');
     }
 
     public function rincian() {

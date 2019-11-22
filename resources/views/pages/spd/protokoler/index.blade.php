@@ -37,7 +37,7 @@
                     <div class="col-sm-12">
                         <div class="white-box">
                         
-                            <a href="{{ route('sppd.create') }}" class="btn btn-success" style="float:right"><i class="fa fa-file"></i>+ BUAT SPPD</a>
+                            <a href="{{ url('sppd.create') }}" class="btn btn-success" style="float:right"><i class="fa fa-file"></i>+ BUAT SPPD</a>
                             
                             <h3 class="box-title m-b-0">Data User</h3>
                             <p class="text-muted m-b-30"></p>

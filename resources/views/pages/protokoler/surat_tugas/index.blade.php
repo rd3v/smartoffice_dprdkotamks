@@ -95,7 +95,7 @@
                                             <button type="button" name="button" class="btn btn-primary" onclick="printthis(<?= $value->id ?>)"><i class="fa fa-print"></i> PRINT</button>
 
                                             @if($value->status != 'batal')
-                                            <button type="button" name="button" class="btn btn-info buatspd" onclick="createspd()"><i class="fa fa-file"></i>+ BUAT SPD</button>
+                                            <a href="{{ url('protokoler/spd/create') }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT SPD</a>
 
                                             <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
                                             @endif
@@ -224,14 +224,6 @@
         var w = window.open("<?= url('protokoler/surat-tugas/printthis') ?>" + '/' + id);
         w.print();
 
-      }
-
-      function createspd() {
-        Swal.fire({
-          title:"Dokumen SPD sedang dalam pengerjaan",
-          text:"",
-          type:"info"
-        });
       }
 
     </script>

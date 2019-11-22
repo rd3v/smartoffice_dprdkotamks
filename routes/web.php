@@ -33,7 +33,7 @@ Route::group([
   Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
 
   Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
-  Route::resource('sppd','SppdController');
+  Route::resource('spd','SpdController');
   
 });
 
