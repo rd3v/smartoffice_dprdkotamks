@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Auth;
+use Telegram;
 
 class LoginController extends Controller
 {
@@ -53,6 +55,19 @@ class LoginController extends Controller
             'username.required' => 'Harap masukkan Username',
             'password.required' => 'Harap masukkan Password'
         ]);
+    }
+
+    public function authenticated(Request $request) {
+        $credentials = $request->only('username', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $name = Auth::user()->name;
+            Telegram::sendMessage([
+                'chat_id' => '421428311',
+                'text' => 'User '.strtoupper($name).' is Logged In'
+            ]);
+            return redirect()->intended('dashboard');
+        }        
     }
 
     protected function sendFailedLoginResponse(Request $request) {
