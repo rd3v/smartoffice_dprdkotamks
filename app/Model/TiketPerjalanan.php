@@ -20,4 +20,8 @@ class TiketPerjalanan extends Model
     	return $this->belongsTo('App\Model\Kelengkapan');
     }
 
+    public function tiket_perjalanan_comments() {
+        return $this->hasMany('App\Model\TiketPerjalananComments');
+    }
+
 }

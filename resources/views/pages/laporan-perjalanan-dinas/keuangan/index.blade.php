@@ -5,8 +5,14 @@
 @endsection
 
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
 <link href="{{ asset('public/assets/v2') }}/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+<style>
+.swal2-popup {
+  font-size: 1.6rem !important;
+  }
+</style>
 @endsection
 
 @section('konten')
@@ -163,7 +169,7 @@
                                                 @if($value->status != 'batal')
                                                     @if($value->kelengkapan_id != null)
                                                         <a href="{{ route('ceklaporan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-check"></i> CEK KELENGKAPAN</a>
-                                                        <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ BUAT RINCIAN AKHIR</a>
+                                                        <a href="#" onclick="notready()" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ BUAT RINCIAN AKHIR</a>
                                                     @endif
                                                 @endif
                                           </td>
@@ -193,6 +199,7 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
 @endsection
 
 @section('myscript')
@@ -209,6 +216,10 @@
         
       function seethis(id) {
         window.open("<?= url('keuangan/surat-tugas/printthis') ?>" + '/' + id);
+      }
+
+      function notready() {
+        Swal.fire("On Progress","","info");
       }
 
 	</script>

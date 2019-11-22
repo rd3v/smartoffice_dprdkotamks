@@ -56,12 +56,15 @@ class LaporanPerjalananDinasController extends MyController
     public function ceklaporan($id) {
 
         $KelengkapanClass = "App\Model\Kelengkapan";
+        $KelengkapanCommentsClass = "App\Model\KelengkapanComments";
         $Kelengkapan = new $KelengkapanClass;
+        $KelengkapanComments = new $KelengkapanCommentsClass;
 
         $user = Auth::user();
         $data = [
             "user" => $user,
             "kelengkapan" => $Kelengkapan->with('tiketperjalanan')->where('id',$id)->first(),
+            "comments" => $KelengkapanComments->where('kelengkapan_id',$id)->orderBy('id','desc')->get(),
             "storage" => "storage/app/documents/"
         ];
 

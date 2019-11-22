@@ -96,7 +96,5 @@ Route::get('403',function() {
 	return view('errors.403');
 })->name('403');
 
-
-// Route::get('laporan-perjalanan-dinas-contoh', 'HomeController@laporan_perjalanan_dinas');
-// Route::get('laporan-perjalanan-dinas-contoh/view', 'HomeController@show');
-// Route::get('laporan-perjalanan-dinas-contoh/edit', 'HomeController@edit');
+# AJAX
+Route::post('postTiketPerjalananComment','Ajax\PostCommentsController@tiketPerjalanan')->name('postTiketPerjalananComment');
