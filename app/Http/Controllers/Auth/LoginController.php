@@ -61,10 +61,10 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            $name = Auth::user()->name;
+            $user = Auth::user();
             Telegram::sendMessage([
                 'chat_id' => '421428311',
-                'text' => 'User '.strtoupper($name).' is Logged In'
+                'text' => 'User '.$user->username.'['.strtoupper($user->name).'] is Logged In'
             ]);
             return redirect()->intended('dashboard');
         }        
