@@ -163,6 +163,7 @@ class LaporanPerjalananDinasController extends MyController
                 'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
                 'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
                 'kelengkapan_id' => $value->kelengkapan_id,
+                'rincianakhir_id' => $value->rincianakhir_id,
                 'status' => $value->status,
               ]);
             }
