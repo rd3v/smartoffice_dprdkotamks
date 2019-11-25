@@ -17,6 +17,10 @@ class SuratTugasAnggotaDewan extends Model
   				'created_at','updated_at'
       ];
 
+      public function surat_tugas() {
+        return $this->belongsTo('App\Model\SuratTugas');
+      }
+
   		public function anggota_dewan() {
   				return $this->belongsTo('App\Model\AnggotaDewan');
   		}

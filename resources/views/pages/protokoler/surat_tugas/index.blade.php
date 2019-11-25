@@ -92,13 +92,26 @@
                                           <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
                                           <td>
                                             
-                                            <button type="button" name="button" class="btn btn-primary" onclick="printthis(<?= $value->id ?>)"><i class="fa fa-print"></i> PRINT</button>
-
+                                            <button type="button" name="button" class="btn btn-success" onclick="printthis(<?= $value->id ?>)"><i class="fa fa-print"></i> PRINT SURAT TUGAS</button>
+                                            <br>
                                             @if($value->status != 'batal')
-                                            <a href="{{ url('protokoler/spd/create') }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT SPD</a>
-
-                                            <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
+                                              @if($value->is_spd > 0)
+                                              
+                                                @foreach($value->spd as $spd)
+                                                  <br>
+                                                  <a href="{{ route('printthisspd',['id' => $spd->id]) }}" target="_blank" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->nama_pejabat }}</a>
+                                                @endforeach
+                                              
+                                              @endif
                                             @endif
+                                            <br>
+                                              <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT SPD</a>
+                                            <br><br>
+                                              <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT RINCIAN AWAL</a>
+                                            <br><br>
+                                              <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT REKAPAN</a>
+
+                                              <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
                                           </td>
                                         </tr>
                                      <?php } ?>
@@ -140,6 +153,7 @@
                   ],
                   responsive:true
               });
+               $("[data-toggle=popover]").popover({html:true});             
 
         });
 
@@ -220,10 +234,14 @@
       });
 
       function printthis(id) {
-
         var w = window.open("<?= url('protokoler/surat-tugas/printthis') ?>" + '/' + id);
         w.print();
+      }
 
+      function printspd(id) {
+        // var w = window.open("<?= url('protokoler/surat-tugas/printthis') ?>" + '/' + id);
+        // w.print();
+        Swal.fire("On Progress","","info");
       }
 
     </script>

@@ -27,6 +27,18 @@ class SuratTugas extends Model
       return $this->belongsTo('App\Model\Persuratan');  
     }
 
+    public function surat_tugas_anggota_dewan() {
+      return $this->hasMany('App\Model\SuratTugasAnggotaDewan');  
+    }
+
+    public function anggota_dewan() {
+      return $this->belongsTo('App\Model\AnggotaDewan');  
+    }
+
+    public function spd() {
+      return $this->hasMany('App\Model\Spd');  
+    }
+
     public function getAll() {
       return self::all();
     }

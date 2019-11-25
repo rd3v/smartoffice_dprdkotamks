@@ -31,13 +31,19 @@ class SuratTugasController extends Controller
         $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
       }
       
-      $dp = $Persuratan->with('SuratTugas')->orderBy('id','desc')->get();
+      $dp = $Persuratan->with('SuratTugas','spd')->orderBy('id','desc')->get();
+
       $Persuratan_DataSurat = [];
       foreach ($dp as $value) {
         if($value->suratTugas != null) {
           array_push($Persuratan_DataSurat, (object) [
             'persuratan_id' => $value->suratTugas->persuratan_id,
             'id' => $value->suratTugas->id,
+            'is_spd' => count($value->spd),
+            'rincian_id' => $value->rincian_id,
+            'rekapan_id' => $value->rekapan_id,
+            'kelengkapan_id' => $value->kelengkapan_id,
+            'rincianakhir_id' => $value->rincianakhir_id,
             'nomor' => $value->suratTugas->nomor,
             'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
             'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
@@ -45,6 +51,7 @@ class SuratTugasController extends Controller
             'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
             'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
             'status' => $value->status,
+            'spd' => $value->spd
           ]);
         }
       }

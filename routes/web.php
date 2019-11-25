@@ -25,12 +25,17 @@ Route::group([
 ], function() {
 
   Route::get('surat-tugas/updatestatusverified','SuratTugasController@verified')->name('updateStatusSuratTugasVerified');
+  Route::get('spd/updatestatusverified','SpdController@verified')->name('updateStatusSuratPerjalananDinasVerified');
   Route::get('surat-tugas/print','SuratTugasController@print')->name('printSuratTugas');
+  Route::get('spd/print','SpdController@print')->name('printSPD');
   Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
+  Route::get('spd/printthis/{id}','SpdController@printthis')->name('printthisspd');
   Route::post('checkNomorSuratTugas','SuratTugasController@checkNomorSuratTugas');
+  Route::post('checkNomorSPD','SpdController@checkNomorSPD');
   Route::get('updateStatusBatal/{id}','SuratTugasController@updateStatusBatal')->name('updatestatusBatal');
 
   Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
+  Route::get('spd/buat/{persuratan_id}','SpdController@buatspd')->name('buatspd');
 
   Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
   Route::resource('spd','SpdController');
