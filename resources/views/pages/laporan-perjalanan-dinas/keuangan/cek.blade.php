@@ -45,19 +45,57 @@
                         <div class="white-box">
                             <h3 class="box-title m-b-0">DATA KELENGKAPAN</h3>
                             <p class="text-muted m-b-30 font-13"> </p>
-                            <h3><u>Tiket Perjalanan</u></h3>
-                            @foreach($kelengkapan->tiketperjalanan as $key => $tiketperjalanan)
-                                @php
-                                    $name = explode(".",$tiketperjalanan->file);
-                                @endphp
-                                <div class="form-group row">
-                                    <label style="font-size:1.5em" class="col-2 col-form-label">File {{ ($key+1) }} :</label>
-                                    <div class="col-2">
-                                        <a class="btn btn-info" href="{{ asset($storage.$tiketperjalanan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                            
+                            @if(count($kelengkapan->tiket_perjalanan)>0)
+                                <h3><u>Tiket Perjalanan</u></h3>
+                                @foreach($kelengkapan->tiket_perjalanan as $key => $tiketperjalanan)
+                                    @php
+                                        $name = explode(".",$tiketperjalanan->file);
+                                    @endphp
+                                    <div class="form-group row">
+                                        <label style="font-size:1.5em" class="col-2 col-form-label">File {{ ($key+1) }} :</label>
+                                        <div class="col-2">
+                                            <a class="btn btn-info" href="{{ asset($storage_documents.'tiket_perjalanan/'.$tiketperjalanan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
-                
+                                @endforeach
+                            @endif
+
+                            <br>
+
+                            @if(count($kelengkapan->invoice_hotel)>0)
+                                <h3><u>Invoice Hotel</u></h3>
+                                @foreach($kelengkapan->invoice_hotel as $key => $invoice_hotel)
+                                    @php
+                                        $name = explode(".",$invoice_hotel->file);
+                                    @endphp
+                                    <div class="form-group row">
+                                        <label style="font-size:1.5em" class="col-2 col-form-label">File {{ ($key+1) }} :</label>
+                                        <div class="col-2">
+                                            <a class="btn btn-info" href="{{ asset($storage_documents.'invoice_hotel/'.$invoice_hotel->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            
+                            @if(count($kelengkapan->foto_kegiatan)>0)
+                                <h3><u>Foto Kegiatan</u></h3>
+                                @foreach($kelengkapan->foto_kegiatan as $key => $foto_kegiatan)
+                                    @php
+                                        $name = explode(".",$foto_kegiatan->file);
+                                    @endphp
+                                    <div class="form-group row">
+                                        <label style="font-size:1.5em" class="col-2 col-form-label">File {{ ($key+1) }} :</label>
+                                        <div class="col-2">
+                                            <a class="btn btn-info" href="{{ asset($storage_documents.'foto_kegiatan/'.$foto_kegiatan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            
+
+                            <br>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <h2>Koreksi</h2>
@@ -91,9 +129,9 @@
                     </div>
                 </div>
 
-                            <label for="{{ $name[0] }}">Kirim Koreksi</label>
+                            <label for="koreksi">Kirim Koreksi</label>
                             <div class="has-error">
-                                <textarea name="koreksi" cols="30" rows="10" class="form-control" style="margin-bottom:0.5em"></textarea>
+                                <textarea name="koreksi" id="koreksi" cols="30" rows="10" class="form-control" style="margin-bottom:0.5em"></textarea>
                                 <button class="btn btn-danger" id="koreksi" data-id="{{ $kelengkapan->id }}"><i class="fa fa-paper-plane"></i> Kirim</button> | <a href="{{ url('keuangan/laporan-perjalanan-dinas') }}" class="btn btn-default"><b>Kembali</b></a>
                             </div>                           
 

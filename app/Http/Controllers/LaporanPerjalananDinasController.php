@@ -63,9 +63,9 @@ class LaporanPerjalananDinasController extends MyController
         $user = Auth::user();
         $data = [
             "user" => $user,
-            "kelengkapan" => $Kelengkapan->with('tiketperjalanan')->where('id',$id)->first(),
+            "kelengkapan" => $Kelengkapan->with('tiket_perjalanan','invoice_hotel','foto_kegiatan')->where('id',$id)->first(),
             "comments" => $KelengkapanComments->where('kelengkapan_id',$id)->orderBy('id','desc')->get(),
-            "storage" => "storage/app/documents/"
+            "storage_documents" => "storage/app/documents/"
         ];
 
         return view('pages.laporan-perjalanan-dinas.keuangan.cek',$data);
@@ -116,14 +116,43 @@ class LaporanPerjalananDinasController extends MyController
 
     }
 
+    public function editKelengkapan($persuratan_id) {
+        $user = Auth::user();
+
+        $PersuratanClass = "App\Model\Persuratan";
+        $KelengkapanClass = "App\Model\Kelengkapan";
+
+        $Persuratan = new $PersuratanClass;
+        $Kelengkapan = new $KelengkapanClass;
+
+        $getKelengkapan = $Kelengkapan->with('tiket_perjalanan','invoice_hotel','foto_kegiatan')->where('persuratan_id',$persuratan_id)->first();
+
+        $data = [
+            "user" => $user,
+            "id" => $getKelengkapan->id,
+            "komisi" => "KOMISI ".strtoupper($user->komisi),
+            "persuratan" => $Persuratan->with(['SuratTugas','kelengkapan' => function($query) {
+                $query->with('tiket_perjalanan','invoice_hotel','foto_kegiatan')->first();
+            }])->where('id',$persuratan_id)->first(),
+            "kelengkapan" => $Kelengkapan->with('tiket_perjalanan','invoice_hotel','foto_kegiatan')->where('id',$getKelengkapan->id)->first(),
+            "storage_tiketperjalanan" => "storage/app/documents/tiket_perjalanan/",
+            "storage_invoicehotel" => "storage/app/documents/invoice_hotel/",
+            "storage_fotokegiatan" => "storage/app/documents/foto_kegiatan/"            
+        ];
+
+        return view('pages.laporan-perjalanan-dinas.komisi.edit_kelengkapan',$data);
+    }
+
     public function index()
     {
         $data['user'] = Auth::user();
   
         $SuratTugasClass = "App\Model\SuratTugas";
         $PersuratanClass = "App\Model\Persuratan";
+        $KelengkapanClass = "App\Model\Kelengkapan";
         $SuratTugas = new $SuratTugasClass;
         $Persuratan = new $PersuratanClass;
+        $Kelengkapan = new $KelengkapanClass;
 
         $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
         if($SuratTugasDelete) {
@@ -205,13 +234,18 @@ class LaporanPerjalananDinasController extends MyController
     {
       $rules = [
           'id'                  => 'required',
-          'tiket_perjalanan.*'    => 'required|mimes:jpeg,png,pdf|max:5000',
+          'tiket_perjalanan.*'  => 'mimes:jpeg,png,pdf|max:5000',
+          'invoice_hotel.*'     => 'mimes:jpeg,png,pdf|max:5000',
+          'foto_kegiatan.*'     => 'mimes:jpeg,png,pdf|max:5000',
       ];
 
       $rules_message = [
-          'tiket_perjalanan.*.required'  => 'Anda belum mengupload Tiket Perjalanan',     
           'tiket_perjalanan.*.mimes'  => 'Format Tiket Perjalanan yang diterima hanya jpg,png, dan pdf',     
-          'tiket_perjalanan.*.max'  => 'Maksimum ukuran file sebesar 5 MB',     
+          'tiket_perjalanan.*.max'  => 'Maksimum ukuran file Tiket Perjalanan sebesar 5 MB',
+          'invoice_hotel.*.mimes'  => 'Format Invoice Hotel yang diterima hanya jpg,png, dan pdf',     
+          'invoice_hotel.*.max'  => 'Maksimum ukuran file Invoice Hotel sebesar 5 MB',     
+          'foto_kegiatan.*.mimes'  => 'Format Foto Kegiatan yang diterima hanya jpg,png, dan pdf',     
+          'foto_kegiatan.*.max'  => 'Maksimum ukuran file Foto Kegiatan sebesar 5 MB',     
       ];
 
       $validator = Validator::make($request->all(),$rules,$rules_message);
@@ -221,36 +255,84 @@ class LaporanPerjalananDinasController extends MyController
       } 
         
         $TiketPerjalananClass = "App\Model\TiketPerjalanan";
+        $InvoiceHotelClass = "App\Model\InvoiceHotel";
+        $FotoKegiatanClass = "App\Model\FotoKegiatan";
         $KelengkapanClass = "App\Model\Kelengkapan";  
         $PersuratanClass = "App\Model\Persuratan";  
         
         $TiketPerjalanan = new $TiketPerjalananClass;
+        $InvoiceHotel = new $InvoiceHotelClass;
+        $FotoKegiatan = new $FotoKegiatanClass;
         $Kelengkapan = new $KelengkapanClass;
         $Persuratan = new $PersuratanClass;
 
         $Kelengkapan_id = $request->id;
 
         $tiket_perjalanan = $request->file('tiket_perjalanan');
+        $invoice_hotel = $request->file('invoice_hotel');
+        $foto_kegiatan = $request->file('foto_kegiatan');
         
-        $tiket_data = [];
-        foreach ($tiket_perjalanan as $tiket) {
-            $tiket_store = $tiket->store('documents');
-            $tiket_nama = explode("/", $tiket_store);
-            $tiket_data[] = [
-                'kelengkapan_id' => $Kelengkapan_id,
-                'file' => $tiket_nama[1]
-            ];
+        if($tiket_perjalanan != null) {
+
+            $tiket_data = [];
+            foreach ($tiket_perjalanan as $tiket) {
+                $tiket_store = $tiket->store('documents/tiket_perjalanan');
+                $tiket_nama = explode("/", $tiket_store);
+                $tiket_data[] = [
+                    'kelengkapan_id' => $Kelengkapan_id,
+                    'file' => $tiket_nama[2]
+                ];
+            }
+
+            $TiketPerjalananQuery = $TiketPerjalanan->insert($tiket_data);        
+
+            if($TiketPerjalananQuery!=1) {
+                return redirect()->back()->withErrors("Tidak dapat menambah data Tiket Perjalanan");
+            }
+
         }
 
-        $TiketPerjalananQuery = $TiketPerjalanan->insert($tiket_data);        
+        if($invoice_hotel != null) {
 
-        if($TiketPerjalananQuery==1) {
-            return redirect()->route('laporan-perjalanan-dinas.show',['id' => $Kelengkapan_id]);
-        } else {
-            $response = "Tidak dapat menambah data Tiket Perjalanan";
+            $invoice_data = [];
+            foreach ($invoice_hotel as $hotel) {
+                $invoice_store = $hotel->store('documents/invoice_hotel');
+                $invoice_nama = explode("/", $invoice_store);
+                $invoice_data[] = [
+                    'kelengkapan_id' => $Kelengkapan_id,
+                    'file' => $invoice_nama[2]
+                ];
+            }
+
+            $InvoiceHotelQuery = $InvoiceHotel->insert($invoice_data);        
+
+            if($InvoiceHotelQuery!=1) {
+                return redirect()->back()->withErrors("Tidak dapat menambah data Invoice Hotel");
+            }
+
         }
 
-        return redirect()->back()->withErrors($response);
+        if($foto_kegiatan != null) {
+
+            $fk_data = [];
+            foreach ($foto_kegiatan as $fk) {
+                $fk_store = $fk->store('documents/foto_kegiatan');
+                $fk_nama = explode("/", $fk_store);
+                $fk_data[] = [
+                    'kelengkapan_id' => $Kelengkapan_id,
+                    'file' => $fk_nama[2]
+                ];
+            }
+
+            $FotoKegiatanQuery = $FotoKegiatan->insert($fk_data);        
+
+            if($FotoKegiatanQuery!=1) {
+                return redirect()->back()->withErrors("Tidak dapat menambah data Foto Kegiatan");
+            }
+
+        }
+
+        return redirect()->route('laporan-perjalanan-dinas.show',['id' => $Kelengkapan_id]);
     }
 
     /**
@@ -267,11 +349,13 @@ class LaporanPerjalananDinasController extends MyController
         $user = Auth::user();
         $data = [
             "user" => $user,
-            "kelengkapan" => $Kelengkapan->with('tiketperjalanan')->where('id',$id)->first(),
-            "storage" => "storage/app/documents/"
+            "kelengkapan" => $Kelengkapan->with('tiket_perjalanan','invoice_hotel','foto_kegiatan')->where('id',$id)->first(),
+            "storage_tiketperjalanan" => "storage/app/documents/tiket_perjalanan/",
+            "storage_invoicehotel" => "storage/app/documents/invoice_hotel/",
+            "storage_fotokegiatan" => "storage/app/documents/foto_kegiatan/"
         ];
 
-        // dd($data['kelengkapan']->tiketperjalanan[0]->file);
+        // dd($data['kelengkapan']->tiket_perjalanan[0]->file);
         // dd(pathinfo(storage_path().'/documents/huSBWeySuAthoxEeItj9OwNX4CCFqlVyEC6CRBiW.pdf', PATHINFO_EXTENSION));
         // return Storage::download('documents/'.'huSBWeySuAthoxEeItj9OwNX4CCFqlVyEC6CRBiW.pdf');
 
@@ -307,8 +391,71 @@ class LaporanPerjalananDinasController extends MyController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+
+        $TiketPerjalananClass = "App\Model\TiketPerjalanan";
+        $InvoiceHotelClass = "App\Model\InvoiceHotel";
+        $FotoKegiatanClass = "App\Model\FotoKegiatan";
+
+        $TiketPerjalanan = new $TiketPerjalananClass;
+        $InvoiceHotel = new $InvoiceHotelClass;
+        $FotoKegiatan = new $FotoKegiatanClass;
+
+        $response = null;
+
+        switch ($request->kategori) {
+            case 'tiket_perjalanan':
+                
+                $myFile = $this->getDocumentPath('tiket_perjalanan').$request->nama;
+                $delete = unlink($myFile);
+
+                if($delete) {
+                    $delete = $TiketPerjalanan->where('id',$request->id)->delete();
+                    if($delete) {
+                        $response = $this->sweetResponse(true,"data");
+                    } else {
+                        $response = $this->sweetResponse(false,"data");
+                    }
+
+                } else {
+                    $response = $this->sweetResponse(false,"file");
+                }
+
+                break;
+            case 'invoice_hotel':
+                $myFile = $this->getDocumentPath('invoice_hotel').$request->nama;
+                $delete = unlink($myFile);
+
+                if($delete) {
+                    $delete = $InvoiceHotel->where('id',$request->id)->delete();
+                    if($delete != false) $response = $this->sweetResponse(true,"data"); else $response = $this->sweetResponse(false,"data"); 
+                } else {
+                    $response = $this->sweetResponse(false,"file");
+                }
+
+                break;
+            case 'foto_kegiatan':
+                $myFile = $this->getDocumentPath('foto_kegiatan').$request->nama;
+                $delete = unlink($myFile);
+                
+                if($delete) {
+                    $delete = $FotoKegiatan->where('id',$request->id)->delete();
+                    if($delete != false) $response = $this->sweetResponse(true,"data"); else $response = $this->sweetResponse(false,"data"); 
+                } else {
+                    $response = $this->sweetResponse(false,"file");
+                }
+                break;
+        }
+
+        return response()->json($response);
     }
+
+    public function getComments(Request $request) {
+        $CommentsClass = "App\Model\KelengkapanComments";
+        $Comments = new $CommentsClass;
+        $response = $Comments->where('kelengkapan_id',$request->kelengkapan_id)->get();
+        return response()->json($response);
+    }
+
 }

@@ -75,8 +75,12 @@ Route::group([
 	'middleware' => 'App\Http\Middleware\KomisiMiddleware'
 ], function() {
 	Route::get('laporan-perjalanan-dinas/upload-kelengkapan/{id}','LaporanPerjalananDinasController@uploadKelengkapan')->name('upload-kelengkapan');
+	Route::get('laporan-perjalanan-dinas/edit-kelengkapan/{kelengkapan_id}','LaporanPerjalananDinasController@editKelengkapan')->name('edit-kelengkapan');
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
 	Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
+
+	Route::post('laporan/upload/{kelengkapan_id}','LaporanPerjalananDinasController@upload');;
+	Route::post('getcomments','LaporanPerjalananDinasController@getComments')->name('getcomments');
 });
 
 # JADWAL SIDANG

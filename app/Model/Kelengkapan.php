@@ -20,7 +20,21 @@ class Kelengkapan extends Model
     	return $this->belongsTo('App\Model\Persuratan');
     }
 
-    public function tiketperjalanan() {
+    public function tiket_perjalanan() {
     	return $this->hasMany('App\Model\TiketPerjalanan');
     }
+
+    public function invoice_hotel() {
+        return $this->hasMany('App\Model\InvoiceHotel');
+    }
+
+    public function foto_kegiatan() {
+        return $this->hasMany('App\Model\FotoKegiatan');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Model\KelengkapanComments');
+    }
+
+    
 }

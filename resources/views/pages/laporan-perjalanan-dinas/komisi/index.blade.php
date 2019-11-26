@@ -39,64 +39,6 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 
-                <!--row -->
-                <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12">
-                        <div class="white-box">
-
-<!--                             <div class="row row-in">
-                                <div class="col-lg-4 col-sm-6 row-in-br" style="cursor: pointer;">
-                                    <div class="col-in row">
-                                        <div class="col-md-6 col-sm-6 col-xs-6"><h4 style="display: inline;font-weight: bold">JUMLAH PERJALANAN DINAS</h4>
-                                            <h5 class="text-muted vb"></h5>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15 text-danger">30</h3>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-6 row-in-br  b-r-none" style="cursor: pointer;">
-                                    <div class="col-in row">
-                                        <div class="col-md-6 col-sm-6 col-xs-6"><h4 style="display: inline;font-weight: bold">PERJALANAN DINAS YANG SELESAI</h4>
-                                            <h5 class="text-muted vb"></h5>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15 text-megna">22</h3>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-6 row-in-br" style="cursor: pointer;">
-                                    <div class="col-in row">
-                                        <div class="col-md-6 col-sm-6 col-xs-6"><h4 style="display: inline;font-weight: bold">SISA PERJALANAN DINAS</h4>
-                                            <h5 class="text-muted vb"></h5>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6">
-                                            <h3 class="counter text-right m-t-15 text-primary">8</h3>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
@@ -171,16 +113,16 @@
                                             
                                             <button type="button" name="button" class="btn btn-success" onclick="notready()"><i class="fa fa-eye"></i> LIHAT REKAPAN</button>
                                             <hr style="margin-top:1em;margin-bottom: 1em">
-                                            <?php 
-                                                if($value->status != 'batal') {
                                                 
-                                                if($value->kelengkapan_id == null) { ?>
-                                                <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ UPLOAD KELENGKAPAN</a>
-                                            <?php } else { ?>
-                                                <a href="{{ route('upload-kelengkapan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-primary"><i class="fa fa-edit"></i>+ EDIT KELENGKAPAN</a>
+                                                <a href="{{ route('upload-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-primary"><i class="fa fa-file"></i>+ UPLOAD KELENGKAPAN</a>
+
+                                               <?php if($value->kelengkapan_id != null) { ?>
+                                                    <a href="{{ route('edit-kelengkapan',['id' => $value->persuratan_id]) }}" name="button" class="btn btn-danger"><i class="fa fa-trash"></i> HAPUS KELENGKAPAN</a>
+                                                <?php } ?>
+                                                
                                                 <a href="{{ route('laporan-perjalanan-dinas.show',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-eye"></i> LIHAT KELENGKAPAN</a>
-                                            <?php } 
-                                             } ?>
+                                                <br><br>
+                                                <button type="button" data-toggle="modal" data-target="#myModal" data-kelengkapan_id="{{ $value->kelengkapan_id }}" class="btn btn-warning btnkoreksi"><i class="fa fa-comment"></i> LIHAT KOREKSI KELENGKAPAN</button>
 
                                           </td>
                                         </tr>
@@ -194,6 +136,36 @@
                 </div>
 
         </div>
+
+                        <!-- modal content -->
+                            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-comment"></i> Koreksi Kelengkapan</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table">
+                                                <thead>
+                                                    <th>Tanggal</th>
+                                                    <th>Koreksi</th>
+                                                </thead>
+                                                <tbody id="koreksi">
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
 @endsection
 
 @section('js')
@@ -221,6 +193,44 @@
                         'copy', 'csv', 'excel', 'pdf', 'print'
                     ]
                 });
+
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+
+               $(".btnkoreksi").click(function() {
+                    var kelengkapan_id = $(this).data("kelengkapan_id");
+                    
+                    $.ajax({
+                        url:"{{ url('komisi/getcomments') }}",
+                        type:"post",
+                        data:{kelengkapan_id:kelengkapan_id},
+                        dataType:"json"
+                    }).done(function(res) {
+                        var html = "";
+                        html += "<tr>";
+                        if(res.length>0) {
+                            for (var i = res.length - 1; i >= 0; i--) {
+                                var timestamp = (res[i].created_at).toString();
+                                var tanggal = timestamp.split(" ");
+                                var new_tanggal = tanggal[0].split("-");
+
+                                html += "<td>" + new_tanggal[2]+"-"+new_tanggal[1]+"-"+new_tanggal[0] + " " + tanggal[1] + "</td>";
+                                html += "<td>" + res[i].comment + "</td>";
+                            }
+                        } else {
+                            html += "<td colspan='2' class='text-center'><h3>Tidak Koreksi</h3></td>";
+                        }
+
+                        html += "</tr>";
+                        $("tbody#koreksi").html(html);
+                    }).fail(function(res) {
+                        console.log(res);
+                    });
+
+               });
         });
         
          (function() {

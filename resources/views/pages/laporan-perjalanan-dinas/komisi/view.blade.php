@@ -39,16 +39,50 @@
                         <div class="white-box">
                             <h3 class="box-title m-b-0">DATA KELENGKAPAN</h3>
                             <p class="text-muted m-b-30 font-13"> </p>
-                        	<h3><u>Tiket Perjalanan</u></h3>
-                            @foreach($kelengkapan->tiketperjalanan as $key => $tiketperjalanan)
-                                <div class="form-group row">
-                                    <label for="example-text-input" class="col-2 col-form-label">File {{ ($key+1) }}</label>
-                                    <div class="col-10">
-                                        <a class="btn btn-info" href="{{ asset($storage.$tiketperjalanan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+
+                            @if(count($kelengkapan->tiket_perjalanan)>0)
+                            	<h3><u>Tiket Perjalanan</u></h3>
+                                @foreach($kelengkapan->tiket_perjalanan as $key => $tiketperjalanan)
+                                    <div class="form-group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">File {{ ($key+1) }}</label>
+                                        <div class="col-10">
+                                            <a class="btn btn-info" href="{{ asset($storage_tiketperjalanan.$tiketperjalanan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
                                     </div>
-                                </div>
-							@endforeach
+    							@endforeach
+                            @endif
+                            <br>
+
+                            @if(count($kelengkapan->invoice_hotel) > 0)
+                                <h3><u>Invoice Hotel</u></h3>
+                                @foreach($kelengkapan->invoice_hotel as $key => $invoice_hotel)
+                                    <div class="form-group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">File {{ ($key+1) }}</label>
+                                        <div class="col-10">
+                                            <a class="btn btn-info" href="{{ asset($storage_invoicehotel.$invoice_hotel->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
+                            <br>
                             
+                            @if(count($kelengkapan->foto_kegiatan)>0)
+
+                                <h3><u>Foto Kegiatan</u></h3>
+                                @foreach($kelengkapan->foto_kegiatan as $key => $foto_kegiatan)
+                                    <div class="form-group row">
+                                        <label for="example-text-input" class="col-2 col-form-label">File {{ ($key+1) }}</label>
+                                        <div class="col-10">
+                                            <a class="btn btn-info" href="{{ asset($storage_fotokegiatan.$foto_kegiatan->file) }}" target="_blank"><i class="fa fa-eye"></i> Lihat</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            @endif
+
+                            
+
                         </div>
                     </div>
                 </div>

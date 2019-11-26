@@ -56,17 +56,33 @@
                                         <input type="hidden" name="id" value="{{ $id }}">
                                         <div class="form-body">
 
+                                             <!-- Tiket Perjalanan -->
                                             <div class="col-sm-12 ol-md-12 col-xs-12">
                                                 <div class="white-box">
                                                     <h3 class="box-title">Tiket Perjalanan</h3>
                                                     <label for="tiket_perjalanan">Upload Tiket Perjalanan</label>
-                                                    <input type="file" name="tiket_perjalanan[]" id="tiket_perjalanan" class="dropify" value="{{ old('tiket_perjalanan') }}" required multiple/>
+                                                    <input type="file" name="tiket_perjalanan[]" id="tiket_perjalanan" class="dropify" value="{{ old('tiket_perjalanan') }}" multiple/>
                                                 </div>
                                             </div>
 
-                                             <!-- Tiket Perjalanan -->
                                              <!-- Invoice Hotel -->
+                                            <div class="col-sm-12 ol-md-12 col-xs-12">
+                                                <div class="white-box">
+                                                    <h3 class="box-title">Invoice Hotel</h3>
+                                                    <label for="invoice_hotel">Upload Invoice Hotel</label>
+                                                    <input type="file" name="invoice_hotel[]" id="invoice_hotel" class="dropify" value="{{ old('invoice_hotel') }}" multiple/>
+                                                </div>
+                                            </div>
+
                                              <!-- Foto Kegiatan -->
+                                            <div class="col-sm-12 ol-md-12 col-xs-12">
+                                                <div class="white-box">
+                                                    <h3 class="box-title">Foto Kegiatan</h3>
+                                                    <label for="foto_kegiatan">Upload Foto Kegiatan</label>
+                                                    <input type="file" name="foto_kegiatan[]" id="foto_kegiatan" class="dropify" value="{{ old('foto_kegiatan') }}" multiple/>
+                                                </div>
+                                            </div>
+
 
                                         </div>
                                         <div class="form-actions">

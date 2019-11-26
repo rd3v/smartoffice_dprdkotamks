@@ -9,15 +9,15 @@ class KelengkapanComments extends Model
     protected $table = 'tbl_kelengkapancomments';
 
     protected $fillable = [
-    	'kelengkapan_id','comment'
+    	'kelengkapan_id','comment','created_at'
     ];
 
     protected $hidden = [
-    	'id','created_at','updated_at'
+    	'id','updated_at'
     ];
 
-    public function tiket_perjalanan() {
-    	return $this->belongsTo('App\Model\TiketPerjalanan');
+    public function kelengkapan() {
+    	return $this->belongsTo('App\Model\Kelengkapan');
     }
 
 }

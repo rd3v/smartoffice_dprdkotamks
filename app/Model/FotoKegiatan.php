@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class FotoKegiatan extends Model
 {
-    protected $table = 'tbl_foto_kegiatan';
+    protected $table = 'tbl_fotokegiatan';
 
     protected $fillable = [
-    	"dinas_id","file","status","keterangan"
+    	"kelengkapan_id","file"
     ];
 
     protected $hidden = [
     	"id","created_at","updated_at"
     ];
+
+    public function kelengkapan() {
+    	return $this->belongsTo('App\Model\Kelengkapan');
+    }
 }

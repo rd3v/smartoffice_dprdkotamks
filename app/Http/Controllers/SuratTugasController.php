@@ -31,7 +31,7 @@ class SuratTugasController extends Controller
         $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
       }
       
-      $dp = $Persuratan->with('SuratTugas','spd')->orderBy('id','desc')->get();
+      $dp = $Persuratan->with('SuratTugas','spd')->where('status','!=','batal')->orderBy('id','desc')->get();
 
       $Persuratan_DataSurat = [];
       foreach ($dp as $value) {

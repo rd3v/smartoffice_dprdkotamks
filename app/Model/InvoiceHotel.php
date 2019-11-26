@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceHotel extends Model
 {
-    protected $table = 'tbl_invoice_hotel';
+    protected $table = 'tbl_invoicehotel';
 
     protected $fillable = [
-    	"dinas_id","file","status","keterangan"
+    	"kelengkapan_id","file"
     ];
 
     protected $hidden = [
     	"id","created_at","updated_at"
     ];
+
+    public function kelengkapan() {
+    	return $this->belongsTo('App\Model\Kelengkapan');
+    }
 }
