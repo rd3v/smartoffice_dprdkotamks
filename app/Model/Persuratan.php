@@ -9,7 +9,7 @@ class Persuratan extends Model
     protected $table = 'tbl_persuratan';
 
     protected $fillable = [
-    	'id','surat_tugas_id','rincian_id','rekapan_id','kelengkapan_id','rincianakhir_id'
+    	'id','surat_tugas_id','rincianawal_id','rekapan_id','kelengkapan_id','rincianakhir_id'
     ];
 
     protected $hidden = ['created_at','updated_at'];

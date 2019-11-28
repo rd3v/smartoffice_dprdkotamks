@@ -107,7 +107,7 @@
                                             <br>
                                               <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT SPD</a>
                                             <br><br>
-                                              <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT RINCIAN AWAL</a>
+                                              <a href="{{ url('protokoler/rincian-awal/create/'.$value->persuratan_id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT RINCIAN AWAL</a>
                                             <br><br>
                                               <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT REKAPAN</a>
 
