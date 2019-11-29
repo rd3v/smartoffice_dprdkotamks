@@ -19,6 +19,7 @@
         td {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
+          font-size:0.9em;
         }
 
     </style>
@@ -30,7 +31,7 @@
 
     <div class="row">
       <div class="col-md-12 text-center">
-          <h5>RINCIAN BIAYA PERJALANAN DINAS TA 2019 BERDASARKAN KEPUTUSAN WALIKOTA MAKASSAR <br> NOMOR : 2220/090/TAHUN 2018 </h5>
+          <h56>RINCIAN BIAYA PERJALANAN DINAS TA 2019 BERDASARKAN KEPUTUSAN WALIKOTA MAKASSAR <br> NOMOR : 2220/090/TAHUN 2018 </h6>
       </div>
       <div class="col-md-12">
           <h6 style="font-weight:normal;padding-left:4em;margin-top:0.7em"></h6>

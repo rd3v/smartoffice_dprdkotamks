@@ -19,6 +19,19 @@
         td {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
+          font-size: 0.9em;
+        }
+
+        p {
+          font-size: 1em;
+        }
+
+        h3 {
+          font-size: 1.2em;
+        }
+
+        h5 {
+          font-size: 1em;
         }
 
     </style>
@@ -64,9 +77,9 @@
       <div class="row">
         <div class="col-md-12">
           <br>
-          Berdasarkan Surat Perjalanan Dinas (SPPD) Nomor : 090 / 57 / DPRD / IX / 2019 Tanggal, 30 September 2019 dengan ini kami menyatakan dengan sesungguhnya bahwa :
+          <p>Berdasarkan Surat Perjalanan Dinas (SPPD) Nomor : 090 / 57 / DPRD / IX / 2019 Tanggal, 30 September 2019 dengan ini kami menyatakan dengan sesungguhnya bahwa :
           <br><br>
-          1. Berdasarkan Bukti - bukti Pelaksanaan SPPD, meliputi :
+          1. Berdasarkan Bukti - bukti Pelaksanaan SPPD, meliputi :</p>
         </div>
       </div>
     
@@ -166,17 +179,19 @@
 
       <div class="row">
         <div class="col-md-12">
-          2. Jumlah uang tersebut pada angka 1 diatas benar - benar dikeluarkan untuk pelaksanaan Perjalanan Dinas dimaksud dan apabila dikemudian hari terdapat kelebihan atas Pembayaran, kami bersedia untuk menyetorkan kelebihan tersebut ke Kas Negara.
+          <p>2. Jumlah uang tersebut pada angka 1 diatas benar - benar dikeluarkan untuk pelaksanaan Perjalanan Dinas dimaksud dan apabila dikemudian hari terdapat kelebihan atas Pembayaran, kami bersedia untuk menyetorkan kelebihan tersebut ke Kas Negara.</p>
         </div>
       </div>
-      <br><br>
+      <br>
       <div class="row">
         <div class="col-md-12">
+          <p>
           Demikian Pernyataan ini kami buat dengan sebenarnya, untuk dipergunakan sebagaimana mestinya.
+          </p>
         </div>
       </div>
       
-      <br><br>
+      <br>
       
       <table class="table">
         <tr>

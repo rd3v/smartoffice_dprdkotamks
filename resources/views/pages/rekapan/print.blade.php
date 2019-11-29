@@ -19,10 +19,12 @@
         td {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
+          font-size: 0.9em;
         }
 
         th {
         	text-align: center;
+          font-size: 0.9em;
         }
 
     </style>
@@ -48,7 +50,7 @@
     
     <br>
 
-      <table class="table" border="1" style="line-height: 1.5">
+      <table class="table" border="1" style="line-height: 1.8">
         <thead style="background: grey">
           <th>No</th>
           <th>KEGIATAN</th>

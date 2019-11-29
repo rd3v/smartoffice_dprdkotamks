@@ -19,6 +19,7 @@
         td {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
+          font-size: 0.9em;
         }
 
     </style>
@@ -28,18 +29,6 @@
   <div class="container-fluid">
     <br>
     <div class="row">
-      <div class="col-md-2">
-        <img src="{{ asset('public/assets/v2/images/dprd.jpeg') }}" alt="Logo" width="75px">
-      </div>
-      <div class="col-md-10 text-center">
-        <h1 style="font-size:1.5em;font-weight:bold">DEWAN PERWAKILAN RAKYAT DAERAH <br> KOTA MAKASSAR</h1>
-        <p>
-          {{ $data->alamat.' Telp. '.$data->telepon.' Fax. '.$data->fax.' '.$data->kodepos  }} <br>
-          {{ 'Email : '.$data->email.' Homepage:.'.$data->homepage }}
-        </p>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-md-12">
           <hr style="border: 1px solid black; margin-bottom: .7px">
           <hr style="border: 1px solid black; margin-top: 0">
@@ -47,7 +36,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-          <h4 style="text-decoration:underline">SURAT PERJALANAN DINAS</h4>
+          <h5 style="text-decoration:underline">SURAT PERJALANAN DINAS</h5>
           <h6>(SPD)</h6>
       </div>
       <div class="col-md-12">
@@ -56,8 +45,8 @@
     </div>
 
     <div class="row">
-      <table class="table" style="line-height:60px" border="1">
-        <tr>
+      <table class="table" style="line-height:40px" border="1">
+        <tr style="font-size:0.9em">
           <td>1.</td>
           <td>Pejabat yang memberi Perintah</td>
           <td>Pimpinan DPRD Kota Makassar</td>
@@ -131,14 +120,14 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-md-11 text-right">
+      <div class="col-md-11 text-right" style="font-size: 0.9em;">
         <b>KETUA DPRD Kota Makassar</b>
       </div>
       <div class="col-md-1"></div>
     </div>
     <br><br><br><br>
     <div class="row">
-      <div class="col-md-11 text-right">
+      <div class="col-md-11 text-right" style="font-size: 0.9em;">
         <b style="margin-right:1.7em">{{ $data->ketua }}</b>
       </div>
       <div class="col-md-1"></div>

@@ -19,6 +19,7 @@
         td {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
+          font-size: 0.9em;
         }
 
     </style>
@@ -27,18 +28,7 @@
 
   <div class="container-fluid">
     <br>
-    <div class="row">
-      <div class="col-md-2">
-        <img src="{{ asset('public/assets/v2/images/dprd.jpeg') }}" alt="Logo" width="75px">
-      </div>
-      <div class="col-md-10 text-center">
-        <h1 style="font-size:1.5em;font-weight:bold">DEWAN PERWAKILAN RAKYAT DAERAH <br> KOTA MAKASSAR</h1>
-        <p>
-          {{ $data->alamat.' Telp. '.$data->telepon.' Fax. '.$data->fax.' '.$data->kodepos  }} <br>
-          {{ 'Email : '.$data->email.' Homepage:.'.$data->homepage }}
-        </p>
-      </div>
-    </div>
+
     <div class="row">
       <div class="col-md-12">
           <hr style="border: 1px solid black; margin-bottom: .7px">
@@ -47,19 +37,19 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-          <h4 style="text-decoration:underline">SURAT TUGAS</h4>
+          <h5 style="text-decoration:underline">SURAT TUGAS</h5>
           <h6>Nomor : {{ strtoupper($SuratTugas->nomor) }}</h6>
       </div>
       <div class="col-md-12">
           <h6 style="font-weight:normal;padding-left:4em;margin-top:0.7em">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }}
             Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</h6>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-        <h6 style="margin-top:0.7em">M E N U G A S K A N</h6>
+        <p style="margin-top:0.7em;font-size: 1em">M E N U G A S K A N</p>
       </div>
     </div>
     <div class="row">
@@ -74,8 +64,8 @@
             <div class="col-md-10">
               <ul style="list-style:none;">
                 <?php foreach ($AnggotaDewan as $key => $value): ?>
-                  <li style="font-weight:bold"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
-                  <li>(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
+                  <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
+                  <li style="font-size: 0.9em">(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
                 <?php endforeach; ?>
               </ul>
             </div>
@@ -89,9 +79,9 @@
       <span class="col-md-1">Untuk</span>
         <div class="col-md-10" style="padding-left:0;">
             :<ol>
-                <li>{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
-                <li>Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
-                <li>Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
+                <li style="font-size: 0.9em">{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
+                <li>Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li style="font-size: 0.9em">
+                <li style="font-size: 0.9em">Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
             </ol>
         </div>
     </div>
@@ -99,7 +89,7 @@
     <div class="row">
       <div class="col-md-1" style="padding-left:0"></div>
       <div class="col-md-11" style="padding-left:0">
-        <p>Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
+        <p style="font-size: 0.9em">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
       </div>
     </div>
 
@@ -141,7 +131,7 @@
     <div class="row text-center">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-        <p style="font-weight:bold">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
+        <p style="font-weight:bold;font-size: 0.8">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
       </div>
     </div>
 
@@ -149,7 +139,7 @@
       <div class="col-md-12">
         Tembusan :
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" style="font-size: 0.9em">
         <ol>
           <li>Pimpinan DPRD Kota Makassar</li>
           <li>Kabag. Keuangan Sek. DPRD Kota Makassar</li>
