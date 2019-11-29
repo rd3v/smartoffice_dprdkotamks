@@ -109,20 +109,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="atas_beban" class="col-2 col-form-label">Atas Beban</label>
-                            <div class="col-10">
-                                <input name="atas_beban" class="form-control" type="text" id="atas_beban">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="kode_rekening" class="col-2 col-form-label">Kode Rekening</label>
-                            <div class="col-10">
-                                <input name="kode_rekening" class="form-control" type="number" id="kode_rekening">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <button type="button" class="btn btn-success" onclick="print_confirm()">Buat Surat Perjalanan Dinas</button>
@@ -202,8 +188,6 @@
         var nama_pejabat = $("select[name=nama_pejabat]").val();
         var jabatan = $("input[name=jabatan]").val();
         var tipe_transportasi = $("select[name=tipe_transportasi]").val();
-        var atas_beban = $("input[name=atas_beban]").val();
-        var kode_rekening = $("input[name=kode_rekening]").val();
 
         mydata.nomor = nomor;
         mydata.persuratan_id = persuratan_id;
@@ -211,8 +195,6 @@
         mydata.nama_pejabat = nama_pejabat;
         mydata.jabatan = jabatan;
         mydata.tipe_transportasi = tipe_transportasi;
-        mydata.atas_beban = atas_beban;
-        mydata.kode_rekening = kode_rekening;
 
         $.ajaxSetup({
             headers: {

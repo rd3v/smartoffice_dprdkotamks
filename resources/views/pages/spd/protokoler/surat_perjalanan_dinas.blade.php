@@ -104,8 +104,8 @@
           <td>Perhitungan biaya Perjalanan Dinas</td>
           <td>
             <ul>
-              <li>Atas Beban : {{ $Spd->atas_beban }}</li>
-              <li>Kode Rekening : {{ $Spd->kode_rekening }}</li>
+              <li>Atas Beban : APBD KOTA MAKASSAR T.A 2019</li>
+              <li>Kode Rekening : </li>
             </ul>                        
           </td>
         </tr>

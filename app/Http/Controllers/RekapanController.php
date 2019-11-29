@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\RincianAwal;
+use App\Model\Rekapan;
 use App\Model\Settings;
 use Illuminate\Http\Request;
 
 use Auth;
-use Validator;
 
-use App\Helpers\MyLibHelper;
-
-class RincianAwalController extends MyController
+class RekapanController extends MyController
 {
-
-    public function __construct() {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -32,17 +25,9 @@ class RincianAwalController extends MyController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($persuratan_id)
+    public function create()
     {
-        $SuratTugasClass = "App\Model\SuratTugas";
-        $SuratTugas = new $SuratTugasClass;
-
-        $this->data['user'] = Auth::user();
-        $this->data['surat_tugas'] = $SuratTugas->with(['surat_tugas_anggota_dewan' => function($query) {
-            $query->with('anggota_dewan')->get();
-        }])->where('persuratan_id',$persuratan_id)->first();
-
-        return view('pages.protokoler.rincian_awal.create',$this->data);
+        //
     }
 
     /**
@@ -59,10 +44,10 @@ class RincianAwalController extends MyController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\RincianAwal  $rincianAwal
+     * @param  \App\Model\Rekapan  $rekapan
      * @return \Illuminate\Http\Response
      */
-    public function show(RincianAwal $rincianAwal)
+    public function show(Rekapan $rekapan)
     {
         //
     }
@@ -70,10 +55,10 @@ class RincianAwalController extends MyController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\RincianAwal  $rincianAwal
+     * @param  \App\Model\Rekapan  $rekapan
      * @return \Illuminate\Http\Response
      */
-    public function edit(RincianAwal $rincianAwal)
+    public function edit(Rekapan $rekapan)
     {
         //
     }
@@ -82,10 +67,10 @@ class RincianAwalController extends MyController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\RincianAwal  $rincianAwal
+     * @param  \App\Model\Rekapan  $rekapan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RincianAwal $rincianAwal)
+    public function update(Request $request, Rekapan $rekapan)
     {
         //
     }
@@ -93,16 +78,16 @@ class RincianAwalController extends MyController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\RincianAwal  $rincianAwal
+     * @param  \App\Model\Rekapan  $rekapan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RincianAwal $rincianAwal)
+    public function destroy(Rekapan $rekapan)
     {
         //
     }
 
     public function print() {
-      $this->data["data"] = Settings::first();
-      return view('pages.protokoler.rincian_awal.print',$this->data);
+        $this->data["data"] = Settings::first();
+        return view('pages.rekapan.print',$this->data);
     }
 }

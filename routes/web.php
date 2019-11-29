@@ -38,7 +38,8 @@ Route::group([
   Route::get('laporan-perjalanan-dinas/{id}/buatsppd', 'LaporanPerjalananDinasController@buatsppd');
   Route::get('spd/buat/{persuratan_id}','SpdController@buatspd')->name('buatspd');
 
-  Route::get('rincian-awal/create/{persuratan_id}','RincianAwalController@create');;
+  Route::get('rincian-awal/create/{persuratan_id}','RincianAwalController@create');
+  Route::get('rekapan/print','RekapanController@print');
   Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
   Route::resource('spd','SpdController');
   Route::resource('rincian-awal','RincianAwalController')->except(['index','create','edit','update','destroy']);
@@ -56,6 +57,9 @@ Route::group([
 
 	Route::resource('laporan-perjalanan-dinas','LaporanPerjalananDinasController');
 	Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');	
+	Route::get('rincian-akhir/create/{persuratan_id}','RincianAkhirController@create');
+	Route::get('rincian-akhir/print','RincianAkhirController@print')->name('printRincianAkhir');
+	Route::resource('rincian-akhir','RincianAkhirController');
 
 });
 

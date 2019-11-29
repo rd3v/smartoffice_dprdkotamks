@@ -61,9 +61,7 @@ class SpdController extends Controller
           'surat_tugas_id'          => 'required',
           'nama_pejabat'            => 'required',
           'jabatan'                 => 'required',
-          'tipe_transportasi'       => 'required',
-          'atas_beban'              => 'required',
-          'kode_rekening'           => 'required'
+          'tipe_transportasi'       => 'required'
       ];
 
       $validator = Validator::make($request->all(), $rules);
@@ -81,8 +79,6 @@ class SpdController extends Controller
           $Spd->nama_pejabat             = $request->nama_pejabat;
           $Spd->jabatan                  = $request->jabatan;
           $Spd->tipe_transportasi        = $request->tipe_transportasi;
-          $Spd->atas_beban               = $request->atas_beban;
-          $Spd->kode_rekening            = $request->kode_rekening;
           $Spd->status                   = 0;
 
           if($Spd->save()) {

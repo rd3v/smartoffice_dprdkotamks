@@ -1,7 +1,7 @@
 @extends('template.v1.temp')
 
 @section('title_bar')
-  Buat Rincian Awal
+  Buat Rincian Akhir
 @endsection
 
 @section('css')
@@ -26,13 +26,13 @@
         <!-- .row -->
         <div class="row bg-title" style="background:url({{ asset('public/assets/v2/plugins/images/heading-title-bg.jpg') }}) no-repeat center center /cover;">
             <div class="col-lg-12">
-                <h4 class="page-title">Buat Rincian Awal</h4>
+                <h4 class="page-title">Buat Rincian Akhir</h4>
             </div>
             <div class="col-sm-6 col-md-6 col-xs-12">
                 <ol class="breadcrumb pull-left">
                     <li><a href="{{ url('/') }}">Dashboard</a></li>
                     <li><a href="{{ url('protokoler/surat-tugas') }}">Perjalanan Dinas</a></li>
-                    <li class="active">Buat Rincian Awal</li>
+                    <li class="active">Buat Rincian Akhir</li>
                 </ol>
             </div>
             <div class="col-sm-6 col-md-6 col-xs-12">
@@ -51,19 +51,7 @@
                     <h3 class="box-title m-b-0"></h3>
 
                     <form class="form">
-                        <div class="form-group row">
-                            <label for="nomor" class="col-2 col-form-label">Nomor</label>
-                            <div class="col-10">
-                                <input type="hidden" name="surat_tugas_id" value="{{ $surat_tugas->id }}">
-                                <input type="hidden" name="persuratan_id" value="{{ $surat_tugas->persuratan_id }}">
-                                <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
 
-                        <div class="alert alert-danger text-center nomor-exist" style="border-color: red;display:none">
-                          <h4 style="font-weight: bold">!!! Nomor Surat sudah ada</h4>
-                        </div>
-
-                            </div>
-                        </div>                      
                         <div class="form-group row">
                             <label for="nama_pejabat" class="col-2 col-form-label">Nama Pejabat</label>
                             <div class="col-10">
@@ -87,7 +75,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-8" style="margin-left:2em">
-                                <button type="button" class="btn btn-success" onclick="print_confirm()"><i class="fa fa-print"></i> Buat Rincian Awal</button>
+                                <button type="button" class="btn btn-success" onclick="print_confirm()"><i class="fa fa-print"></i> Buat Rincian Akhir</button>
                                 <a href="<?= url()->previous() ?>" class="btn btn-danger">Batal</a>
                             </div>
                         </div>
@@ -252,7 +240,7 @@
         //     }).done(function(res) {
         //       console.log(res);
 
-              var w = window.open("<?= route('printRincianAwal') ?>");
+              var w = window.open("<?= route('printRincianAkhir') ?>");
               w.print();
 
         //       Swal.fire({

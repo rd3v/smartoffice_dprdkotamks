@@ -10,7 +10,7 @@ class Spd extends Model
 
     protected $fillable = [
     	"persuratan_id","surat_tugas_id","nomor","nama_pejabat","jabatan",
-    	"tipe_transportasi","atas_beban","kode_rekening","status","created_at","updated_at"
+    	"tipe_transportasi","status","created_at","updated_at"
     ];
 
     protected $hidden = [

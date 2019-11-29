@@ -172,7 +172,7 @@
                                                         <button type="button" class="btn btn-success btn-outline" data-container="body" data-toggle="popover" data-placement="top" data-content="<a href='#' class='btn btn-success'>DEPAN</a> | <a href='#' class='btn btn-success'>BELAKANG</a>"><i class="fa fa-print"></i> PRINT RINCIAN AKHIR</button>
                                                     @elseif($value->kelengkapan_id != null)
                                                         <a href="{{ route('ceklaporan',['id' => $value->kelengkapan_id]) }}" name="button" class="btn btn-info"><i class="fa fa-check"></i> CEK KELENGKAPAN</a>
-                                                        <a href="#" onclick="notready()" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ BUAT RINCIAN AKHIR</a>
+                                                        <a href="{{ url('keuangan/rincian-akhir/create/'.$value->id) }}" name="button" class="btn btn-danger"><i class="fa fa-file"></i>+ BUAT RINCIAN AKHIR</a>
                                                     @endif
                                                 
                                                 @endif
