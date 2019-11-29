@@ -27,14 +27,8 @@
 <body>
 
   <div class="container-fluid">
-    <br>
-    <div class="row">
-      <div class="col-md-12">
-          <hr style="border: 1px solid black; margin-bottom: .7px">
-          <hr style="border: 1px solid black; margin-top: 0">
-      </div>
-    </div>
-    <div class="row">
+
+    <div class="row" style="margin-top:12em">
       <div class="col-md-12 text-center">
           <h5 style="text-decoration:underline">SURAT PERJALANAN DINAS</h5>
           <h6>(SPD)</h6>
