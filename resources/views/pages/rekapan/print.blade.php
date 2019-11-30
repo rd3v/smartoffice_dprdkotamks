@@ -51,7 +51,7 @@
     <br>
 
       <table class="table" border="1" style="line-height: 1.8">
-        <thead style="background: grey">
+        <thead>
           <th>No</th>
           <th>KEGIATAN</th>
           <th>NO.ST</th>
@@ -62,7 +62,7 @@
           <th>KETERANGAN</th>
         </thead>
         <tbody>
-          <tr style="background: #6666FF;color:white">
+          <tr>
             <td>1</td>
             <td>Mengikuti Orientasi training tentang pendalaman tugas anggota dewan perwakilan rakyat daerah provinsi dan dewan perwakilan rakyat daerah kabupaten/kota</td>
             <td>005 / 2 / DPRD / IX / 2019</td>
@@ -72,7 +72,7 @@
             <td>1</td>
             <td></td>
           </tr>
-          <tr style="background: green;color:white">
+          <tr>
             <td>2</td>
             <td>Mengikuti Kunjungan Kerja pansus pembahasan rancangan peraturan DPRD Kota Makassar tentang tata tertib untuk sharing informasi terkait rancangan peraturan DPRD tentang tata tertib di DPRD Kota Tangerang Selatan dan DRPD Provinsi DKI Jakarta</td>
             <td>093 / 3 / DPRD / X / 2019</td>
@@ -82,7 +82,7 @@
             <td>1</td>
             <td></td>
           </tr>
-          <tr style="background: #6666FF;color:white">
+          <tr>
             <td>3</td>
             <td>Melaksanakan Sekolah Legislatif dan Pendalaman Tugas kepada Anggota DPRD Provinsi, DPRD Kabupaten dan Kota Periode 2019 - 2024 Fraksi Partai Nasdem.</td>
             <td>005 / 4 / DPRD / IX / 2019</td>
@@ -92,7 +92,7 @@
             <td>2</td>
             <td></td>
           </tr>
-          <tr style="background: orange">
+          <tr>
             <td>4</td>
             <td>Melakukan Konsultasi ke Kementrian Dalam Negeri di Jakarta Terkait : APBD Pokok TA 2020.</td>
             <td>093 / 8 / DPRD / X / 2019</td>
