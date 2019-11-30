@@ -184,15 +184,15 @@
         </tr>
       </table>
       
-      <br><br><br><br>
+      <br><br>
       
       <table class="table">
         <tr>
-          <td><b><u>PITER SAMPE</u></b></td>
+          <td><b><u>{{ $data->bendahara }}</u></b></td>
           <td class="text-right"><b><u>BADARUDDIN OPHIER</u></b></td>
         </tr>
         <tr>
-          <td>NIP.19630202 198612 1 001</td>
+          <td>NIP.{{ $data->bendaharanip }}</td>
           <td></td>
         </tr>
       </table>

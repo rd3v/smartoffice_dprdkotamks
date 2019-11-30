@@ -22,13 +22,17 @@
           font-size: 0.9em;
         }
 
+        li {
+          margin: -10px 0;
+        }
+  
     </style>
 </head>
 <body>
 
   <div class="container-fluid">
 
-    <div class="row" style="margin-top:12em">
+    <div class="row" style="margin-top:10.5em">
       <div class="col-md-12 text-center">
           <h5 style="text-decoration:underline">SURAT PERJALANAN DINAS</h5>
           <h6>(SPD)</h6>
