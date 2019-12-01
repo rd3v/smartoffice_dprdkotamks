@@ -24,6 +24,10 @@
     <link href="{{ URL::asset('public/assets/v2') }}/css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{ URL::asset('public/assets/v2') }}/css/colors/default.css" id="theme" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" id="theme" rel="stylesheet">
+    <link href="{{ URL::asset('public/css') }}/offline-theme-chrome.css">
+    <link href="{{ URL::asset('public/css') }}/offline-language-english.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -129,24 +133,20 @@
                     </li>
                     @endif
 
-
-
                     @if($user->level == "komisi")
                     <li>
                         <a href="{{ url('komisi/laporan-perjalanan-dinas') }}">LAPORAN PERJALANAN DINAS</a>
                     </li>
+                    <!-- <li><a href="{{ url('jadwal-sidang') }}">JADWAL SIDANG</a></li> -->
                     @endif
 
-                    @if($user->level == "komisi")
-                        <li><a href="{{ url('jadwal-sidang') }}">JADWAL SIDANG</a></li>
-                    @endif
 
                     @if($user->level == "admin" or $user->level == "ketua" or $user->level == "wakil")
                         <li><a href="{{ url('data-komisi') }}">DATA KOMISI</a></li>
                     @endif
 
                     @if($user->level == "komisi")
-                        <li><a href="{{ url('anggota-komisi') }}">ANGGOTA KOMISI</a></li>
+                        <li><a href="{{ url('komisi/anggota') }}">ANGGOTA KOMISI</a></li>
                     @endif
 
                         </ul>
@@ -166,9 +166,10 @@
 
 
     </div>
-    <script src="{{ asset('public/assets/v2') }}/js/connection.js"></script>
     <!-- jQuery -->
     <script src="{{ asset('public/assets/v2') }}/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script>var server = "/smartoffice";</script>
+    <script src="{{ asset('public/js') }}/offline.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('public/assets/v2') }}/bootstrap/dist/js/tether.min.js"></script>
     <script src="{{ asset('public/assets/v2') }}/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -181,6 +182,7 @@
     @yield('js')
 
     <script src="{{ asset('public/assets/v2') }}/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+
     @yield('myscript')
 
 </body>

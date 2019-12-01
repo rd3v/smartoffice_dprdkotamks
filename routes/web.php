@@ -84,6 +84,8 @@ Route::group([
 	Route::get('laporan-perjalanan-dinas/upload-kelengkapan/{id}','LaporanPerjalananDinasController@uploadKelengkapan')->name('upload-kelengkapan');
 	Route::get('laporan-perjalanan-dinas/edit-kelengkapan/{kelengkapan_id}','LaporanPerjalananDinasController@editKelengkapan')->name('edit-kelengkapan');
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
+	Route::resource('anggota','AnggotaKomisiController');
+
 	Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
 
 	Route::post('laporan/upload/{kelengkapan_id}','LaporanPerjalananDinasController@upload');;
@@ -98,7 +100,6 @@ Route::group(['middleware' => 'App\Http\Middleware\KomisiMiddleware'], function(
 # DATA KOMISI
 Route::get('data-komisi/lihatanggota/{id}','DataKomisiController@lihat_anggota');
 Route::resource('data-komisi','DataKomisiController');
-Route::resource('anggota-komisi','AnggotaKomisiController');
 
 # UBAH PASSWQORD
 Route::resource('password','Auth\PasswordSettingController');

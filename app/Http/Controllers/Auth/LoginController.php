@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Auth;
 use Telegram as Telegram;
+use Httpful;
 
 class LoginController extends Controller
 {
@@ -58,16 +59,46 @@ class LoginController extends Controller
     }
 
     public function authenticated(Request $request) {
+
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            Telegram::sendMessage([
-                'chat_id' => '421428311',
-                'text' => 'User '.$user->username.'['.strtoupper($user->name).'] is Logged In'
-            ]);
+
+            // $uri = "https://swapi.co/api/people/1/?format=json";
+            // $response = \Httpful\Request::get($uri)->send();
+            // if($response->code != 408) {
+                try {
+
+                    $ip = getenv('HTTP_CLIENT_IP')?:
+                    getenv('HTTP_X_FORWARDED_FOR')?:
+                    getenv('HTTP_X_FORWARDED')?:
+                    getenv('HTTP_FORWARDED_FOR')?:
+                    getenv('HTTP_FORWARDED')?:
+                    getenv('REMOTE_ADDR');
+                    
+                    $text = [
+                        "action" => "Client Logged In",
+                        "username" => $user->username,
+                        "name" => $user->name,
+                        "ip" => $ip
+                    ];
+
+                    Telegram::sendMessage([
+                        'chat_id' => '421428311',
+                        'text' => json_encode($text)
+                    ]);
+
+                } catch(\Telegram\Bot\Exceptions\TelegramSDKException $telegramSdkException) {
+                    return redirect()->intended('dashboard');
+                }
+
+
+            // }
+
             return redirect()->intended('dashboard');
-        }        
+        
+        }
     }
 
     protected function sendFailedLoginResponse(Request $request) {

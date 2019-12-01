@@ -39,252 +39,36 @@
 
                     <p><a href="{{ url()->previous() }}" class="btn btn-danger">Kembali</a></p>
 
-                        <div class="row">
+                <div class="row">
                     
+                    @foreach($anggota as $value)
+                    <div class="col-md-4 col-sm-4">
+                        <div class="white-box">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <a href="#"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <h3 class="box-title m-b-0">{{ $value->nama }}</h3>
+                                    <small>{{ ($value->partai != null) ?  strtoupper($value->partai->nama):'' }}</small>
+                                    <p>
+                                        <address>
+                                            {{ strtoupper($value->jabatan_text) }}
+                                            <br/>
+                                            <br/>
+                                            @if($value->telepon != null || $value->telepon != "")
+                                                <i class="fa fa-phone"></i> <a href="telp:{{ $value->telepon }}">{{ $value->telepon }}</a>
+                                            @endif
+                                        </address>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
 
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Abdi Asmara</h3>
-                                    <small>Demokrat</small>
-                                    <p>
-                                        <address>
-                                            Ketua
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Abdul Wahab Tahir</h3>
-                                    <small>Golkar</small>
-                                    <p>
-                                        <address>
-                                            Wakil Ketua
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Mario David</h3>
-                                    <small>NasDem</small>
-                                    <p>
-                                        <address>
-                                            Sekretaris
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-                <!-- .row -->
-                <div class="row">
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Haji Andi Hasir</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Syarifuddin Badollahi</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Lisdayanti Sabri</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- .row -->
-                <div class="row">
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Busranuddin Baso Tika</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Jufri Pabe</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Haslinda</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <!-- .row -->
-                <div class="row">
-                    <!-- .col -->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="white-box">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="{{ asset('public/assets/v2/images/user-male.png') }}" alt="user" class="img-circle img-responsive"></a>
-                                </div>
-                                <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Zaenal Dg Beta</h3>
-                                    <small>-</small>
-                                    <p>
-                                        <address>
-                                            Anggota
-                                            <br/>
-                                            <br/>
-                                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                                        </address>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    
-                </div>
+
 
                         </div>
                     </div>

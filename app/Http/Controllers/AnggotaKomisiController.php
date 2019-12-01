@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\AnggotaKomisiModel;
+use App\Model\AnggotaDewan;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -21,10 +21,8 @@ class AnggotaKomisiController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data = [
-            "user" => $user
-        ];
-
+        $data['user'] = $user;
+        $data['anggota'] = AnggotaDewan::with('partai')->where('komisi',$user->komisi)->get();
         return view('pages.datakomisi.lihatanggota',$data);
     }
 
