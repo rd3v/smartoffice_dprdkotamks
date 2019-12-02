@@ -86,11 +86,26 @@
                             <div class="col-10">
                                 <select class="form-control" name="berdasarkan_surat">
                                     <option value="">== Pilih ==</option>
+                                    <option value="Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar">Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar</option>
                                     <option value="Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar">Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar</option>
+                                    <option value="Komisi C Bidang Pembangunan DPRD Kota Makassar">Komisi C Bidang Pembangunan DPRD Kota Makassar</option>
+                                    <option value="Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar">Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar</option>
                                     <option value="manual">Isi Manual</option>
                                 </select>
                                 <br>
-                                <textarea placeholder="Contoh : Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar Nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80" style="display:none"></textarea>
+                                <textarea placeholder="Contoh : Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar Nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80" style="display:none"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="jenis_kegiatan" class="col-2 col-form-label">Jenis Kegiatan</label>
+                            <div class="col-10">
+                                <select class="form-control" name="jenis_kegiatan">
+                                    <option value="">== Pilih ==</option>
+                                    <option value="kunjungan kerja">Kunjungan Kerja</option>
+                                    <option value="bimtek">Bimtek</option>
+                                    <option value="konsul">Konsultasi</option>
+                                </select>
                             </div>
                         </div>
 
@@ -236,6 +251,7 @@
         mydata.untuk = $("select[name=untuk]").val();
         mydata.nomor = $("input[name=nomor]").val();
         mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
+        mydata.jenis_kegiatan = $("select[name=jenis_kegiatan]").val();
         mydata.tanggal_surat_masuk = $("input[name=tanggal_surat_masuk]").val();
         mydata.perihal = $("input[name=perihal]").val();
         mydata.menugaskan = $("select[name=menugaskan]").val();

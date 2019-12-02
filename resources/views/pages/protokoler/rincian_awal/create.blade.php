@@ -54,12 +54,12 @@
                         <div class="form-group row">
                             <label for="nomor" class="col-2 col-form-label">Nomor</label>
                             <div class="col-10">
-                                <input type="hidden" name="surat_tugas_id" value="{{ $surat_tugas->id }}">
+                                <input type="hidden" name="surat_rincian_id" value="{{ $surat_tugas->id }}">
                                 <input type="hidden" name="persuratan_id" value="{{ $surat_tugas->persuratan_id }}">
                                 <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
 
                         <div class="alert alert-danger text-center nomor-exist" style="border-color: red;display:none">
-                          <h4 style="font-weight: bold">!!! Nomor Surat sudah ada</h4>
+                          <h4 style="font-weight: bold">!!! <u>Nomor Surat Rincian Awal</u> sudah ada</h4>
                         </div>
 
                             </div>
@@ -203,7 +203,7 @@
 
         // var mydata = {};
         // var persuratan_id = $("input[name=persuratan_id]").val();
-        // var surat_tugas_id = $("input[name=surat_tugas_id]").val();
+        // var surat_rincian_id = $("input[name=surat_rincian_id]").val();
         // var nomor = $("input[name=nomor]").val();
         // var nama_pejabat = $("select[name=nama_pejabat]").val();
         // var jabatan = $("input[name=jabatan]").val();
@@ -213,7 +213,7 @@
 
         // mydata.nomor = nomor;
         // mydata.persuratan_id = persuratan_id;
-        // mydata.surat_tugas_id = surat_tugas_id;
+        // mydata.surat_rincian_id = surat_rincian_id;
         // mydata.nama_pejabat = nama_pejabat;
         // mydata.jabatan = jabatan;
         // mydata.tipe_transportasi = tipe_transportasi;

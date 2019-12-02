@@ -99,6 +99,7 @@ class SuratTugasController extends Controller
           'untuk'                   => 'required',
           'nomor'                   => 'required|unique:tbl_surat_tugas',
           'berdasarkan_surat'       => 'required',
+          'jenis_kegiatan'          => 'required',
           'tanggal_surat_masuk'     => 'required',
           'perihal'                 => 'required',
           'menugaskan'              => 'required|array',
@@ -124,6 +125,7 @@ class SuratTugasController extends Controller
 
           $SuratTugas->nomor                    = $request->nomor;
           $SuratTugas->berdasarkan_surat        = $request->berdasarkan_surat;
+          $SuratTugas->jenis_kegiatan           = $request->jenis_kegiatan;
           $SuratTugas->tanggal_surat_masuk      = $request->tanggal_surat_masuk;
           $SuratTugas->perihal                  = $request->perihal;
           $SuratTugas->untuk_maksud             = $request->untuk_maksud;
