@@ -30,8 +30,12 @@ class SuratTugasController extends Controller
       if($SuratTugasDelete) {
         $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
       }
-      
-      $dp = $Persuratan->with('SuratTugas','spd')->where('status','!=','batal')->orderBy('id','desc')->get();
+
+      $this->data['user'] = Auth::user();
+      $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
+            $query->with('staff')->get();
+        }
+      ])->where('status','!=','batal')->where('untuk',$this->data['user']->protokoler_type)->orderBy('id','desc')->get();
 
       $Persuratan_DataSurat = [];
       foreach ($dp as $value) {
@@ -47,6 +51,7 @@ class SuratTugasController extends Controller
             'nomor' => $value->suratTugas->nomor,
             'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
             'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
+            'tempat' => $value->suratTugas->tempat,
             'perihal' => $value->suratTugas->perihal,
             'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
             'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
@@ -55,8 +60,6 @@ class SuratTugasController extends Controller
           ]);
         }
       }
-
-      $this->data['user'] = Auth::user();
       $this->data['SuratTugas'] = $Persuratan_DataSurat;
       return view('pages.protokoler.surat_tugas.index',$this->data);
     }
@@ -68,11 +71,26 @@ class SuratTugasController extends Controller
      */
     public function create()
     {
-        $AnggotaDewanClass = "App\Model\AnggotaDewan";
-        $AnggotaDewan = new $AnggotaDewanClass;
 
         $this->data['user'] = Auth::user();
+        $AnggotaDewanClass = "App\Model\AnggotaDewan";
+        $AnggotaDewan = new $AnggotaDewanClass;
         $this->data['anggota_dewan'] = $AnggotaDewan->getAll();
+
+        if ($this->data['user']->protokoler_type == 'ad') {
+
+          $AnggotaDewanClass = "App\Model\AnggotaDewan";
+          $AnggotaDewan = new $AnggotaDewanClass;
+          $this->data['anggota_dewan'] = $AnggotaDewan->getAll();
+
+        } else if($this->data['user']->protokoler_type == 'staff') {
+
+          $StaffClass = "App\Model\Staff";
+          $Staff = new $StaffClass;
+          $this->data['staff'] = $Staff->all();
+
+        }
+
         return view('pages.protokoler.surat_tugas.create',$this->data);
     }
 
@@ -143,20 +161,39 @@ class SuratTugasController extends Controller
 
           if($SuratTugas->save()) {
 
-            $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
-            $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
+            $user = Auth::user();
+            if ($user->protokoler_type == 'ad') {
+              
+              $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
+              $suratTugasAnggota = new $SuratTugasAnggotaDewanClass;
+              
+              foreach ($request->menugaskan as $value) {
+                  $data[] = [
+                    'surat_tugas_id'  => $SuratTugas->id,
+                    'anggota_dewan_id' => $value
+                  ];
+              }
 
-        
-            foreach ($request->menugaskan as $value) {
-                $data[] = [
-                  'surat_tugas_id'  => $SuratTugas->id,
-                  'anggota_dewan_id' => $value
-                ];
+              $suratTugasAnggota::insert($data);
+
+            } else if($user->protokoler_type == 'staff') {
+
+              $SuratTugasStaffClass = "App\Model\SuratTugasStaff";
+              $suratTugasAnggota = new $SuratTugasStaffClass;
+
+              foreach ($request->menugaskan as $value) {
+                  $data[] = [
+                    'surat_tugas_id'  => $SuratTugas->id,
+                    'staff_id' => $value
+                  ];
+              }
+
+              $suratTugasAnggota::insert($data);
+
             }
 
-            $SuratTugasAnggotaDewan::insert($data);
 
-            if($SuratTugasAnggotaDewan->save()) {
+            if($suratTugasAnggota->save()) {
 
               $Persuratan->surat_tugas_id = $SuratTugas->id;
               $Persuratan->untuk = $request->untuk;
@@ -238,40 +275,81 @@ class SuratTugasController extends Controller
 
     public function printthis($id) {
       $SuratTugasClass = "App\Model\SuratTugas";
-      $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
-      $AnggotaDewanClass = "App\Model\AnggotaDewan";
       $SuratTugas = new $SuratTugasClass;
-      $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
-      $AnggotaDewan = new $AnggotaDewanClass;
-
+      
+      $user = Auth::user();
       $this->data['data'] = Settings::getOne();
-      $this->data['SuratTugas'] = (object) $SuratTugas->where(['id' => $id])->first();
+      $this->data['SuratTugas'] = (object) $SuratTugas->where(['id' => $id])->first();      
+      if ($user->protokoler_type == 'ad') {
+        $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
+        $AnggotaDewan = new $SuratTugasAnggotaDewanClass;
+        
+        $AnggotaDewanClass = "App\Model\AnggotaDewan";
+        $AnggotaDewan = new $AnggotaDewanClass;
+
+        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
+        $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
+
+      } else if($user->protokoler_type == 'staff') {
+        $StaffClass = "App\Model\Staff";
+        $Staff = new $StaffClass;
+
+        $SuratTugasStaffClass = "App\Model\SuratTugasStaff";
+        $SuratTugasStaff = new $SuratTugasStaffClass;
+
+        $this->data['Staff'] = $SuratTugasStaff->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
+        $this->data['BertandaTangan'] = $Staff->where('ttd',1)->first();
+
+      }
+
       $this->data['SuratTugas']->tanggal_surat_masuk = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_surat_masuk);
       $this->data['SuratTugas']->tanggal_mulai = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_mulai);
       $this->data['SuratTugas']->tanggal_akhir = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_akhir);
       $this->data['SuratTugas']->tanggal_dikeluarkan = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_dikeluarkan);
-      $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
-      $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
-
+      $this->data['user'] = $user;
+      
       return view('pages.protokoler.surat_tugas.surat_tugas',$this->data);
     }
 
     public function print() {
+      
       $SuratTugasClass = "App\Model\SuratTugas";
-      $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
-      $AnggotaDewanClass = "App\Model\AnggotaDewan";
       $SuratTugas = new $SuratTugasClass;
-      $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
-      $AnggotaDewan = new $AnggotaDewanClass;
+      
+      $this->data['SuratTugas'] = (object) $SuratTugas->where('status',0)->first();
+      $user = Auth::user();
+      if ($user->protokoler_type == 'ad') {
+  
+        $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
+        $AnggotaDewanClass = "App\Model\AnggotaDewan";
+  
+        $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
+        $AnggotaDewan = new $AnggotaDewanClass;
 
+        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
+        $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
+      
+      } else if($user->protokoler_type == 'staff') {
+  
+        $SuratTugasStaffClass = "App\Model\SuratTugasStaff";
+        $StaffClass = "App\Model\Staff";
+
+        $SuratTugasStaff = new $SuratTugasStaffClass;
+        $Staff = new $StaffClass;
+
+        $this->data['Staff'] = $SuratTugasStaff->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
+        $this->data['BertandaTangan'] = $Staff->where('ttd',1)->first();
+
+      }
+
+      $this->data['user'] = Auth::user();
       $this->data['data'] = Settings::getOne();
-      $this->data['SuratTugas'] = (object) $SuratTugas->where(['status' => 0])->first();
       $this->data['SuratTugas']->tanggal_surat_masuk = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_surat_masuk);
+
       $this->data['SuratTugas']->tanggal_mulai = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_mulai);
       $this->data['SuratTugas']->tanggal_akhir = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_akhir);
       $this->data['SuratTugas']->tanggal_dikeluarkan = MyLibHelper::tgl_indo($this->data['SuratTugas']->tanggal_dikeluarkan);
-      $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
-      $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
+
 
       return view('pages.protokoler.surat_tugas.surat_tugas',$this->data);
     }

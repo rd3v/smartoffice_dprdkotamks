@@ -44,20 +44,28 @@
 
     <div class="row">
       <table class="table" style="line-height:40px" border="1">
-        <tr style="font-size:0.9em">
+        <tr>
           <td>1.</td>
           <td>Pejabat yang memberi Perintah</td>
-          <td>Pimpinan DPRD Kota Makassar</td>
+          <td>{{ $Spd->surat_tugas->nama_yang_bertanda_tangan }}</td>
         </tr>
         <tr>
           <td>2.</td>
           <td>Nama pejabat yang diperintah mengadakan Perjalanan Dinas</td>
-          <td><b>{{ $Spd->nama_pejabat }}</b></td>
+          @if($user->protokoler_type == 'ad')
+          <td><b>{{ $Spd->anggota_dewan->nama }}</b></td>
+          @elseif($user->protokoler_type == 'staff')
+          <td><b>{{ $Spd->staff->nama }}</b></td>
+          @endif
         </tr>
         <tr>
           <td>3.</td>
           <td>Jabatan dari yang diperintahkan</td>
-          <td>({{ ucfirst($Spd->jabatan) }})</td>
+          @if($user->protokoler_type == 'ad')
+          <td>({{ ucfirst($Spd->anggota_dewan->jabatan_text) }})</td>
+          @elseif($user->protokoler_type == 'staff')
+          <td>({{ ucfirst($Spd->staff->jabatan) }})</td>
+          @endif
         </tr>
         <tr>
           <td>4.</td>
@@ -65,7 +73,7 @@
           <td>
             <ul>
               <li>dari Makassar</li>
-              <li>ke {{ $Spd->surat_tugas->tempat }}</li>
+              <li>ke {{ ucfirst($Spd->surat_tugas->tempat) }}</li>
               <li>Transportasi menggunakan <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transportasi {{ $Spd->tipe_transportasi }}</p></li>
             </ul>
           </td>
@@ -75,9 +83,18 @@
           <td>Perjalanan Dinas direncanakan</td>
           <td>
             <ul>
-              <li>selama Makassar</li>
-              <li>dari tanggal {{ $Spd->surat_tugas->tempat }}</li>
-              <li>s/d tanggal </li>
+
+<?php 
+$date1 = date_create($Spd->surat_tugas->tanggal_mulai);
+$date2 = date_create($Spd->surat_tugas->tanggal_akhir);
+$days  = date_diff($date1,$date2);
+$str_tanggal_mulai = explode('-',$Spd->surat_tugas->tanggal_mulai);
+$str_tanggal_akhir = explode('-',$Spd->surat_tugas->tanggal_akhir);
+?>
+
+              <li>Selama <?= ($days->format('%a')+1) ?> Hari</li>
+              <li>Dari tanggal, <?= $tanggal_mulai ?></li>
+              <li>s/d tanggal, <?= $tanggal_akhir ?></li>
             </ul>            
           </td>
         </tr>
@@ -102,7 +119,7 @@
           <td>
             <ul>
               <li>Surat Tugas Nomor : {{ $Spd->surat_tugas->nomor }}</li>
-              <li>Tanggal : {{ $Spd->surat_tugas->tanggal_surat_masuk }}</li>
+              <li>Tanggal : {{ $Spd->surat_tugas->tanggal_dikeluarkan }}</li>
             </ul>                                    
           </td>
         </tr>
@@ -118,17 +135,19 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-md-11 text-right" style="font-size: 0.9em;">
-        <b>KETUA DPRD Kota Makassar</b>
+      <div class="col-md-8"></div>
+      <div class="col-md-4 text-center" style="font-size: 0.9em;">
+        <b>{{ $Spd->surat_tugas->jabatan }}</b>
       </div>
-      <div class="col-md-1"></div>
     </div>
     <br><br><br><br>
     <div class="row">
-      <div class="col-md-11 text-right" style="font-size: 0.9em;">
-        <b style="margin-right:1.7em">{{ $data->ketua }}</b>
+
+      <div class="col-md-8"></div>
+      <div class="col-md-4 text-center" style="font-size: 0.9em;">
+        <b>{{ $Spd->surat_tugas->nama_yang_bertanda_tangan }}</b>
       </div>
-      <div class="col-md-1"></div>
+
     </div>
   
     <br>

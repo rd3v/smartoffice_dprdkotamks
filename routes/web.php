@@ -28,7 +28,9 @@ Route::group([
   Route::get('spd/updatestatusverified','SpdController@verified')->name('updateStatusSuratPerjalananDinasVerified');
   Route::get('surat-tugas/print','SuratTugasController@print')->name('printSuratTugas');
   Route::get('spd/print','SpdController@print')->name('printSPD');
-  Route::get('rincian-awal/print','RincianAwalController@print')->name('printRincianAwal');
+  
+  Route::get('rincian-awal/print/{spd_id}/{staff_id}/{asal}/{tujuan}','RincianAwalController@print')->name('printRincianAwal');
+
   Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
   Route::get('spd/printthis/{id}','SpdController@printthis')->name('printthisspd');
   Route::post('checkNomorSuratTugas','SuratTugasController@checkNomorSuratTugas');
@@ -115,3 +117,5 @@ Route::get('403',function() {
 
 # AJAX
 Route::post('postTiketPerjalananComment','Ajax\PostCommentsController@tiketPerjalanan')->name('postTiketPerjalananComment');
+Route::post('getAnggotaDewan','Ajax\AnggotaDewanController@get')->name('getAnggotaDewan');
+Route::post('getStaff','Ajax\StaffController@get')->name('getStaff');

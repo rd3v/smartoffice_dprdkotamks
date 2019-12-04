@@ -110,7 +110,7 @@ class MyLibHelper {
         else return 'Rp.'.number_format($angka, 0, ',', '.').',-';
     }
 
-    public function sebut($angka, $langsung = FALSE, $koma = '.') {
+    public static function sebut($angka, $langsung = FALSE, $koma = '.') {
         $angka = explode($koma, trim($angka, $koma));
 
         if ($langsung) {
@@ -118,39 +118,39 @@ class MyLibHelper {
             for ($i = 0; $i < sizeof($bulat); $i++) { $bulat[$i] = terbilang($bulat[$i]); }
             $huruf = implode(' ', $bulat);
         } else {
-            $huruf = trim(terbilang($angka[0]));
+            $huruf = trim(self::terbilang($angka[0]));
         }
 
         if (sizeof($angka) > 1) {
             $desimal = str_split($angka[1]);
-            for ($i = 0; $i < sizeof($desimal); $i++) { $desimal[$i] = terbilang($desimal[$i]); }
+            for ($i = 0; $i < sizeof($desimal); $i++) { $desimal[$i] = self::terbilang($desimal[$i]); }
             $huruf .= ' koma'.implode(' ', $desimal);
         }
 
         return $huruf;
     }
 
-    public function terbilang($x) {
+    public static function terbilang($x) {
         $huruf = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
         if ($x === '0') return ' nol';
         elseif ($x < 0) return 'minus'.terbilang($x * -1);
         elseif ($x < 12) return ' '.$huruf[$x];
-        elseif ($x < 20) return terbilang($x - 10).' belas';
-        elseif ($x < 100) return terbilang($x / 10).' puluh'.terbilang($x % 10);
-        elseif ($x < 200) return 'seratus'.terbilang($x - 100);
-        elseif ($x < 1000) return terbilang($x / 100).' ratus'.terbilang($x % 100);
-        elseif ($x < 2000) return 'seribu'.terbilang($x - 1000);
-        elseif ($x < 1000000) return terbilang($x / 1000).' ribu'.terbilang($x % 1000);
-        elseif ($x < 1000000000) return terbilang($x / 1000000).' juta'.terbilang($x % 1000000);
-        elseif ($x < 1000000000000) return terbilang($x / 1000000000).' miliar'.terbilang($x % 1000000000);
-        elseif ($x < 1000000000000000) return terbilang($x / 1000000000000).' triliun'.terbilang($x % 1000000000000);
-        elseif ($x < 1000000000000000000) return terbilang($x / 1000000000000000).' kuadriliun'.terbilang($x % 1000000000000000);
-        elseif ($x < 1000000000000000000000) return terbilang($x / 1000000000000000000).' kuantiliun'.terbilang($x % 1000000000000000000);
-        elseif ($x < 1000000000000000000000000) return terbilang($x / 1000000000000000000000).' sekstiliun'.terbilang($x % 1000000000000000000000);
-        elseif ($x < 1000000000000000000000000000) return terbilang($x / 1000000000000000000000000).' septiliun'.terbilang($x % 1000000000000000000000000);
-        elseif ($x < 1000000000000000000000000000000) return terbilang($x / 1000000000000000000000000000).' oktiliun'.terbilang($x % 1000000000000000000000000000);
-        elseif ($x < 1000000000000000000000000000000000) return terbilang($x / 1000000000000000000000000000000).' noniliun'.terbilang($x % 1000000000000000000000000000000);
-        elseif ($x < 1000000000000000000000000000000000000) return terbilang($x / 1000000000000000000000000000000000).' desiliun'.terbilang($x % 1000000000000000000000000000000000);
+        elseif ($x < 20) return self::terbilang($x - 10).' belas';
+        elseif ($x < 100) return self::terbilang($x / 10).' puluh'.self::terbilang($x % 10);
+        elseif ($x < 200) return 'seratus'.self::terbilang($x - 100);
+        elseif ($x < 1000) return self::terbilang($x / 100).' ratus'.self::terbilang($x % 100);
+        elseif ($x < 2000) return 'seribu'.self::terbilang($x - 1000);
+        elseif ($x < 1000000) return self::terbilang($x / 1000).' ribu'.self::terbilang($x % 1000);
+        elseif ($x < 1000000000) return self::terbilang($x / 1000000).' juta'.self::terbilang($x % 1000000);
+        elseif ($x < 1000000000000) return self::terbilang($x / 1000000000).' miliar'.self::terbilang($x % 1000000000);
+        elseif ($x < 1000000000000000) return self::terbilang($x / 1000000000000).' triliun'.self::terbilang($x % 1000000000000);
+        elseif ($x < 1000000000000000000) return self::terbilang($x / 1000000000000000).' kuadriliun'.self::terbilang($x % 1000000000000000);
+        elseif ($x < 1000000000000000000000) return self::terbilang($x / 1000000000000000000).' kuantiliun'.self::terbilang($x % 1000000000000000000);
+        elseif ($x < 1000000000000000000000000) return self::terbilang($x / 1000000000000000000000).' sekstiliun'.self::terbilang($x % 1000000000000000000000);
+        elseif ($x < 1000000000000000000000000000) return self::terbilang($x / 1000000000000000000000000).' septiliun'.self::terbilang($x % 1000000000000000000000000);
+        elseif ($x < 1000000000000000000000000000000) return self::terbilang($x / 1000000000000000000000000000).' oktiliun'.self::terbilang($x % 1000000000000000000000000000);
+        elseif ($x < 1000000000000000000000000000000000) return self::terbilang($x / 1000000000000000000000000000000).' noniliun'.self::terbilang($x % 1000000000000000000000000000000);
+        elseif ($x < 1000000000000000000000000000000000000) return self::terbilang($x / 1000000000000000000000000000000000).' desiliun'.self::terbilang($x % 1000000000000000000000000000000000);
     }
 
 

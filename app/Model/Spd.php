@@ -9,8 +9,8 @@ class Spd extends Model
     protected $table = 'tbl_spd';
 
     protected $fillable = [
-    	"persuratan_id","surat_tugas_id","nomor","nama_pejabat","jabatan",
-    	"tipe_transportasi","status","created_at","updated_at"
+    	"persuratan_id","surat_tugas_id","anggota_id","nomor",
+        "tipe_transportasi","status","created_at","updated_at"
     ];
 
     protected $hidden = [
@@ -20,4 +20,13 @@ class Spd extends Model
     public function surat_tugas() {
     	return $this->belongsTo('App\Model\SuratTugas');
     }
+
+    public function anggota_dewan() {
+        return $this->belongsTo('App\Model\AnggotaDewan','anggota_id');
+    }
+
+    public function staff() {
+        return $this->belongsTo('App\Model\Staff','anggota_id');
+    }
+
 }

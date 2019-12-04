@@ -31,6 +31,10 @@ class SuratTugas extends Model
       return $this->hasMany('App\Model\SuratTugasAnggotaDewan');  
     }
 
+    public function surat_tugas_staff() {
+      return $this->hasMany('App\Model\SuratTugasStaff');
+    }
+
     public function anggota_dewan() {
       return $this->belongsTo('App\Model\AnggotaDewan');  
     }

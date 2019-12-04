@@ -56,10 +56,20 @@
             <div class="col-md-2"></div>
             <div class="col-md-10">
               <ul style="list-style:none;">
-                <?php foreach ($AnggotaDewan as $key => $value): ?>
-                  <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
-                  <li style="font-size: 0.9em">(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
-                <?php endforeach; ?>
+                <?php
+                  if ($user->protokoler_type == 'ad') {
+                   foreach ($AnggotaDewan as $key => $value): ?>
+                    <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
+                    <li style="font-size: 0.9em">(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
+                <?php endforeach; 
+                  } elseif($user->protokoler_type == 'staff') {
+                    foreach ($Staff as $key => $value): ?>
+                    <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->staff->nama ?></li>
+                    <li style="font-size: 0.9em">(<?= ucwords($value->staff->jabatan) ?>)</li>
+                <?php endforeach; 
+                  }
+                ?>
+
               </ul>
             </div>
           </div>
@@ -73,7 +83,7 @@
         <div class="col-md-10" style="padding-left:0;">
             :<ol>
                 <li style="font-size: 0.9em">{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
-                <li>Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li style="font-size: 0.9em">
+                <li style="font-size: 0.9em">Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
                 <li style="font-size: 0.9em">Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
             </ol>
         </div>

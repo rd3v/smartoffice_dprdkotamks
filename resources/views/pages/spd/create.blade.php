@@ -57,6 +57,7 @@
                             <div class="col-10">
                             	<input type="hidden" name="surat_tugas_id" value="{{ $surat_tugas->id }}">
                             	<input type="hidden" name="persuratan_id" value="{{ $surat_tugas->persuratan_id }}">
+
                                 <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
 
                         <div class="alert alert-danger text-center nomor-exist" style="border-color: red;display:none">
@@ -66,23 +67,23 @@
                             </div>
                         </div>                    	
                         <div class="form-group row">
-                            <label for="nama_pejabat" class="col-2 col-form-label">Nama Pejabat</label>
+                            <label for="anggota_id" class="col-2 col-form-label">Nama Pejabat</label>
                             <div class="col-10">
-                                <select class="form-control" name="nama_pejabat" id="nama_pejabat" required>
+                                <select class="form-control" name="anggota_id" id="anggota_id" required>
                                     <option value="">== Pilih ==</option>
-									@foreach($surat_tugas->surat_tugas_anggota_dewan as $value)
-										<option value="{{ $value->anggota_dewan->nama }}">{{ $value->anggota_dewan->nama }}</option>
-									@endforeach
+									@if($user->protokoler_type == 'ad')
+                    @foreach($surat_tugas->surat_tugas_anggota_dewan as $value)
+  										<option value="{{ $value->anggota_dewan->id }}">{{ $value->anggota_dewan->nama }}</option>
+  									@endforeach
+                  @elseif($user->protokoler_type == 'staff')
+                    @foreach($surat_tugas->surat_tugas_staff as $value)
+                      <option value="{{ $value->staff->id }}">{{ $value->staff->nama }}</option>
+                    @endforeach
+                  @endif
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="jabatan" class="col-2 col-form-label">Jabatan</label>
-                            <div class="col-10">
-                                <input name="jabatan" class="form-control" type="input" id="jabatan" readonly>
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                           <label for="dari" class="col-2 col-form-label">Perjalanan Dinas yang diperintahkan</label>
@@ -138,26 +139,22 @@
 
   <script>
 	
-	var jabatan = [];
-  	@foreach($surat_tugas->surat_tugas_anggota_dewan as $value)
-  		jabatan.push({
-  			"nama":"{{ $value->anggota_dewan->nama }}",
-  			"jabatan":"{{ $value->anggota_dewan->jabatan }}"
-  		});
-  	@endforeach
-
-  	$("select[name=nama_pejabat]").change(function() {
-  		var nama_pejabat = $(this).val();
-  		if(nama_pejabat != "") {		
-	  		for (var i = jabatan.length - 1; i >= 0; i--) {
-	  			if(jabatan[i].nama == nama_pejabat) {
-	  				$("input[name=jabatan]").val(jabatan[i].jabatan + " DPRD Kota Makassar");
-	  			}
-	  		}
-  		} else {
-  			$("input[name=jabatan]").val("");
-  		}
-  	});
+  	var jabatan = [];
+      @if($user->protokoler_type == 'ad')
+      	@foreach($surat_tugas->surat_tugas_anggota_dewan as $value)
+      		jabatan.push({
+      			"nama":"{{ $value->anggota_dewan->nama }}",
+      			"jabatan":"{{ $value->anggota_dewan->jabatan }}"
+      		});
+      	@endforeach
+      @elseif($user->protokoler_type == 'staff')
+        @foreach($surat_tugas->surat_tugas_staff as $value)
+          jabatan.push({
+            "nama":"{{ $value->staff->nama }}",
+            "jabatan":"{{ $value->staff->jabatan }}"
+          });
+        @endforeach
+      @endif
 
       $.ajaxSetup({
           headers: {
@@ -185,14 +182,14 @@
         var persuratan_id = $("input[name=persuratan_id]").val();
         var surat_tugas_id = $("input[name=surat_tugas_id]").val();
         var nomor = $("input[name=nomor]").val();
-        var nama_pejabat = $("select[name=nama_pejabat]").val();
+        var anggota_id = $("select[name=anggota_id]").val();
         var jabatan = $("input[name=jabatan]").val();
         var tipe_transportasi = $("select[name=tipe_transportasi]").val();
 
         mydata.nomor = nomor;
         mydata.persuratan_id = persuratan_id;
         mydata.surat_tugas_id = surat_tugas_id;
-        mydata.nama_pejabat = nama_pejabat;
+        mydata.anggota_id = anggota_id;
         mydata.jabatan = jabatan;
         mydata.tipe_transportasi = tipe_transportasi;
 

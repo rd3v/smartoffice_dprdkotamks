@@ -55,12 +55,15 @@
                             <label for="untuk" class="col-2 col-form-label">Untuk</label>
                             <div class="col-10">
                                 <select class="form-control" name="untuk" id="untuk" required>
-                                    <option value="">== Pilih ==</option>
-                                    <option value="a">Komisi A</option>
-                                    <option value="b">Komisi B</option>
-                                    <option value="c">Komisi C</option>
-                                    <option value="d">Komisi D</option>
-                                    <option value="staff">STAFF</option>
+                                    @if($user->protokoler_type == 'ad')
+                                      <option value="">== Pilih ==</option>
+                                      <option value="a">Komisi A</option>
+                                      <option value="b">Komisi B</option>
+                                      <option value="c">Komisi C</option>
+                                      <option value="d">Komisi D</option>
+                                    @elseif($user->protokoler_type == 'staff')
+                                      <option value="staff" selected>STAFF</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>                        
@@ -84,16 +87,25 @@
                         <div class="form-group row">
                             <label for="berdasarkan_surat" class="col-2 col-form-label">Berdasarkan Surat</label>
                             <div class="col-10">
-                                <select class="form-control" name="berdasarkan_surat">
-                                    <option value="">== Pilih ==</option>
-                                    <option value="Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar">Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar</option>
-                                    <option value="Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar">Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar</option>
-                                    <option value="Komisi C Bidang Pembangunan DPRD Kota Makassar">Komisi C Bidang Pembangunan DPRD Kota Makassar</option>
-                                    <option value="Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar">Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar</option>
-                                    <option value="manual">Isi Manual</option>
-                                </select>
-                                <br>
-                                <textarea placeholder="Contoh : Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar Nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80" style="display:none"></textarea>
+                                @if($user->protokoler_type == 'ad')
+                                
+                                  <select class="form-control" name="berdasarkan_surat">
+                                      <option value="">== Pilih ==</option>
+                                      <option value="Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar">Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar</option>
+                                      <option value="Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar">Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar</option>
+                                      <option value="Komisi C Bidang Pembangunan DPRD Kota Makassar">Komisi C Bidang Pembangunan DPRD Kota Makassar</option>
+                                      <option value="Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar">Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar</option>
+                                      <option value="manual">Isi Manual</option>
+                                  </select>
+                                  <br>
+                                  <textarea placeholder="Contoh : Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar Nomor : KB/127/DPRD/VIII/2019" name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80" style="display:none"></textarea>
+                                
+                                @elseif($user->protokoler_type == 'staff')
+
+                                  <textarea name="berdasarkan_surat" id="berdasarkan_surat" class="form-control" rows="8" cols="80"></textarea>
+                                
+                                @endif
+
                             </div>
                         </div>
 
@@ -120,9 +132,15 @@
                           <label for="menugaskan" class="col-2 col-form-label">Menugaskan</label>
                             <div class="col-10">
                               <select id='menugaskan' name="menugaskan" multiple='multiple'>
-                                @foreach($anggota_dewan as $key => $value)
-                                <option value='{{ $value->id }}'>{{ ($key+1).'. '.$value->nama }}</option>
-                                @endforeach
+                                @if($user->protokoler_type == 'ad')
+                                  @foreach($anggota_dewan as $key => $value)
+                                  <option value='{{ $value->id }}'>{{ ($key+1).'. '.$value->nama }}</option>
+                                  @endforeach
+                                @elseif($user->protokoler_type == 'staff')
+                                  @foreach($staff as $key => $value)
+                                  <option value='{{ $value->id }}'>{{ ($key+1).'. '.$value->nama }}</option>
+                                  @endforeach
+                                @endif
                               </select>
                             </div>
                         </div>
@@ -167,11 +185,16 @@
                             <label for="nama_yang_bertanda_tangan" class="col-2 col-form-label">Nama yang bertanda tangan</label>
                             <div class="col-10">
                                 <select class="form-control" name="nama_yang_bertanda_tangan">
-                                  @foreach($anggota_dewan as $value)
-                                    @if($value->jabatan == 'ketua' or $value->jabatan == 'wakil')
-                                      <option value="{{ $value->nama.'-'.$value->jabatan_text }}">{{ $value->nama }} - {{ ucwords($value->jabatan_text) }}</option>
-                                    @endif
-                                  @endforeach
+                                  @if($user->protokoler_type == 'ad')  
+                                    @foreach($anggota_dewan as $value)
+                                      @if($value->jabatan == 'ketua' or $value->jabatan == 'wakil')
+                                        <option value="{{ $value->nama.'-'.$value->jabatan_text }}">{{ $value->nama }} - {{ ucwords($value->jabatan_text) }}</option>
+                                      @endif
+                                    @endforeach
+                                  @elseif($user->protokoler_type == 'staff')
+                                    <option value="H. Andi Sadly, SE, M.Si - Plt. Sekertaris Dewan">H. Andi Sadly, SE, M.Si - Plt. Sekertaris Dewan</option>
+                                    <option value="Syamsul Syamsuddin, SE,S.Sos - Kabag Umum">Syamsul Syamsuddin, SE,S.Sos - Kabag Umum</option>
+                                  @endif
                                 </select>
                             </div>
                         </div>
@@ -250,7 +273,12 @@
 
         mydata.untuk = $("select[name=untuk]").val();
         mydata.nomor = $("input[name=nomor]").val();
-        mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
+        @if($user->protokoler_type == 'ad')
+          mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
+        @elseif($user->protokoler_type == 'staff')
+          mydata.berdasarkan_surat = $("textarea[name=berdasarkan_surat]").val();
+        @endif
+
         mydata.jenis_kegiatan = $("select[name=jenis_kegiatan]").val();
         mydata.tanggal_surat_masuk = $("input[name=tanggal_surat_masuk]").val();
         mydata.perihal = $("input[name=perihal]").val();

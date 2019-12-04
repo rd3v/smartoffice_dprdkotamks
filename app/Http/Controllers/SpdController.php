@@ -59,8 +59,7 @@ class SpdController extends Controller
           'nomor'                   => 'required|unique:tbl_spd',
           'persuratan_id'           => 'required',
           'surat_tugas_id'          => 'required',
-          'nama_pejabat'            => 'required',
-          'jabatan'                 => 'required',
+          'anggota_id'              => 'required',
           'tipe_transportasi'       => 'required'
       ];
 
@@ -75,9 +74,8 @@ class SpdController extends Controller
       } else {
           $Spd->persuratan_id            = $request->persuratan_id;
           $Spd->surat_tugas_id           = $request->surat_tugas_id;
+          $Spd->anggota_id               = $request->anggota_id;
           $Spd->nomor                    = $request->nomor;
-          $Spd->nama_pejabat             = $request->nama_pejabat;
-          $Spd->jabatan                  = $request->jabatan;
           $Spd->tipe_transportasi        = $request->tipe_transportasi;
           $Spd->status                   = 0;
 
@@ -145,9 +143,9 @@ class SpdController extends Controller
         $SuratTugas = new $SuratTugasClass;
 
         $this->data['user'] = Auth::user();
-        $this->data['surat_tugas'] = $SuratTugas->with(['surat_tugas_anggota_dewan' => function($query) {
-            $query->with('anggota_dewan')->get();
-        }])->where('id',$surat_tugas_id)->first();
+        
+        $this->data['surat_tugas'] = $this->data['user']->protokoler_type == 'ad' ? $SuratTugas->with('surat_tugas_anggota_dewan')->where('id',$surat_tugas_id)->first() : $SuratTugas->with('surat_tugas_staff')->where('id',$surat_tugas_id)->first();
+
         return view('pages.spd.create',$this->data);        
     }
 
@@ -163,9 +161,13 @@ class SpdController extends Controller
       $SpdClass = "App\Model\Spd";
       $Spd = new $SpdClass;
 
+      $this->data['user'] = Auth::user();
       $this->data['data'] = Settings::getOne();
       $this->data['Spd'] = (object) $Spd->with('surat_tugas')->where(['id' => $id])->first();
       $this->data['Spd']->surat_tugas->tanggal_dikeluarkan = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_dikeluarkan);
+
+      $this->data['tanggal_mulai'] = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_mulai);
+      $this->data['tanggal_akhir'] = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_akhir);
 
       return view('pages.spd.protokoler.surat_perjalanan_dinas',$this->data);
     }
@@ -174,10 +176,21 @@ class SpdController extends Controller
     public function print() {
       $SpdClass = "App\Model\Spd";
       $Spd = new $SpdClass;
- 
+
+      $user = Auth::user();
+      $this->data['user'] = $user;
       $this->data['data'] = Settings::getOne();
-      $this->data['Spd'] = (object) $Spd->with('surat_tugas')->where(['status' => 0])->first();
+
+      if($user->protokoler_type == 'ad') {
+        $this->data['Spd'] = (object) $Spd->with('surat_tugas','anggota_dewan')->where(['status' => 0])->first();
+      } else if($user->protokoler_type == 'staff') {
+        $this->data['Spd'] = (object) $Spd->with('surat_tugas','staff')->where(['status' => 0])->first();
+      }
+
       $this->data['Spd']->surat_tugas->tanggal_dikeluarkan = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_dikeluarkan);
+      
+      $this->data['tanggal_mulai'] = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_mulai);
+      $this->data['tanggal_akhir'] = MyLibHelper::tgl_indo($this->data['Spd']->surat_tugas->tanggal_akhir);
 
       return view('pages.spd.protokoler.surat_perjalanan_dinas',$this->data);
     }

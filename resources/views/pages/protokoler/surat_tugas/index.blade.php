@@ -45,7 +45,15 @@
 
                             <a href="{{ route('surat-tugas.create') }}" class="btn btn-success" style="float:right"><i class="fa fa-file"></i>+ Buat Surat Tugas</a>
 
-                            <h3 class="box-title m-b-0">Data Surat Tugas</h3>
+                            <h3 class="box-title m-b-0">Data Surat Tugas |
+                              <b>
+                                @if($user->protokoler_type == 'ad')
+                                  Komisi
+                                @elseif($user->protokoler_type == 'staff')
+                                  Staff
+                                @endif
+                              </b>
+                            </h3>
                             <p class="text-muted m-b-30"></p>
                             <div class="table-responsive">
                                 <table id="table-surat" class="display responsive nowrap" cellspacing="0" width="100%">
@@ -55,6 +63,7 @@
                                             <th>Surat</th>
                                             <th>Tanggal Masuk</th>
                                             <th>Perihal</th>
+                                            <th>Tempat</th>
                                             <th>Lama Kegiatan</th>
                                             <th>Aksi</th>
                                     </thead>
@@ -64,6 +73,7 @@
                                             <th>Surat</th>
                                             <th>Tanggal Masuk</th>
                                             <th>Perihal</th>
+                                            <th>Tempat</th>
                                             <th>Lama Kegiatan</th>
                                             <th>Aksi</th>
                                     </tfoot>
@@ -79,14 +89,14 @@
                                            ?>
                                           <td><?= $str_tanggal_surat_masuk[2].' / '.$str_tanggal_surat_masuk[1].' / '.$str_tanggal_surat_masuk[0] ?></td>
                                           <td><?= ucwords($value->perihal) ?></td>
+                                          <td><?= ucfirst($value->tempat) ?></td>
                                           <?php
                                             $date1 = date_create($value->tanggal_mulai);
                                             $date2 = date_create($value->tanggal_akhir);
                                             $days  = date_diff($date1,$date2);
-                                           ?>
-                                           <?php
-                                               $str_tanggal_mulai = explode('-',$value->tanggal_mulai);
-                                               $str_tanggal_akhir = explode('-',$value->tanggal_akhir);
+                                           
+                                             $str_tanggal_mulai = explode('-',$value->tanggal_mulai);
+                                             $str_tanggal_akhir = explode('-',$value->tanggal_akhir);
                                             ?>
 
                                           <td><?= $str_tanggal_mulai[2].' / '.$str_tanggal_mulai[1].' / '.$str_tanggal_mulai[0].' - '.$str_tanggal_akhir[2].' / '.$str_tanggal_akhir[1].' / '.$str_tanggal_akhir[0].' ('.($days->format('%a')+1).' Hari)' ?> </td>
@@ -99,7 +109,8 @@
                                               
                                                 @foreach($value->spd as $spd)
                                                   <br>
-                                                  <a href="{{ route('printthisspd',['id' => $spd->id]) }}" target="_blank" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->nama_pejabat }}</a>
+                                                  <!-- <a href="{{ route('printthisspd',['id' => $spd->id]) }}" target="_blank" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->staff->nama }}</a> -->
+                                                  <button onclick="printspd('{{$spd->id}}')" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->staff->nama }}</button>
                                                 @endforeach
                                               
                                               @endif
@@ -107,9 +118,16 @@
                                             <br>
                                               <a href="{{ url('protokoler/spd/buat/'.$value->id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT SPD</a>
                                             <br><br>
-                                              <a href="{{ url('protokoler/rincian-awal/create/'.$value->persuratan_id) }}" class="btn btn-info"><i class="fa fa-file"></i>+ BUAT RINCIAN AWAL</a>
+
+                                              @if($user->protokoler_type == 'ad')
+                                              <button onclick='print_rincian_awal("{{$value->id}}","ad","{{ ucfirst($value->tempat) }}")' class="btn btn-success"><i class="fa fa-print"></i> PRINT RINCIAN AWAL</button>
+                                                  
+                                              @elseif($user->protokoler_type == 'staff')
+                                              <button onclick='print_rincian_awal("{{$value->id}}","staff","{{ ucfirst($value->tempat) }}")' class="btn btn-success"><i class="fa fa-print"></i> PRINT RINCIAN AWAL</button>
+                                              @endif
+                                            
                                             <br><br>
-                                              <a href="{{ url('protokoler/rekapan/print') }}" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> PRINT REKAPAN</a>
+                                              <a href="{{ url('protokoler/rekapan/print') }}" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> PRINT REKAPAN</a>
 
                                               <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
                                           </td>
@@ -164,6 +182,92 @@
             });
 
         })();
+
+      function print_rincian_awal(surat_tugas_id,type,tujuan) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var url = "";
+            if (type == 'ad') {
+              url = "{{ url('getAnggotaDewan') }}";
+            } else if(type == 'staff') {
+              url = "{{ url('getStaff') }}";
+            }
+
+            $.ajax({
+                url:url,
+                type:"post",
+                data:{surat_tugas_id:surat_tugas_id},
+                dataType:"json"
+            }).done(function(res) {
+
+              var html = "";
+              html += "<input type='text' value='Makassar - "+tujuan+"' class='form-control' style='margin-bottom:0.5em' readonly>";
+              html += "<input name='asal' type='number' placeholder='Harga Tiket Makassar' class='form-control' style='margin-bottom:0.5em'>";
+              html += "<input name='tujuan' type='number' placeholder='Harga Tiket "+tujuan+"' class='form-control' style='margin-bottom:0.5em'>";
+              html += "<select name='anggota' class='form-control'>";
+              if(type == 'ad') {
+                for (var i = res.length - 1; i >= 0; i--) {
+                   html += "<option value='"+res[i].anggota_dewan.id+"'>" + res[i].anggota_dewan.nama + "</option>";
+                }
+              } else if(type == 'staff') {
+                for (var i = res.length - 1; i >= 0; i--) {
+                   html += "<option value='"+res[i].staff.id+"'>" + res[i].staff.nama + "</option>";
+                }
+              }
+
+              html += "</select>";
+
+              Swal.fire({
+                title: "PRINT RINCIAN AWAL",
+                html:html,
+                confirmButtonText: '<i class="fa fa-print"></i> PRINT RINCIAN AWAL',
+                cancelButtonText: 'Batal',
+                showLoaderOnConfirm: true,
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-success',
+                onOpen: function() {
+                      swal.disableConfirmButton();
+
+                      $("input[name=asal]").on('input', function() {
+                        if($(this).val() != "" && $("input[name=tujuan]").val() != "") {
+                            swal.enableConfirmButton();
+                          } else {
+                            swal.disableConfirmButton();
+                          }
+                      });
+
+                      $("input[name=tujuan]").on('input', function() {
+                        if($(this).val() != "" && $("input[name=asal]").val() != "") {
+                            swal.enableConfirmButton();
+                          } else {
+                            swal.disableConfirmButton();
+                          }
+                      });
+
+                  }
+                }).then(function (result) {
+                    
+                    var anggota_id = $("select[name=anggota]").val();
+                    var asal = $("input[name=asal]").val();
+                    var tujuan = $("input[name=tujuan]").val();
+
+                    if(result.value) {
+                      var w = window.open("{{ url('protokoler/rincian-awal/print') }}/"+surat_tugas_id+"/"+anggota_id+"/"+asal+"/"+tujuan,"_blank");
+                      w.print();
+                    }
+
+                }).catch(swal.noop)
+
+            }).fail(function(res) {
+                console.log(res);
+            });
+
+      }
 
       $(document).on('click','.btn-batal',function(e) {
           var id = $(this).data("id");
@@ -239,9 +343,8 @@
       }
 
       function printspd(id) {
-        // var w = window.open("<?= url('protokoler/surat-tugas/printthis') ?>" + '/' + id);
-        // w.print();
-        Swal.fire("On Progress","","info");
+        var w = window.open("<?= url('protokoler/spd/printthis') ?>" + '/' + id);
+        w.print();
       }
 
     </script>

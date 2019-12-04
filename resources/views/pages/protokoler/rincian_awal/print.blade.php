@@ -42,27 +42,35 @@
         <tr>
           <td>Lampiran SPPD Nomor</td>
           <td>:</td>
-          <td>090/1120/DPRD/VIII/2019</td>
+          <td>{{ $spd->nomor }}</td>
         </tr>
         <tr>
           <td>Tanggal</td>
           <td>:</td>
-          <td>22 Agutus 2019</td>
+          <td>{{ $tanggal }}</td>
         </tr>
         <tr>
           <td>Tujuan SPPD</td>
           <td>:</td>
-          <td>Bandung</td>
+          <td>{{ ucfirst($spd->surat_tugas->tempat) }}</td>
         </tr>
         <tr>
           <td>Nama</td>
           <td>:</td>
-          <td>BADARUDDIN OPHIER</td>
+          @if($user->protokoler_type == 'ad')
+            <td>{{ $spd->anggota_dewan->nama }}</td>
+          @elseif($user->protokoler_type == 'staff')
+            <td>{{ $spd->staff->nama }}</td>
+          @endif      
         </tr>
         <tr>
           <td>Jabatan</td>
           <td>:</td>
-          <td>(Anggota DPRD Kota Makassar)</td>
+          @if($user->protokoler_type == 'ad')
+            <td>{{ $spd->anggota_dewan->jabatan_text }}</td>
+          @elseif($user->protokoler_type == 'staff')
+            <td>{{ $spd->staff->jabatan }}</td>
+          @endif      
         </tr>
       </table>
     
@@ -80,50 +88,50 @@
         <tbody>
           <tr>
             <td>1</td>
-            <td>Makassar - JAKARTA</td>
+            <td>MAKASSAR - {{ strtoupper($spd->surat_tugas->tempat) }}</td>
             <td>1</td>
-            <td>Rp.2.083.000</td>
-            <td>Rp.2.083.000</td>
+            <td>Rp{{ number_format($biaya_asal_makassar) }}</td>
+            <td>Rp{{ number_format($biaya_asal_makassar) }}</td>
             <td></td>
           </tr>
           <tr>
             <td>2</td>
-            <td>JAKARTA - MAKASSAR</td>
+            <td>{{ strtoupper($spd->surat_tugas->tempat) }} - MAKASSAR</td>
             <td>1</td>
-            <td>Rp.1.772.100</td>
-            <td>Rp.2.083.000</td>
+            <td>Rp{{ number_format($biaya_tujuan) }}</td>
+            <td>Rp{{ number_format($biaya_tujuan) }}</td>
             <td></td>
           </tr>
           <tr>
             <td>3</td>
             <td>BIAYA HARIAN</td>
-            <td>3</td>
-            <td>Rp.2.083.000</td>
-            <td>Rp.2.083.000</td>
+            <td>{{ ($lama_kegiatan-1) }}</td>
+            <td>Rp{{ number_format($satuan_harian) }}</td>
+            <td>Rp{{ number_format($biaya_harian) }}</td>
             <td></td>
           </tr>
           <tr>
             <td>4</td>
             <td>BIAYA HOTEL</td>
-            <td>2</td>
-            <td>Rp.1.490.000</td>
-            <td>Rp.894.000</td>
+            <td>{{ ($lama_kegiatan-1) }}</td>
+            <td>Rp{{ number_format($satuan_hotel) }}</td>
+            <td>Rp{{ number_format($biaya_hotel) }}</td>
             <td>Hotel 30%</td>
           </tr>
           <tr>
             <td>5</td>
             <td>BIAYA TAKSI MAKASSAR</td>
-            <td>2</td>
-            <td>Rp.145.000</td>
-            <td>Rp.290.000</td>
+            <td>{{ ($lama_kegiatan-1) }}</td>
+            <td>Rp{{ number_format($satuan_taksi_makassar) }}</td>
+            <td>Rp{{ number_format($biaya_taksi_makassar) }}</td>
             <td></td>
           </tr>
           <tr>
             <td>6</td>
-            <td>BIAYA TAKSI JAKARTA</td>
-            <td>2</td>
-            <td>Rp.170.000</td>
-            <td>Rp.340.000</td>
+            <td>BIAYA TAKSI {{ strtoupper($spd->surat_tugas->tempat) }}</td>
+            <td>{{ ($lama_kegiatan-1) }}</td>
+            <td>Rp{{ number_format($satuan_taksi_tujuan) }}</td>
+            <td>Rp{{ number_format($biaya_taksi_tujuan) }}</td>
             <td></td>
           </tr>
           <tr>
@@ -146,12 +154,12 @@
             <td></td>
             <td><b>JUMLAH</b></td>
             <td></td>
-            <td><b>Rp.7.860.100</b></td>
-            <td><b>Rp.11.979.100</b></td>
+            <td><b>Rp{{ number_format($satuan_jumlah) }}</b></td>
+            <td><b>Rp{{ number_format($total_jumlah) }}</b></td>
             <td></td>
           </tr>
           <tr>
-            <td colspan="5" class="text-center">Terbilang :  Sebelas Juta Sembilan Ratus Tujuh Puluh Sembilan Ribu Seratus Rupiah,-</td>
+            <td colspan="5" class="text-center">Terbilang :  {{ ucfirst($terbilang) }},-</td>
             <td></td>
           </tr>
 
@@ -162,7 +170,7 @@
 
       <table class="table">
         <tr>
-          <td class="text-right">Makassar, 21 Agustus 2019</td>
+          <td class="text-right">Makassar, {{ $tanggal }}</td>
         </tr>
       </table>
 
@@ -172,8 +180,8 @@
           <td class="text-right">Telah menerima sejumlah sebesar</td>
         </tr>
         <tr>
-          <td><b>Rp.11.979.100</b></td>
-          <td class="text-right"><b>Rp.11.979.100</b></td>
+          <td><b>Rp{{ number_format($total_jumlah) }}</b></td>
+          <td class="text-right"><b>Rp{{ number_format($total_jumlah) }}</b></td>
         </tr>
       </table>
 
