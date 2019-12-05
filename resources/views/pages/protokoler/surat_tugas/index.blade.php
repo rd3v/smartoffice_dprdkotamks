@@ -110,7 +110,11 @@
                                                 @foreach($value->spd as $spd)
                                                   <br>
                                                   <!-- <a href="{{ route('printthisspd',['id' => $spd->id]) }}" target="_blank" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->staff->nama }}</a> -->
-                                                  <button onclick="printspd('{{$spd->id}}')" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->staff->nama }}</button>
+                                                  @if($user->protokoler_type == 'ad')
+                                                    <button onclick="printspd('{{$spd->id}}')" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->anggota_dewan->nama }}</button>
+                                                  @elseif($user->protokoler_type == 'staff')
+                                                    <button onclick="printspd('{{$spd->id}}')" class="btn btn-success btn-outline"><i class="fa fa-print"></i> PRINT SPD {{ $spd->staff->nama }}</button>
+                                                  @endif
                                                 @endforeach
                                               
                                               @endif
