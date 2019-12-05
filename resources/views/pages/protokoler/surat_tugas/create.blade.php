@@ -91,10 +91,10 @@
                                 
                                   <select class="form-control" name="berdasarkan_surat">
                                       <option value="">== Pilih ==</option>
-                                      <option value="Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar">Komisi A Bidang Hukum dan Pemerintahan DPRD Kota Makassar</option>
+                                      <option value="Komisi A Bidang Pemerintahan DPRD Kota Makassar">Komisi A Bidang Pemerintahan DPRD Kota Makassar</option>
                                       <option value="Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar">Komisi B Bidang Perekonomian dan Keuangan DPRD Kota Makassar</option>
                                       <option value="Komisi C Bidang Pembangunan DPRD Kota Makassar">Komisi C Bidang Pembangunan DPRD Kota Makassar</option>
-                                      <option value="Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar">Komisi D Bidang Pendidikan dan Kesejahteraan Masyarakat DPRD Kota Makassar</option>
+                                      <option value="Komisi D Bidang Kesra DPRD Kota Makassar">Komisi D Bidang Kesra DPRD Kota Makassar</option>
                                       <option value="manual">Isi Manual</option>
                                   </select>
                                   <br>
