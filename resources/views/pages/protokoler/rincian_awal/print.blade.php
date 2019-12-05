@@ -67,9 +67,9 @@
           <td>Jabatan</td>
           <td>:</td>
           @if($user->protokoler_type == 'ad')
-            <td>{{ $spd->anggota_dewan->jabatan_text }}</td>
+            <td>{{ ucfirst($spd->anggota_dewan->jabatan_text) }}</td>
           @elseif($user->protokoler_type == 'staff')
-            <td>{{ $spd->staff->jabatan }}</td>
+            <td>{{ ucfirst($spd->staff->jabatan) }}</td>
           @endif      
         </tr>
       </table>

@@ -9,11 +9,11 @@ class AnggotaDewan extends Model
   protected $table = 'tbl_anggota_dewan';
 
   protected $fillable = [
-    "nama","partai_id","jabatan_id","komisi","jabatan","jabatan_text"
+    "id","nama","partai_id","jabatan_id","komisi","jabatan","jabatan_text"
   ];
 
   protected $hidden = [
-    "id","created_at","updated_at"
+    "created_at","updated_at"
   ];
 
   public function partai() {

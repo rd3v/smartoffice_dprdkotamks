@@ -5,7 +5,12 @@
 @endsection
 
 @section('css')
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="theme-styles">
+<style>
+.swal2-popup {
+  font-size: 1.6rem !important;
+  }
+</style>
 @endsection
 
 @section('konten')
@@ -61,6 +66,8 @@
                                             @endif
                                         </address>
                                     </p>
+                                    <button class="btn btn-success" onclick="rekapan()" target="_blank"><i class="fa fa-file"></i> Rekapan Perjalanan Dinas</button>
+                                    <!-- <a class="btn btn-success" href="{{ url('komisi/rekapan/print') }}" target="_blank"><i class="fa fa-file"></i> Rekapan Perjalanan Dinas</a> -->
                                 </div>
                             </div>
                         </div>
@@ -81,9 +88,15 @@
 @section('js')
 <script src="{{ asset('public/assets/v2') }}/js/custom.min.js"></script>
 <script src="{{ asset('public/assets/v2') }}/js/cbpFWTabs.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
+
 @endsection
 
 @section('myscript')
-
+    <script>
+        function rekapan() {
+            Swal.fire("On Progress","","info");
+        }
+    </script>
 @endsection
 

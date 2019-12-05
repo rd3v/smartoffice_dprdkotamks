@@ -28,14 +28,26 @@ class SuratTugasController extends Controller
 
       $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
       if($SuratTugasDelete) {
-        $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
+        $Persuratan->where(['surat_tugas_id' => $SuratTugas->id])->delete();
       }
 
       $this->data['user'] = Auth::user();
-      $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
-            $query->with('staff')->get();
-        }
-      ])->where('status','!=','batal')->where('untuk',$this->data['user']->protokoler_type)->orderBy('id','desc')->get();
+      
+      if ($this->data['user']->protokoler_type == 'ad') {
+
+        $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
+              $query->with('anggota_dewan')->get();
+          }
+        ])->where('status','!=','batal')->whereIn('untuk',['a','b','c','d'])->orderBy('id','desc')->get();
+
+      } else if($this->data['user']->protokoler_type == 'staff') {
+        
+        $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
+                $query->with('staff')->get();
+            }
+          ])->where('status','!=','batal')->where('untuk','staff')->orderBy('id','desc')->get();
+      
+      }
 
       $Persuratan_DataSurat = [];
       foreach ($dp as $value) {
@@ -282,7 +294,7 @@ class SuratTugasController extends Controller
       $this->data['SuratTugas'] = (object) $SuratTugas->where(['id' => $id])->first();      
       if ($user->protokoler_type == 'ad') {
         $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
-        $AnggotaDewan = new $SuratTugasAnggotaDewanClass;
+        $SuratTugasAnggotaDewan = new $SuratTugasAnggotaDewanClass;
         
         $AnggotaDewanClass = "App\Model\AnggotaDewan";
         $AnggotaDewan = new $AnggotaDewanClass;

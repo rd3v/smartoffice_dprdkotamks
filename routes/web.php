@@ -41,7 +41,7 @@ Route::group([
   Route::get('spd/buat/{persuratan_id}','SpdController@buatspd')->name('buatspd');
 
   Route::get('rincian-awal/create/{persuratan_id}','RincianAwalController@create');
-  Route::get('rekapan/print','RekapanController@print');
+  
   Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
   Route::resource('spd','SpdController');
   Route::resource('rincian-awal','RincianAwalController')->except(['index','create','edit','update','destroy']);
@@ -83,6 +83,7 @@ Route::group([
 	'prefix' => 'komisi',
 	'middleware' => 'App\Http\Middleware\KomisiMiddleware'
 ], function() {
+	Route::get('rekapan/print','RekapanController@print');
 	Route::get('laporan-perjalanan-dinas/upload-kelengkapan/{id}','LaporanPerjalananDinasController@uploadKelengkapan')->name('upload-kelengkapan');
 	Route::get('laporan-perjalanan-dinas/edit-kelengkapan/{kelengkapan_id}','LaporanPerjalananDinasController@editKelengkapan')->name('edit-kelengkapan');
 	Route::resource('laporan-perjalanan-dinas', 'LaporanPerjalananDinasController');
@@ -118,4 +119,5 @@ Route::get('403',function() {
 # AJAX
 Route::post('postTiketPerjalananComment','Ajax\PostCommentsController@tiketPerjalanan')->name('postTiketPerjalananComment');
 Route::post('getAnggotaDewan','Ajax\AnggotaDewanController@get')->name('getAnggotaDewan');
+Route::post('getAnggotaDewanByKomisi','Ajax\AnggotaDewanController@getByKomisi')->name('getAnggotaDewanByKomisi');
 Route::post('getStaff','Ajax\StaffController@get')->name('getStaff');

@@ -14,9 +14,7 @@ class DashboardController extends MyController {
 
         $user = Auth::user();
 
-    	$data = [
-    		"user"	=> $user
-    	];
+    	$data["user"] = $user;
 
     	switch ($user->level) {
             case 'admin':
@@ -40,6 +38,9 @@ class DashboardController extends MyController {
 	
             case 'bendahara':
                 return view('pages.dashboard.bendahara',$data);
+
+            case 'staff':
+                return view('pages.dashboard.staff',$data);
             
                 break;
     

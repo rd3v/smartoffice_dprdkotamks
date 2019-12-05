@@ -127,7 +127,6 @@
                                               @endif
                                             
                                             <br><br>
-                                              <a href="{{ url('protokoler/rekapan/print') }}" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> PRINT REKAPAN</a>
 
                                               <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
                                           </td>

@@ -228,8 +228,39 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
 
   <script>
+      
+      $("select[name=untuk]").change(function() {
+          var komisi = $(this).val();
+          $.ajax({
+              url:"{{url('getAnggotaDewanByKomisi')}}",
+              type:"post",
+              data:{komisi:komisi},
+              dataType:"json"
+          }).done(function(res) {
+
+              $('#menugaskan').empty().multiSelect('refresh');
+
+              var data = [];
+              var j = 1;
+              for (var i = res.length - 1; i >= 0; i--) {
+                 data.push({
+                  'text':res[i].nama,
+                  'value':res[i].id
+                 });
+
+                 $('#menugaskan').append("<option value='"+res[i].id+"'>"+ j + ". " + res[i].nama+"</option>");
+                 j++;
+              }
+
+              $('#menugaskan').multiSelect('refresh');              
+
+          }).fail(function(res) {
+              console.log(res);
+          });
+      });
 
       $('#menugaskan').multiSelect();
+
       $('.input-daterange-datepicker').daterangepicker({
           buttonClasses: ['btn', 'btn-sm'],
           applyClass: 'btn-danger',
