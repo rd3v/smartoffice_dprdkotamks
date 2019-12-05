@@ -30,8 +30,8 @@
 
     <div class="row" style="margin-top:12em">
       <div class="col-md-12 text-center">
-          <h6 style="text-decoration:underline">SURAT TUGAS</h6>
-          <p><b>Nomor : {{ strtoupper($SuratTugas->nomor) }}</b></p>
+          <p style="text-decoration:underline;font-size:0.7em;font-weight:bolder">SURAT TUGAS</p>
+          <p style="font-size:0.7em;font-weight:bolder"><b>Nomor : {{ strtoupper($SuratTugas->nomor) }}</b></p>
       </div>
       <div class="col-md-12">
           <p style="font-weight:normal;padding-left:4em;margin-top:0.7em;font-size: 0.85em">
