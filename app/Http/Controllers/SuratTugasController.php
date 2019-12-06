@@ -378,8 +378,9 @@ class SuratTugasController extends MyController
       $text = [
           "action" => "store",
           "module" => "Surat Tugas",
+          "type" => ucfirst(Auth::user()->protokoler_type),
           "nomor" => $value->nomor,
-          "perihal" => $value->perihal,
+          "perihal" => ucfirst($value->perihal),
           "status" => $SuratTugas
       ];
 
