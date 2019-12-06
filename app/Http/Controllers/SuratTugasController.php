@@ -10,7 +10,7 @@ use App\Helpers\MyLibHelper;
 use Auth;
 use Validator;
 
-class SuratTugasController extends Controller
+class SuratTugasController extends MyController
 {
 
     public function __construct() {}
@@ -122,7 +122,7 @@ class SuratTugasController extends Controller
 
       $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
       if($SuratTugasDelete) {
-        $Persuratan->where(['sppd_id' => null,'rincian_id' => null])->delete();
+
       }
 
       $rules = [
@@ -214,7 +214,9 @@ class SuratTugasController extends Controller
                 $ResultSuratTugas = $SuratTugas->where('persuratan_id',null)->update(['persuratan_id' => $Persuratan->id]);
                 
                 if($ResultSuratTugas) {
+  
                   $response = ['state' => true,'title' => 'Sukses','text' => 'Data telah tersimpan','type' => 'success'];
+                
                 } else {
                   $response = ['state' => false,'title' => 'Gagal','text' => 'Data gagal tersimpan, silahkan hubungi admin','type' => 'error'];
                 }
@@ -370,7 +372,19 @@ class SuratTugasController extends Controller
       $SuratTugasClass = "App\Model\SuratTugas";
       $SuratTugas = new $SuratTugasClass;
 
-      $SuratTugas->where('status',0)->update(['status' => 1]);
+      $value = $SuratTugas->where('status',0)->first();
+      $SuratTugas->where('id',$value->id)->update(['status' => 1]);
+
+      $text = [
+          "module" => "Surat Tugas",
+          "action" => "store",
+          "nomor" => $value->nomor,
+          "perihal" => $value->perihal,
+          "status" => $SuratTugas
+      ];
+
+      $this->TelegramNotify($text);
+
     }
 
     public function checkNomorSuratTugas(Request $request) {

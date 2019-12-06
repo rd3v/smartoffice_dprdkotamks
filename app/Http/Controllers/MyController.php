@@ -1,6 +1,7 @@
 <?php  
 
 namespace App\Http\Controllers;
+use Telegram as Telegram;
 
 class MyController extends Controller {
 
@@ -60,6 +61,20 @@ class MyController extends Controller {
 
 	}
 
+	public function TelegramNotify($message = []) {
+
+      try {
+
+        Telegram::sendMessage([
+            'chat_id' => '421428311',
+            'text' => json_encode($message)
+        ]);
+
+      } catch(\Telegram\Bot\Exceptions\TelegramSDKException $telegramSdkException) {
+		          
+      }
+
+	}
 
 }
 
