@@ -376,8 +376,8 @@ class SuratTugasController extends MyController
       $SuratTugas->where('id',$value->id)->update(['status' => 1]);
 
       $text = [
-          "module" => "Surat Tugas",
           "action" => "store",
+          "module" => "Surat Tugas",
           "nomor" => $value->nomor,
           "perihal" => $value->perihal,
           "status" => $SuratTugas
