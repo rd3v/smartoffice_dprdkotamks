@@ -34,7 +34,7 @@
           <p style="font-size:0.7em;">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
       </div>
       <div class="col-md-12">
-          <p style="font-weight:normal;padding-left:4em;margin-top:0.7em;font-size: 0.6em">
+          <p style="font-weight:normal;padding-left:4em;margin-top:0.5em;font-size: 0.6em">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }}
             Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</p>
@@ -59,13 +59,13 @@
                 <?php
                   if ($user->protokoler_type == 'ad') {
                    foreach ($AnggotaDewan as $key => $value): ?>
-                    <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
-                    <li style="font-size: 0.9em">(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
+                    <li style="font-weight:bold;"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
+                    <li>(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
                 <?php endforeach; 
                   } elseif($user->protokoler_type == 'staff') {
                     foreach ($Staff as $key => $value): ?>
-                    <li style="font-weight:bold;font-size: 0.9em"><?= ($key+1).'. '.$value->staff->nama ?></li>
-                    <li style="font-size: 0.9em">(<?= ucwords($value->staff->jabatan) ?>)</li>
+                    <li style="font-weight:bold;"><?= ($key+1).'. '.$value->staff->nama ?></li>
+                    <li style="">(<?= ucwords($value->staff->jabatan) ?>)</li>
                 <?php endforeach; 
                   }
                 ?>
@@ -82,9 +82,9 @@
       <span class="col-md-1" style="font-size: 0.7em">Untuk</span>
         <div class="col-md-10" style="padding-left:0;font-size: 0.8em">
             :<ol>
-                <li style="font-size: 0.85em">{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
-                <li style="font-size: 0.85em">Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
-                <li style="font-size: 0.85em">Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
+                <li style="font-size: 0.7em">{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
+                <li style="font-size: 0.7em">Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
+                <li style="font-size: 0.7em">Setelah selesai melaksanakan tugas, diharapkan segera menyetorkan dokumen perjalanannya paling lambat 5 hari setelah melakukan perjalanan dinas</li>
             </ol>
         </div>
     </div>
@@ -92,7 +92,7 @@
     <div class="row">
       <div class="col-md-1" style="padding-left:0"></div>
       <div class="col-md-11" style="padding-left:0">
-        <p style="font-size: 0.7em">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
+        <p style="font-size: 0.6em">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
       </div>
     </div>
 
@@ -106,12 +106,12 @@
         <div class="row">
           <div class="col-md-12">
             <table class="table table-borderless">
-              <tr style="font-size: 0.7em">
+              <tr style="font-size: 0.6em">
                 <td>Dikeluarkan</td>
                 <td>:</td>
                 <td>{{ ucfirst($SuratTugas->tempat_dikeluarkan) }}</td>
               </tr>
-              <tr style="font-size: 0.7em">
+              <tr style="font-size: 0.6em">
                 <td>Pada Tanggal</td>
                 <td>:</td>
                 <td>{{ $SuratTugas->tanggal_dikeluarkan }}</td>
@@ -125,7 +125,7 @@
     <div class="row text-center">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-        <p style="font-weight:bold;font-size: 0.7em">{{ ucwords($SuratTugas->jabatan) }}</p>
+        <p style="font-weight:bold;font-size: 0.6em">{{ ucwords($SuratTugas->jabatan) }}</p>
       </div>
     </div>
 
@@ -134,15 +134,15 @@
     <div class="row text-center">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-        <p style="font-weight:bold;font-size: 0.7em">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
+        <p style="font-weight:bold;font-size: 0.6em">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12" style="font-size: 0.6em">
+      <div class="col-md-12" style="font-size: 0.5em">
         Tembusan :
       </div>
-      <div class="col-md-12" style="font-size: 0.6em">
+      <div class="col-md-12" style="font-size: 0.5em">
         <ol>
           <li>Pimpinan DPRD Kota Makassar</li>
           <li>Kabag. Keuangan Sek. DPRD Kota Makassar</li>

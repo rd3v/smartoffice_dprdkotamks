@@ -31,7 +31,7 @@
 
     <div class="row">
       <div class="col-md-12 text-center">
-          <h56>RINCIAN BIAYA PERJALANAN DINAS TA 2019 BERDASARKAN KEPUTUSAN WALIKOTA MAKASSAR <br> NOMOR : 2220/090/TAHUN 2018 </h6>
+          <h6>RINCIAN BIAYA PERJALANAN DINAS TA 2019 BERDASARKAN KEPUTUSAN WALIKOTA MAKASSAR <br> NOMOR : 2220/090/TAHUN 2018 </h6>
       </div>
       <div class="col-md-12">
           <h6 style="font-weight:normal;padding-left:4em;margin-top:0.7em"></h6>
@@ -105,7 +105,7 @@
           <tr>
             <td>3</td>
             <td>BIAYA HARIAN</td>
-            <td>{{ ($lama_kegiatan-1) }}</td>
+            <td>{{ ($lama_kegiatan) }}</td>
             <td>Rp{{ number_format($satuan_harian) }}</td>
             <td>Rp{{ number_format($biaya_harian) }}</td>
             <td></td>
@@ -197,7 +197,11 @@
       <table class="table">
         <tr>
           <td><b><u>{{ $data->bendahara }}</u></b></td>
-          <td class="text-right"><b><u>BADARUDDIN OPHIER</u></b></td>
+          @if($user->protokoler_type == 'ad')
+            <td class="text-right"><b><u>{{ $spd->anggota_dewan->nama }}</u></b></td>
+          @elseif($user->protokoler_type == 'staff')
+            <td class="text-right"><b><u>{{ $spd->staff->nama }}</u></b></td>
+          @endif        
         </tr>
         <tr>
           <td>NIP.{{ $data->bendaharanip }}</td>

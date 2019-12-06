@@ -140,9 +140,15 @@ class RincianAwalController extends MyController
 
                   // Harian
                   $PerwaliBiayaHarianLuarDaerah = PerwaliBiayaHarianLuarDaerah::where('jabatan','sekretarisdaerah_anggotadprd')->first();
-                  $satuan_harian = ($PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian_khusus_diklat);
+
+                  if ($Spd->surat_tugas->jenis_kegiatan == 'bimtek') {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->uang_harian_khusus_diklat;
+                  } else {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian;
+                  }
+                                    
                   $this->data['satuan_harian'] = $satuan_harian;
-                  $this->data['biaya_harian'] = $satuan_harian * ($lama_kegiatan-1);
+                  $this->data['biaya_harian'] = $satuan_harian * $lama_kegiatan;
 
                   // Taksi Makassar
                   $taksi_makassar = PerwaliTaksi::where('provinsi','sulawesi selatan')->first();
@@ -167,7 +173,15 @@ class RincianAwalController extends MyController
 
                   // Harian
                   $PerwaliBiayaHarianLuarDaerah = PerwaliBiayaHarianLuarDaerah::where('jabatan','wakilwalikota_wakilketuadprd')->first();
-                  $satuan_harian = ($PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian_khusus_diklat);
+                  
+                  if ($Spd->surat_tugas->jenis_kegiatan == 'bimtek') {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->uang_harian_khusus_diklat;
+                  
+                  } else {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian;
+
+                  }
+
                   $this->data['satuan_harian'] = $satuan_harian;
                   $this->data['biaya_harian'] = $satuan_harian * ($lama_kegiatan-1);
 
@@ -212,7 +226,7 @@ class RincianAwalController extends MyController
                   // Harian
                   $PerwaliBiayaHarianLuarDaerah = PerwaliBiayaHarianLuarDaerah::where('jabatan','golongan1_dan_golongan2')->first();
 
-                  $satuan_harian = ($PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian_khusus_diklat);
+                  $satuan_harian = ($PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->uang_harian_khusus_diklat);
                   $this->data['satuan_harian'] = $satuan_harian;
                   $this->data['biaya_harian'] = $satuan_harian * ($lama_kegiatan-1);
 
@@ -228,7 +242,15 @@ class RincianAwalController extends MyController
 
                   // Harian
                   $PerwaliBiayaHarianLuarDaerah = PerwaliBiayaHarianLuarDaerah::where('jabatan','golongan3')->first();
-                  $satuan_harian = ($PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian_khusus_diklat);
+                  
+                  if ($Spd->surat_tugas->jenis_kegiatan == 'bimtek') {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian + $PerwaliBiayaHarianLuarDaerah->uang_harian_khusus_diklat;
+                    
+                  } else {
+                    $satuan_harian = $PerwaliBiayaHarianLuarDaerah->uang_saku + $PerwaliBiayaHarianLuarDaerah->uang_makan + $PerwaliBiayaHarianLuarDaerah->uang_transport_lokal + $PerwaliBiayaHarianLuarDaerah->jumlah_uang_harian;
+
+                  }
+
                   $this->data['satuan_harian'] = $satuan_harian;
                   $this->data['biaya_harian'] = $satuan_harian * ($lama_kegiatan-1);
 
