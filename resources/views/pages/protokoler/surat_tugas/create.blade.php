@@ -86,6 +86,7 @@
                             </div>
                         </div>
 
+                        @if($user->protokoler_type == 'ad')
                         <div class="form-group row">
                             <label for="nomor_surat_komisi" class="col-2 col-form-label">Nomor Surat Komisi</label>
                             <div class="col-10">
@@ -97,6 +98,7 @@
 
                             </div>
                         </div>
+                        @endif
 
                         <div class="form-group row">
                             <label for="nomor" class="col-2 col-form-label">Nomor Surat Tugas</label>

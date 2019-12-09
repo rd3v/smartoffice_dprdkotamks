@@ -127,7 +127,7 @@ class SuratTugasController extends MyController
       if($SuratTugasDelete) {
 
       }
-      $auth = Auth::user();
+      $user = Auth::user();
       $rules = [
           'untuk'                   => 'required',
           'nomor'                   => 'required|unique:tbl_surat_tugas',
@@ -157,7 +157,7 @@ class SuratTugasController extends MyController
           $str_yang_bertanda_tangan = explode("-",$request->nama_yang_bertanda_tangan);
 
           $SuratTugas->nomor                    = $request->nomor;
-          if ($auth->protokoler_type == 'ad') {
+          if ($user->protokoler_type == 'ad') {
             $SuratTugas->nomor_surat_komisi     = $request->nomor_surat_komisi;
           }
           $SuratTugas->berdasarkan_surat        = $request->berdasarkan_surat;
@@ -179,7 +179,6 @@ class SuratTugasController extends MyController
 
           if($SuratTugas->save()) {
 
-            $user = Auth::user();
             if ($user->protokoler_type == 'ad') {
               
               $SuratTugasAnggotaDewanClass = "App\Model\SuratTugasAnggotaDewan";
