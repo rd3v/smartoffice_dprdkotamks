@@ -15,7 +15,13 @@ class AnggotaDewanController extends Controller
 
 	public function getByKomisi(Request $request) {
 		$AnggotaDewanClass = "App\Model\AnggotaDewan";
-		$AnggotaDewan = $AnggotaDewanClass::where('komisi',$request->komisi)->get();
+		$AnggotaDewan = $AnggotaDewanClass::where('komisi',$request->untuk)->orWhere('jabatan','ketua')->orWhere('jabatan','wakil')->get();
+		return response()->json($AnggotaDewan);
+	}
+
+	public function getByFraksi(Request $request) {
+		$AnggotaDewanClass = "App\Model\AnggotaDewan";
+		$AnggotaDewan = $AnggotaDewanClass::where('partai_id',$request->fraksi)->get();
 		return response()->json($AnggotaDewan);
 	}
 
