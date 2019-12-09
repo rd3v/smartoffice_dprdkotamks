@@ -61,14 +61,45 @@
                                       <option value="b">Komisi B</option>
                                       <option value="c">Komisi C</option>
                                       <option value="d">Komisi D</option>
+                                      <option value="fraksi">Fraksi</option>
+                                      <option value="badan anggaran">Badan Anggaran</option>
+                                      <option value="badan musyawarah">Badan Musyawarah</option>
+                                      <option value="badan pembentukan peraturan daerah">Badan Pembentukan Peraturan Daerah</option>
+                                      <option value="badan kehormatan">Badan Kehormatan</option>
                                     @elseif($user->protokoler_type == 'staff')
                                       <option value="staff" selected>STAFF</option>
                                     @endif
                                 </select>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="form-group row fraksi" style="display:none">
+                            <label for="fraksi" class="col-2 col-form-label"></label>
+                            <div class="col-10">
+                                <select class="form-control" name="fraksi" id="fraksi">
+                                    <option value="">== Pilih Fraksi ==</option>
+                                    @if($user->protokoler_type == 'ad')
+                                      @foreach($partai as $value)
+                                        <option value="{{ $value->id }}">{{ strtoupper($value->nama) }}</option>
+                                      @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
-                            <label for="nomor" class="col-2 col-form-label">Nomor</label>
+                            <label for="nomor_surat_komisi" class="col-2 col-form-label">Nomor Surat Komisi</label>
+                            <div class="col-10">
+                                <input name="nomor_surat_komisi" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor_surat_komisi">
+
+                        <div class="alert alert-danger text-center nomor_surat_komisi-exist" style="border-color: red;display:none">
+                          <h4 style="font-weight: bold">!!! Nomor Komisi sudah ada</h4>
+                        </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="nomor" class="col-2 col-form-label">Nomor Surat Tugas</label>
                             <div class="col-10">
                                 <input name="nomor" class="form-control" type="text" placeholder="Contoh : 093/512/DPRD/VIII/2019" id="nomor">
 
@@ -78,6 +109,8 @@
 
                             </div>
                         </div>
+
+
                         <div class="form-group row">
                             <label for="tanggal_surat_masuk" class="col-2 col-form-label">Tanggal Surat Masuk</label>
                             <div class="col-10">
@@ -229,12 +262,49 @@
 
   <script>
       
+      var datas = {};
+
+      $("select[name=fraksi]").change(function() {
+          var fraksi = $(this).val();
+          var url = "{{ url('getAnggotaDewanByFraksi') }}";
+          datas.fraksi = fraksi;
+          if (fraksi != "") {
+              ajaxGetAnggota(url,datas);
+          }
+      });
+
       $("select[name=untuk]").change(function() {
-          var komisi = $(this).val();
+          var untuk = $(this).val();
+          var url = "";
+          if(untuk == 'a' || untuk == 'b' || untuk == 'c' || untuk == 'd') {
+            $("div.partai").css("display","none");
+            url = "{{url('getAnggotaDewanByKomisi')}}";
+          } else if(untuk == 'fraksi') {
+            $("div.fraksi").css("display","");
+          } else {
+            $("div.partai").css("display","none");
+            url = "";
+          }
+// start from here
+            datas.untuk = untuk;
+            console.log(datas);
+            if(untuk != "fraksi") {
+              ajaxGetAnggota(url,datas);
+            }
+
+      });
+
+      function ajaxGetAnggota(url,datas = {}) {
+
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });        
           $.ajax({
-              url:"{{url('getAnggotaDewanByKomisi')}}",
+              url:url,
               type:"post",
-              data:{komisi:komisi},
+              data:datas,
               dataType:"json"
           }).done(function(res) {
 
@@ -256,8 +326,8 @@
 
           }).fail(function(res) {
               console.log(res);
-          });
-      });
+          });        
+      }
 
       $('#menugaskan').multiSelect();
 
@@ -292,6 +362,21 @@
 
       });
 
+      $("input[name=nomor_surat_komisi]").on('input', function() {
+          var nomor = $(this).val()
+          $.ajax({
+            url:"<?= url('protokoler/checkNomorSuratKomisi') ?>",
+            type:"POST",
+            data:{nomor:nomor},
+            dataTYpe:"json"
+          }).done(function(res) {
+              if(res) $("div.nomor_surat_komisi-exist").css("display",""); else $("div.nomor_surat_komisi-exist").css("display","none");
+          }).fail(function(res) {
+              console.log(res);
+          });
+
+      });
+
       function print_confirm() {
 
         var mydata = {};
@@ -305,6 +390,7 @@
         mydata.untuk = $("select[name=untuk]").val();
         mydata.nomor = $("input[name=nomor]").val();
         @if($user->protokoler_type == 'ad')
+          mydata.nomor_surat_komisi = $("input[name=nomor_surat_komisi]").val();
           mydata.berdasarkan_surat = $("select[name=berdasarkan_surat]").val() != "" && $("select[name=berdasarkan_surat]").val() != "manual" ? $("select[name=berdasarkan_surat]").val() : $("textarea[name=berdasarkan_surat]").val();
         @elseif($user->protokoler_type == 'staff')
           mydata.berdasarkan_surat = $("textarea[name=berdasarkan_surat]").val();

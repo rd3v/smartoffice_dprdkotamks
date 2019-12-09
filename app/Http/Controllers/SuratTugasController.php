@@ -91,9 +91,12 @@ class SuratTugasController extends MyController
 
         if ($this->data['user']->protokoler_type == 'ad') {
 
+          $PartaiClass = "App\Model\Partai";
           $AnggotaDewanClass = "App\Model\AnggotaDewan";
+          $Partai = new $PartaiClass;
           $AnggotaDewan = new $AnggotaDewanClass;
           $this->data['anggota_dewan'] = $AnggotaDewan->getAll();
+          $this->data['partai'] = $Partai::all();
 
         } else if($this->data['user']->protokoler_type == 'staff') {
 
@@ -124,7 +127,7 @@ class SuratTugasController extends MyController
       if($SuratTugasDelete) {
 
       }
-
+      $auth = Auth::user();
       $rules = [
           'untuk'                   => 'required',
           'nomor'                   => 'required|unique:tbl_surat_tugas',
@@ -154,6 +157,9 @@ class SuratTugasController extends MyController
           $str_yang_bertanda_tangan = explode("-",$request->nama_yang_bertanda_tangan);
 
           $SuratTugas->nomor                    = $request->nomor;
+          if ($auth->protokoler_type == 'ad') {
+            $SuratTugas->nomor_surat_komisi     = $request->nomor_surat_komisi;
+          }
           $SuratTugas->berdasarkan_surat        = $request->berdasarkan_surat;
           $SuratTugas->jenis_kegiatan           = $request->jenis_kegiatan;
           $SuratTugas->tanggal_surat_masuk      = $request->tanggal_surat_masuk;
@@ -393,6 +399,14 @@ class SuratTugasController extends MyController
       $SuratTugas = new $SuratTugasClass;
 
       $check = $SuratTugas->where('nomor',$request->nomor)->first();
+      if($check != null) return response()->json(true); else return response()->json(false);
+    }
+
+    public function checkNomorSuratKomisi(Request $request) {
+      $SuratTugasClass = "App\Model\SuratTugas";
+      $SuratTugas = new $SuratTugasClass;
+
+      $check = $SuratTugas->where('nomor_surat_komisi',$request->nomor)->first();
       if($check != null) return response()->json(true); else return response()->json(false);
     }
 

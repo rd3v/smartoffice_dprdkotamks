@@ -36,7 +36,7 @@
       <div class="col-md-12">
           <p style="font-weight:normal;padding-left:4em;margin-top:0.5em;font-size: 0.6em">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }} Nomor : {{ ucwords($SuratTugas->nomor) }} 
+            Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }} Nomor : {{ ucwords($SuratTugas->nomor_surat_komisi) }} 
             Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</p>
       </div>
     </div>

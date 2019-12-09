@@ -34,6 +34,7 @@ Route::group([
   Route::get('surat-tugas/printthis/{id}','SuratTugasController@printthis')->name('printthis');
   Route::get('spd/printthis/{id}','SpdController@printthis')->name('printthisspd');
   Route::post('checkNomorSuratTugas','SuratTugasController@checkNomorSuratTugas');
+  Route::post('checkNomorSuratKomisi','SuratTugasController@checkNomorSuratKomisi');
   Route::post('checkNomorSPD','SpdController@checkNomorSPD');
   Route::get('updateStatusBatal/{id}','SuratTugasController@updateStatusBatal')->name('updatestatusBatal');
 
@@ -120,4 +121,6 @@ Route::get('403',function() {
 Route::post('postTiketPerjalananComment','Ajax\PostCommentsController@tiketPerjalanan')->name('postTiketPerjalananComment');
 Route::post('getAnggotaDewan','Ajax\AnggotaDewanController@get')->name('getAnggotaDewan');
 Route::post('getAnggotaDewanByKomisi','Ajax\AnggotaDewanController@getByKomisi')->name('getAnggotaDewanByKomisi');
+Route::post('getAnggotaDewanByFraksi','Ajax\AnggotaDewanController@getByFraksi')->name('getAnggotaDewanByFraksi');
+
 Route::post('getStaff','Ajax\StaffController@get')->name('getStaff');
