@@ -30,11 +30,11 @@
 
     <div class="row" style="margin-top:12em">
       <div class="col-md-12 text-center">
-          <p style="text-decoration:underline;font-size:0.7em;font-weight:bolder;margin-bottom: 0">SURAT TUGAS</p>
-          <p style="font-size:0.7em;">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
+          <p style="text-decoration:underline;font-size:0.6em;font-weight:bolder;margin-bottom: 0">SURAT TUGAS</p>
+          <p style="font-size:0.6em;">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
       </div>
       <div class="col-md-12">
-          <p style="font-weight:normal;padding-left:4em;margin-top:0.5em;font-size: 0.6em">
+          <p style="font-weight:normal;padding-left:4em;margin-top:0.5em;font-size: 0.5em">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Berdasarkan surat dari {{ ucwords($SuratTugas->berdasarkan_surat) }} Nomor : {{ ucwords($SuratTugas->nomor_surat_komisi) }} 
             Tanggal, {{ $SuratTugas->tanggal_surat_masuk }} Perihal : {{ ucwords($SuratTugas->perihal) }}, Maka Pimpinan DPRD Kota Makassar :</p>
@@ -42,12 +42,12 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-        <p style="margin-top:0.7em;font-size: 0.7em;font-weight:bolder">M E N U G A S K A N</p>
+        <p style="margin-top:0.7em;font-size: 0.6em;font-weight:bolder">M E N U G A S K A N</p>
       </div>
     </div>
     <div class="row">
-      <span class="col-md-1" style="font-size: 0.7em">Kepada</span>
-      <span class="col-md-1" style="font-size: 0.7em">:</span>
+      <span class="col-md-1" style="font-size: 0.6em">Kepada</span>
+      <span class="col-md-1" style="font-size: 0.6em">:</span>
     </div>
     <div class="row">
         <div class="col-md-6" style="padding-left:0">
@@ -55,7 +55,7 @@
           <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-10">
-              <ul style="list-style:none;font-size: 0.7em">
+              <ul style="list-style:none;font-size: 0.6em">
                 <?php
                   if ($user->protokoler_type == 'ad') {
                    foreach ($AnggotaDewan as $key => $value): ?>
@@ -79,8 +79,8 @@
     </div>
 
     <div class="row">
-      <span class="col-md-1" style="font-size: 0.7em">Untuk</span>
-        <div class="col-md-10" style="padding-left:0;font-size: 0.8em">
+      <span class="col-md-1" style="font-size: 0.6em">Untuk</span>
+        <div class="col-md-10" style="padding-left:0;font-size: 0.7em">
             :<ol>
                 <li style="font-size: 0.7em">{{ $SuratTugas->untuk_maksud }} {{ $SuratTugas->tanggal_mulai }} s/d {{ $SuratTugas->tanggal_akhir }}</li>
                 <li style="font-size: 0.7em">Segala Biaya yang timbul sehubungan dengan pelaksanaan Surat Tugas ini dibebankan pada APBD Kota Makassar Tahun Anggaran {{ $SuratTugas->tahun_anggaran }}</li>
@@ -92,7 +92,7 @@
     <div class="row">
       <div class="col-md-1" style="padding-left:0"></div>
       <div class="col-md-11" style="padding-left:0">
-        <p style="font-size: 0.6em">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
+        <p style="font-size: 0.5em">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>
       </div>
     </div>
 
@@ -106,12 +106,12 @@
         <div class="row">
           <div class="col-md-12">
             <table class="table table-borderless">
-              <tr style="font-size: 0.6em">
+              <tr style="font-size: 0.5em">
                 <td>Dikeluarkan</td>
                 <td>:</td>
                 <td>{{ ucfirst($SuratTugas->tempat_dikeluarkan) }}</td>
               </tr>
-              <tr style="font-size: 0.6em">
+              <tr style="font-size: 0.5em">
                 <td>Pada Tanggal</td>
                 <td>:</td>
                 <td>{{ $SuratTugas->tanggal_dikeluarkan }}</td>
@@ -125,7 +125,7 @@
     <div class="row text-center">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-        <p style="font-weight:bold;font-size: 0.6em">{{ ucwords($SuratTugas->jabatan) }}</p>
+        <p style="font-weight:bold;font-size: 0.5em">{{ ucwords($SuratTugas->jabatan) }}</p>
       </div>
     </div>
 
@@ -134,7 +134,7 @@
     <div class="row text-center">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-        <p style="font-weight:bold;font-size: 0.6em">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
+        <p style="font-weight:bold;font-size: 0.5em">{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p>
       </div>
     </div>
 
