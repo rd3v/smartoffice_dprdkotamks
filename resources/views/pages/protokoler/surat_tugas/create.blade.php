@@ -66,6 +66,7 @@
                                       <option value="badan musyawarah">Badan Musyawarah</option>
                                       <option value="badan pembentukan peraturan daerah">Badan Pembentukan Peraturan Daerah</option>
                                       <option value="badan kehormatan">Badan Kehormatan</option>
+                                      <option value="panitia khusus">Panitia Khusus</option>
                                     @elseif($user->protokoler_type == 'staff')
                                       <option value="staff" selected>STAFF</option>
                                     @endif

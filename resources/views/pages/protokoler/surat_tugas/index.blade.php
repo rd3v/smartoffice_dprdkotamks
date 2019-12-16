@@ -132,7 +132,14 @@
                                             
                                             <br><br>
 
-                                              <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>   
+                                              @foreach($config as $conf)
+                                                @if($conf->feature == 'edit_surat_tugas' && $conf->status == 1)
+                                                  <a href="{{ route('surat-tugas.edit',['id' => $value->id]) }}" class="btn btn-primary btn-edit"><i class="fa fa-edit"></i> EDIT</a>
+                                                @else
+                                                  <button type="button" name="button" class="btn btn-danger btn-batal" data-id="{{ $value->persuratan_id }}" data-nomor="{{ $value->nomor }}"><i class="fa fa-close"></i> BATAL</button>
+                                                @endif
+                                              @endforeach
+
                                           </td>
                                         </tr>
                                      <?php } ?>

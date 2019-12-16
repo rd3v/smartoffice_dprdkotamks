@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Config;
 use App\Model\Settings;
+use App\Model\SuratTugas;
 use App\User;
 use Illuminate\Http\Request;
 use App\Helpers\MyLibHelper;
@@ -32,6 +34,7 @@ class SuratTugasController extends MyController
       }
 
       $this->data['user'] = Auth::user();
+      $this->data['config'] = Config::where('module','surat-tugas')->get();
       
       if ($this->data['user']->protokoler_type == 'ad') {
 
@@ -253,7 +256,7 @@ class SuratTugasController extends MyController
      * @param  \App\modelSuratTugas  $modelSuratTugas
      * @return \Illuminate\Http\Response
      */
-    public function show(modelSuratTugas $modelSuratTugas)
+    public function show(SuratTugas $modelSuratTugas)
     {
         //
     }
@@ -264,9 +267,33 @@ class SuratTugasController extends MyController
      * @param  \App\modelSuratTugas  $modelSuratTugas
      * @return \Illuminate\Http\Response
      */
-    public function edit(modelSuratTugas $modelSuratTugas)
+    public function edit(SuratTugas $SuratTugas)
     {
-        //
+
+        // dd($SuratTugas);
+        $this->data['user'] = Auth::user();
+        $AnggotaDewanClass = "App\Model\AnggotaDewan";
+        $AnggotaDewan = new $AnggotaDewanClass;
+        $this->data['anggota_dewan'] = $AnggotaDewan->getAll();
+
+        if ($this->data['user']->protokoler_type == 'ad') {
+
+          $PartaiClass = "App\Model\Partai";
+          $AnggotaDewanClass = "App\Model\AnggotaDewan";
+          $Partai = new $PartaiClass;
+          $AnggotaDewan = new $AnggotaDewanClass;
+          $this->data['anggota_dewan'] = $AnggotaDewan->getAll();
+          $this->data['partai'] = $Partai::all();
+
+        } else if($this->data['user']->protokoler_type == 'staff') {
+
+          $StaffClass = "App\Model\Staff";
+          $Staff = new $StaffClass;
+          $this->data['staff'] = $Staff->all();
+
+        }
+
+        return view('pages.protokoler.surat_tugas.edit',$this->data);        
     }
 
     /**
@@ -276,7 +303,7 @@ class SuratTugasController extends MyController
      * @param  \App\modelSuratTugas  $modelSuratTugas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, modelSuratTugas $modelSuratTugas)
+    public function update(Request $request, SuratTugas $modelSuratTugas)
     {
         //
     }
@@ -287,7 +314,7 @@ class SuratTugasController extends MyController
      * @param  \App\modelSuratTugas  $modelSuratTugas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(modelSuratTugas $modelSuratTugas)
+    public function destroy(SuratTugas $modelSuratTugas)
     {
         //
     }
@@ -306,7 +333,9 @@ class SuratTugasController extends MyController
         $AnggotaDewanClass = "App\Model\AnggotaDewan";
         $AnggotaDewan = new $AnggotaDewanClass;
 
-        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->getWhere(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
+        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->where(['surat_tugas_id' => $this->data['SuratTugas']->id])->orderBy('id','desc')->get();
+        
+
         $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
 
       } else if($user->protokoler_type == 'staff') {
