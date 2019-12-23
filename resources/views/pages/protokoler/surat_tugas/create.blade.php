@@ -170,11 +170,11 @@
                               <select id='menugaskan' name="menugaskan" multiple='multiple'>
                                 @if($user->protokoler_type == 'ad')
                                   @foreach($anggota_dewan as $key => $value)
-                                  <option value='{{ $value->id }}'>{{ ($key+1).'. '.$value->nama }}</option>
+                                  <option value='{{ $value->id }}'>{{ $value->nama }}</option>
                                   @endforeach
                                 @elseif($user->protokoler_type == 'staff')
                                   @foreach($staff as $key => $value)
-                                  <option value='{{ $value->id }}'>{{ ($key+1).'. '.$value->nama }}</option>
+                                  <option value='{{ $value->id }}'>{{ $value->nama }}</option>
                                   @endforeach
                                 @endif
                               </select>

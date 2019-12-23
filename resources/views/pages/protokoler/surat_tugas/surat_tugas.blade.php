@@ -28,7 +28,7 @@
 
   <div class="container-fluid">
 
-    <div class="row" style="margin-top:11em">
+    <div class="row" style="margin-top:4em">
       <div class="col-md-12 text-center">
           <p style="text-decoration:underline;font-size:0.7em;font-weight:bolder;margin-bottom: 0">SURAT TUGAS</p>
           <p style="font-size:0.7em;">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
@@ -75,7 +75,7 @@
                           <?php endif; ?>
 
                           <?php if ($key==4): ?>
-                             </div">
+                             </div>
                           <?php endif; ?>
 
                           <?php if ($key==5): ?>
@@ -88,7 +88,7 @@
                           <?php endif; ?>
 
                           <?php if ($key==9): ?>
-                             </div">
+                             </div>
                           <?php endif; ?>
                     
                           
@@ -150,9 +150,9 @@
             <table class="table table-borderless" style="font-size: 0.7em">
               <tr>
                 <td></td>
-                <td width="100px">Dikeluarkan</td>
-                <td width="20px">:</td>
-                <td width="120px">{{ ucfirst($SuratTugas->tempat_dikeluarkan) }}</td>
+                <td width="90px">Dikeluarkan</td>
+                <td width="10px">:</td>
+                <td width="110px">{{ ucfirst($SuratTugas->tempat_dikeluarkan) }}</td>
               </tr>
               <tr>
                 <td></td>
@@ -169,7 +169,7 @@
               </tr>
               <tr>
                 <td></td>
-                <td><p style="margin-top:60px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p></td>
+                <td><p style="margin-top:50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ strtoupper($SuratTugas->nama_yang_bertanda_tangan) }}</p></td>
               </tr>
             </table>
 
