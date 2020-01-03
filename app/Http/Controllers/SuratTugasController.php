@@ -41,7 +41,7 @@ class SuratTugasController extends MyController
         $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
               $query->with('anggota_dewan')->get();
           }
-        ])->where('status','!=','batal')->whereIn('untuk',['a','b','c','d'])->orderBy('id','desc')->get();
+        ])->where('status','!=','batal')->where('untuk','!=','staff')->orderBy('id','desc')->get();
 
       } else if($this->data['user']->protokoler_type == 'staff') {
         
@@ -322,7 +322,7 @@ class SuratTugasController extends MyController
     public function printthis($id) {
       $SuratTugasClass = "App\Model\SuratTugas";
       $SuratTugas = new $SuratTugasClass;
-      
+
       $user = Auth::user();
       $this->data['data'] = Settings::getOne();
       $this->data['SuratTugas'] = (object) $SuratTugas->where(['id' => $id])->first();      
@@ -333,9 +333,10 @@ class SuratTugasController extends MyController
         $AnggotaDewanClass = "App\Model\AnggotaDewan";
         $AnggotaDewan = new $AnggotaDewanClass;
 
-        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->where(['surat_tugas_id' => $this->data['SuratTugas']->id])->orderBy('id','desc')->get();
+        $this->data['AnggotaDewan'] = $SuratTugasAnggotaDewan->with(['anggota_dewan' => function($query) {
+            $query->orderBy('jabatan_id','asc')->get();
+        }])->where(['surat_tugas_id' => $this->data['SuratTugas']->id])->get();
         
-
         $this->data['BertandaTangan'] = $AnggotaDewan->getWhere(['jabatan' => 'ketua'])->first();
 
       } else if($user->protokoler_type == 'staff') {

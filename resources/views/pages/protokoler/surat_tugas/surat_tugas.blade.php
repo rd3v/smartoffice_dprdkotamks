@@ -22,6 +22,56 @@
           font-size: 0.9em;
         }
 
+        p.nama {
+          font-weight: bold;
+          margin:0;
+        }
+        p.jabatan_text {
+          margin:0;
+        }
+
+@media print {
+   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        float: left;
+   }
+   .col-sm-12 {
+        width: 100%;
+   }
+   .col-sm-11 {
+        width: 91.66666667%;
+   }
+   .col-sm-10 {
+        width: 83.33333333%;
+   }
+   .col-sm-9 {
+        width: 75%;
+   }
+   .col-sm-8 {
+        width: 66.66666667%;
+   }
+   .col-sm-7 {
+        width: 58.33333333%;
+   }
+   .col-sm-6 {
+        width: 50%;
+   }
+   .col-sm-5 {
+        width: 41.66666667%;
+   }
+   .col-sm-4 {
+        width: 33.33333333%;
+   }
+   .col-sm-3 {
+        width: 25%;
+   }
+   .col-sm-2 {
+        width: 16.66666667%;
+   }
+   .col-sm-1 {
+        width: 8.33333333%;
+   }
+}
+
     </style>
 </head>
 <body>
@@ -49,72 +99,48 @@
       <span class="col-md-1" style="font-size: 0.7em">Kepada :</span>
       <span class="col-md-1" style="font-size: 0.7em"></span>
     </div>
-    <div class="row">
-        <div class="col-md-6" style="padding-left:0">
 
-          <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
-              <ul style="list-style:none;font-size: 0.7em">
+    <div class="row" style="font-size:0.7em;margin-bottom:0.5em">
 
-                <?php
-                  if ($user->protokoler_type == 'ad') {
-                
-                    if (count($AnggotaDewan) <= 10) { ?>
-                          <div class="row">
-                            
-                      <?php foreach ($AnggotaDewan as $key => $value) { ?>
-                          
-                          <?php if ($key==0): ?>
-                             <div class="col-md-6">
-                          <?php endif; ?>
+        <?php if($user->protokoler_type == 'ad'): 
+                  $countData = count($AnggotaDewan);
+                if ($countData < 10): ?>
+                  
+                      <div class="col-sm-6" style="padding-left: 2.5em">  
+               <?php foreach ($AnggotaDewan as $key => $value): ?>
+                        <p style="margin: 0;font-weight: bold;"><?= ($key + 1).'. '.$value->anggota_dewan->nama ?></p>
+                        <p style="margin: 0">(<?= $value->anggota_dewan->jabatan_text ?>)</p>
+               <?php endforeach; ?>
+                      </div>   
 
-                          <?php if ($key<5): ?>
-                              <li style="font-weight:bold;"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
-                              <li>(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
-                          <?php endif; ?>
-
-                          <?php if ($key==4): ?>
-                             </div>
-                          <?php endif; ?>
-
-                          <?php if ($key==5): ?>
-                             <div class="col-md-6">
-                          <?php endif; ?>
-
-                          <?php if ($key == 5 && $key <= 9): ?>
-                              <li style="font-weight:bold;"><?= ($key+1).'. '.$value->anggota_dewan->nama ?></li>
-                              <li>(<?= ucwords($value->anggota_dewan->jabatan_text) ?>)</li>
-                          <?php endif; ?>
-
-                          <?php if ($key==9): ?>
-                             </div>
-                          <?php endif; ?>
-                    
-                          
-
-                  <?php } ?>
-                          </div>
-
-                  <?php }
-                     
-
-                  } elseif($user->protokoler_type == 'staff') {
-                
-                    foreach ($Staff as $key => $value): ?>
-                    <li style="font-weight:bold;"><?= ($key+1).'. '.$value->staff->nama ?></li>
-                    <li style="">(<?= ucwords($value->staff->jabatan) ?>)</li>
-                <?php endforeach; 
-                
-                  }
+          <?php else:
+                  $roundData = round(($countData / 2) + 1);
+                  $number = 0;
+          ?>
+                <script>
+                  console.log("<?= $roundData ?>");
+                </script>
+               <?php foreach ($AnggotaDewan as $key => $value): 
+                        if($key % 2 == 0):
+                          $number++;
+                        endif;
                 ?>
+                      <div class="col-sm-6 col-md-6">
+                        <p class="nama"><?= ($key % 2 == 0 ? $number:$roundData++).'. '.$value->anggota_dewan->nama ?></p>
+                        <p class="jabatan_text">(<?= $value->anggota_dewan->jabatan_text ?>)</p>
+                      </div>
+               <?php endforeach; ?>
 
-              </ul>
-            </div>
-          </div>
+          <?php endif; ?>
 
+        <?php elseif($user->protokoler_type == 'staff'): ?>
+            
+         <?php  foreach ($Staff as $key => $value): ?>
+            
+         <?php  endforeach; ?>
+            
+        <?php endif; ?>
 
-        </div>
     </div>
 
     <div class="row">
