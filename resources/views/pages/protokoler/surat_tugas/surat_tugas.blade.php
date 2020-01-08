@@ -78,7 +78,7 @@
 
   <div class="container-fluid">
 
-    <div class="row" style="margin-top:4em">
+    <div class="row" style="margin-top:6em">
       <div class="col-md-12 text-center">
           <p style="text-decoration:underline;font-size:0.7em;font-weight:bolder;margin-bottom: 0">SURAT TUGAS</p>
           <p style="font-size:0.7em;">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
