@@ -23,10 +23,12 @@
         }
 
         p.nama {
+          font-size: 0.8em;
           font-weight: bold;
           margin:0;
         }
         p.jabatan_text {
+          font-size: 0.8em;
           margin:0;
         }
 
