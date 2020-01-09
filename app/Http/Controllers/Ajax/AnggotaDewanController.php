@@ -21,7 +21,7 @@ class AnggotaDewanController extends Controller
 
 	public function getByFraksi(Request $request) {
 		$AnggotaDewanClass = "App\Model\AnggotaDewan";
-		$AnggotaDewan = $AnggotaDewanClass::where('partai_id',$request->fraksi)->get();
+		$AnggotaDewan = $AnggotaDewanClass::where('partai_id',$request->fraksi)->where('jabatan','!=','ketua')->where('jabatan','!=','wakil')->get();
 		return response()->json($AnggotaDewan);
 	}
 
