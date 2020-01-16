@@ -127,8 +127,43 @@
                         endif;
                 ?>
                       <div class="col-sm-6 col-md-6">
-                        <p class="nama"><?= ($key % 2 == 0 ? $number:$roundData++).'. '.$value->anggota_dewan->nama ?></p>
-                        <p class="jabatan_text">(<?= $value->anggota_dewan->jabatan_text ?>)</p>
+                        <p class="nama">
+                          <?php 
+
+                            if ($key == 1) {
+                             echo ($key % 2 == 0 ? $number:$roundData++).'. '.$AnggotaDewan[4]->anggota_dewan->nama; 
+                            } else if($key == 3) {
+                             echo ($key % 2 == 0 ? $number:$roundData++).'. '.$AnggotaDewan[6]->anggota_dewan->nama; 
+                            } else if($key == 4) {
+                             echo ($key % 2 == 0 ? $number:$roundData++).'. '.$AnggotaDewan[1]->anggota_dewan->nama; 
+                            } else if($key == 6) {
+                             echo ($key % 2 == 0 ? $number:$roundData++).'. '.$AnggotaDewan[3]->anggota_dewan->nama; 
+                            } else {
+                             echo ($key % 2 == 0 ? $number:$roundData++).'. '.$value->anggota_dewan->nama;
+                            }
+
+                           ?>                            
+                          </p>
+                        
+                        <p class="jabatan_text">
+                          (
+                          <?php 
+                            if ($key == 1) {
+                             echo $AnggotaDewan[4]->anggota_dewan->jabatan_text; 
+                            } else if($key == 3) {
+                             echo $AnggotaDewan[6]->anggota_dewan->jabatan_text; 
+                            } else if($key == 4) {
+                             echo $AnggotaDewan[1]->anggota_dewan->jabatan_text; 
+                            } else if($key == 6) {
+                             echo $AnggotaDewan[3]->anggota_dewan->jabatan_text; 
+                            } else {
+                             echo $value->anggota_dewan->jabatan_text;
+                            }
+                           ?>                            
+                          )
+
+                        </p>
+
                       </div>
                <?php endforeach; ?>
 
