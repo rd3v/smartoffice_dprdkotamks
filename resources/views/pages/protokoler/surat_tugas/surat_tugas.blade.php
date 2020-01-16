@@ -80,7 +80,7 @@
 
   <div class="container-fluid">
 
-    <div class="row" style="margin-top:6.3em;margin-bottom:0px">
+    <div class="row" style="margin-top:6.3em;margin-bottom:0 !important">
       <div class="col-md-12 text-center">
           <p style="text-decoration:underline;font-size:0.7em;font-weight:bolder;margin: 0">SURAT TUGAS</p>
           <p style="font-size:0.7em;margin:0">Nomor : {{ strtoupper($SuratTugas->nomor) }}</p>
@@ -94,7 +94,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-center">
-        <p style="margin-top:0;font-size: 0.7em;font-weight:bolder">M E N U G A S K A N</p>
+        <p style="margin-top:0;margin-bottom:0;font-size: 0.7em;font-weight:bolder">M E N U G A S K A N</p>
       </div>
     </div>
     <div class="row">
@@ -190,10 +190,10 @@
         </div>
     </div>
 
-    <div class="row" style="margin:0;margin-top:-0.5em">
+    <div class="row" style="margin:0;margin-top:-0.5em !important">
       <div class="col-md-12">
         
-<p style="font-size: 0.6em;">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>              
+<p style="font-size: 0.6em;margin:0">Demikian Surat Tugas ini dikeluarkan, untuk dilaksanakan dengan penuh rasa tanggung jawab.</p>              
         
       </div>
     </div>
