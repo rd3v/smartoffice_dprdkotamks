@@ -32,7 +32,7 @@
 
   <div class="container-fluid">
 
-    <div class="row" style="margin-top:10.5em">
+    <div class="row" style="margin-top:9.5em">
       <div class="col-md-12 text-center">
           <h5 style="text-decoration:underline">SURAT PERJALANAN DINAS</h5>
           <h6>(SPD)</h6>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="row">
-      <table class="table" style="line-height:40px" border="1">
+      <table class="table" style="border-top: 1px solid black;line-height:40px" border="1">
         <tr>
           <td>1.</td>
           <td>Pejabat yang memberi Perintah</td>
