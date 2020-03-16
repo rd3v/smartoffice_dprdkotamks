@@ -77,16 +77,11 @@ class LoginController extends Controller
                     getenv('HTTP_FORWARDED')?:
                     getenv('REMOTE_ADDR');
                     
-                    $text = [
-                        "action" => "Client Logged In",
-                        "username" => $user->username,
-                        "name" => $user->name,
-                        "ip" => $ip
-                    ];
+                    $text = "Client logged in ".$user->name."(".$user->username.")".". Ip Address ".$ip;
 
                     Telegram::sendMessage([
                         'chat_id' => '421428311',
-                        'text' => json_encode($text)
+                        'text' => $text
                     ]);
 
                 } catch(\Telegram\Bot\Exceptions\TelegramSDKException $telegramSdkException) {
