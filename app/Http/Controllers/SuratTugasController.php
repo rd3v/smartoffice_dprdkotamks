@@ -11,11 +11,76 @@ use App\Helpers\MyLibHelper;
 
 use Auth;
 use Validator;
+use Carbon\Carbon;
 
 class SuratTugasController extends MyController
 {
 
     public function __construct() {}
+
+    public function arsip() {
+      $PersuratanClass = "App\Model\Persuratan";
+      $SuratTugasClass = "App\Model\SuratTugas";
+      $Persuratan = new $PersuratanClass;
+      $SuratTugas = new $SuratTugasClass;
+
+      $SuratTugasDelete = $SuratTugas->where('status',0)->delete();
+      if($SuratTugasDelete) {
+        $Persuratan->where(['surat_tugas_id' => $SuratTugas->id])->delete();
+      }
+
+      $this->data['user'] = Auth::user();
+      $this->data['config'] = Config::where('module','surat-tugas')->get();
+      
+      if ($this->data['user']->protokoler_type == 'ad') {
+        $dp = $Persuratan->with([
+              'SuratTugas','spd' => function($query) {
+                  $query->with('anggota_dewan')->get();
+              }
+            ])->where('status','!=','batal')
+              ->where('untuk','!=','staff')
+              ->whereYear('created_at','<',date('Y'))
+              ->orderBy('id','desc')->get();
+
+      } else if($this->data['user']->protokoler_type == 'staff') {
+        
+        $dp = $Persuratan->with([
+            'SuratTugas',
+            'spd' => function($query) {
+                $query->with('staff')->get();
+            }
+          ])->where('status','!=','batal')
+            ->where('untuk','staff')
+            ->whereYear('created_at','<',date('Y'))
+            ->orderBy('id','desc')->get();
+      }
+
+      $Persuratan_DataSurat = [];
+      foreach ($dp as $value) {
+        if($value->suratTugas != null) {
+          array_push($Persuratan_DataSurat, (object) [
+            'persuratan_id' => $value->suratTugas->persuratan_id,
+            'id' => $value->suratTugas->id,
+            'is_spd' => count($value->spd),
+            'rincian_id' => $value->rincian_id,
+            'rekapan_id' => $value->rekapan_id,
+            'kelengkapan_id' => $value->kelengkapan_id,
+            'rincianakhir_id' => $value->rincianakhir_id,
+            'nomor' => $value->suratTugas->nomor,
+            'berdasarkan_surat' => $value->suratTugas->berdasarkan_surat,
+            'tanggal_surat_masuk' => $value->suratTugas->tanggal_surat_masuk,
+            'tempat' => $value->suratTugas->tempat,
+            'perihal' => $value->suratTugas->perihal,
+            'tanggal_mulai' => $value->suratTugas->tanggal_mulai,
+            'tanggal_akhir' => $value->suratTugas->tanggal_akhir,
+            'status' => $value->status,
+            'spd' => $value->spd
+          ]);
+        }
+      }
+      $this->data['SuratTugas'] = $Persuratan_DataSurat;
+      return view('pages.protokoler.surat_tugas.arsip',$this->data);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,17 +103,27 @@ class SuratTugasController extends MyController
       
       if ($this->data['user']->protokoler_type == 'ad') {
 
-        $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
-              $query->with('anggota_dewan')->get();
-          }
-        ])->where('status','!=','batal')->where('untuk','!=','staff')->orderBy('id','desc')->get();
+        $dp = $Persuratan->with([
+              'SuratTugas',
+              'spd' => function($query) {
+                $query->with('anggota_dewan')->get();
+              }
+        ])->where('status','!=','batal')
+          ->where('untuk','!=','staff')
+          ->whereYear('created_at',date('Y'))
+          ->orderBy('id','desc')->get();
 
       } else if($this->data['user']->protokoler_type == 'staff') {
         
-        $dp = $Persuratan->with(['SuratTugas','spd' => function($query) {
-                $query->with('staff')->get();
-            }
-          ])->where('status','!=','batal')->where('untuk','staff')->orderBy('id','desc')->get();
+        $dp = $Persuratan->with([
+                'SuratTugas',
+                'spd' => function($query) {
+                    $query->with('staff')->get();
+                }
+          ])->where('status','!=','batal')
+            ->where('untuk','staff')
+            ->whereYear('created_at',date('Y'))
+            ->orderBy('id','desc')->get();
       
       }
 

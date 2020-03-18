@@ -106,20 +106,20 @@
                                     <a href="{{ url('manajemen-user') }}"> <span>MANAJEMEN USER</span> </a>
                                 </li>
                             @endif
-
-
                             @if($user->level == "protokoler")
-                            <li class="menu">
-                                <a href="{{ url('protokoler/surat-tugas') }}"> <span>PERJALANAN DINAS</span>  </a>
-                            </li>
-                    @endif
+                                <li class="menu">
+                                    <a href="{{ url('protokoler/surat-tugas') }}"> <span>PERJALANAN DINAS</span>  </a>
+                                </li>
+                                <li class="menu">
+                                    <a href="{{ url('protokoler/surat-tugas/arsip') }}"> <span>ARSIP SURAT</span></a>
+                                </li>
+                            @endif
 
                     @if($user->level == "keuangan")
                         <li class="menu">
                             <a href="{{ url('keuangan/laporan-perjalanan-dinas') }}"> <span>LAPORAN PERJALANAN DINAS</span>  </a>
                         </li>
                     @endif
-
 
                     @if($user->level == "bendahara")
                     <li class="menu">
