@@ -102,21 +102,21 @@
                             <li><a href="{{ url('dashboard') }}">DASHBOARD</a></li>
 
                             @if($user->level == "admin")
-                                <li class="menu">
+                                <li class="menu" id="manajement_user">
                                     <a href="{{ url('manajemen-user') }}"> <span>MANAJEMEN USER</span> </a>
                                 </li>
                             @endif
                             @if($user->level == "protokoler")
-                                <li class="menu">
+                                <li class="menu" id="perjalanan_dinas">
                                     <a href="{{ url('protokoler/surat-tugas') }}"> <span>PERJALANAN DINAS</span>  </a>
                                 </li>
-                                <li class="menu">
-                                    <a href="{{ url('protokoler/surat-tugas/arsip') }}"> <span>ARSIP SURAT</span></a>
+                                <li class="menu" id="arsip_surat">
+                                    <a href="{{ url('protokoler/arsip/surat-tugas') }}"> <span>ARSIP SURAT</span></a>
                                 </li>
                             @endif
 
                     @if($user->level == "keuangan")
-                        <li class="menu">
+                        <li class="menu" id="laporan_perjalanan_dinas">
                             <a href="{{ url('keuangan/laporan-perjalanan-dinas') }}"> <span>LAPORAN PERJALANAN DINAS</span>  </a>
                         </li>
                     @endif

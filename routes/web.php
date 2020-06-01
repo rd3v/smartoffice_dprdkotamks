@@ -59,7 +59,7 @@ Route::group([
 
   Route::get('rincian-awal/create/{persuratan_id}','RincianAwalController@create');
   
-  Route::get('surat-tugas/arsip','SuratTugasController@arsip');
+  Route::get('arsip/surat-tugas','SuratTugasController@arsip');
   Route::resource('surat-tugas','SuratTugasController')->except(['destroy','update']);
   Route::resource('spd','SpdController');
   Route::resource('rincian-awal','RincianAwalController')->except(['index','create','edit','update','destroy']);
